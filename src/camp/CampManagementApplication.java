@@ -282,6 +282,7 @@ public class CampManagementApplication {
             System.out.println(studentStore.get(key).getStudentName()+":"+key);
         }
     }
+
     private static void printSubjecttInfo(){
         System.out.println("=====   수강 가능한 과목 리스트 입니다.  =====");
         System.out.println("=======================================");
