@@ -48,7 +48,7 @@ public class CampManagementApplication {
     private static void setInitData() {
         studentStore = new HashMap<>();
 
-        subjectStore = new HashMap<>();
+        subjectStore = new HashMap<>(); //Map으로 타입 변환으로 인한 초기화 방식 수정
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Java", SUBJECT_TYPE_MANDATORY));
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "객체지향", SUBJECT_TYPE_MANDATORY));
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Spring", SUBJECT_TYPE_MANDATORY));
@@ -157,20 +157,22 @@ public class CampManagementApplication {
         int optionalSize = optionalSet.size();
         if(optionalSize<2) throw new IllegalArgumentException("선택 과목 개수가 부족합니다.");
 
+        //필수 과목 저장.
         for(String val : mandatorySet){
             val =INDEX_TYPE_SUBJECT+val;
             Subject useSubject = subjectStore.get(val);
-            if(!useSubject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY))
+            if(!useSubject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY)) //타 과목시 예외처리
                 throw new IllegalArgumentException();
             getSubject.add(val);
         }
 
+        //선택 과목 저장
         for(String val : optionalSet){
             int useVal = Integer.parseInt(val)+5;
             val =INDEX_TYPE_SUBJECT+useVal;
 
             Subject useSubject = subjectStore.get(val);
-            if(!useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE))
+            if(!useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE)) //타 과목시 예외처리
                 throw new IllegalArgumentException();
             getSubject.add(val);
         }
