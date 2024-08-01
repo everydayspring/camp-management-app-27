@@ -159,11 +159,21 @@ public class CampManagementApplication {
         if(optionalSize<2) throw new IllegalArgumentException("선택 과목 개수가 부족합니다.");
 
         for(String val : mandatorySet){
-            getSubject.add("SU"+val);
+            val =INDEX_TYPE_SUBJECT+val;
+            Subject useSubject = subjectStore.get(val);
+            if(!useSubject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY))
+                throw new IllegalArgumentException();
+            getSubject.add(val);
         }
+
         for(String val : optionalSet){
             int useVal = Integer.parseInt(val)+5;
-            getSubject.add("SU"+useVal);
+            val =INDEX_TYPE_SUBJECT+useVal;
+
+            Subject useSubject = subjectStore.get(val);
+            if(!useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE))
+                throw new IllegalArgumentException();
+            getSubject.add(val);
         }
 
         Student student = new Student(studentName, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
