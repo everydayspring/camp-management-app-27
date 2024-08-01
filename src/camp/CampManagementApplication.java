@@ -307,12 +307,90 @@ public class CampManagementApplication {
     }
 
     // 수강생의 과목별 회차 점수 수정
-    private static void updateRoundScoreBySubject() {
+    public static void updateRoundScoreBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (수정할 과목 및 회차, 점수)
-        System.out.println("시험 점수를 수정합니다...");
-        // 기능 구현
-        System.out.println("\n점수 수정 성공!");
+        System.out.println("원하는 수강생의 고유번호 입력: ");
+        String fixstudentId = sc.nextLine();
+
+
+        while (true) {
+            // 메뉴 출력
+            System.out.println("수정할 항목을 선택하세요:");
+            System.out.println("press1: 과목만 수정");
+            System.out.println("press2: 점수만 수정");
+            System.out.println("press3: 회차만 수정");
+            System.out.println("press4: 회차,과목과 점수 모두 수정");
+            System.out.println("press0: 종료");
+
+            int fix = sc.nextInt();
+            sc.nextLine();  // 버퍼를 비우기 위해 호출
+
+            try {
+                switch (fix) {
+                    case 1:
+                        System.out.print("수정할 과목 입력: ");
+                        String newSubject = sc.nextLine();
+                        if (newSubject.equals(subjectStore)) {
+                            System.out.println("과목이 수정되었습니다.");
+                        } else {
+                            System.out.println("변경된 과목이 없습니다.");
+                        }
+                        break;
+                    case 2:
+                        System.out.print("수정할 점수 입력: ");
+                        int newScore = sc.nextInt();
+                        sc.nextLine();  // 버퍼를 비우기 위해 호출
+                        if (newScore >= 0 && newScore <= 100) {
+                            System.out.println("점수가 수정되었습니다.");
+                        } else {
+                            System.out.println("잘못된 입력값입니다. 점수는 0에서 100 사이여야 합니다.");
+                        }
+                        break;
+                    case 3:
+                        System.out.print("새 회차 입력 (1~10): ");
+                        int newRound = sc.nextInt();
+                        sc.nextLine();  // 버퍼를 비우기 위해 호출
+                        if (newRound >= 1 && newRound <= 10) {
+                            System.out.println("회차가 수정되었습니다.");
+                        } else {
+                            System.out.println("잘못된 입력값입니다. 회차는 1에서 10 사이여야 합니다.");
+                        }
+                        break;
+                    case 4:
+                        System.out.print("수정할 과목 입력: ");
+                        String updatedSubject = sc.nextLine();
+                        if (newSubject.equals(subjectStore)) {
+                            System.out.println("과목이 수정되었습니다.");
+                        } else {
+                            System.out.println("변경된 과목이 없습니다.");
+                        }
+                        System.out.print("새 점수 입력: ");
+                        int updatedScore = sc.nextInt();
+
+                        sc.nextLine();  // 버퍼를 비우기 위해 호출
+                        System.out.print("새 회차 입력 (1~10): ");
+                        int updatedRound = sc.nextInt();
+                        sc.nextLine();  // 버퍼를 비우기 위해 호출
+
+                        if (updatedScore >= 0 && updatedScore <= 100 && updatedRound >= 1 && updatedRound <= 10) {
+                            System.out.println("과목, 점수 및 회차가 모두 수정되었습니다.");
+                        } else {
+                            System.out.println("잘못된 입력값입니다.");
+                        }
+                        break;
+                    case 0:
+                        System.out.println("프로그램을 종료합니다.");
+                        sc.close();
+                        return;
+                    default:
+                        System.out.println("잘못된 선택입니다. 다시 시도하세요.");
+                }
+            } catch (Exception e) {
+                System.out.println("다시 입력하세요. " + e.getMessage());
+            }
+
+
+        }
     }
 
     // 수강생의 특정 과목 회차별 등급 조회
