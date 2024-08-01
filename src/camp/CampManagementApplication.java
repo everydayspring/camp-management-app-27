@@ -16,9 +16,10 @@ import java.util.*;
  */
 public class CampManagementApplication {
     // 데이터 저장소
-    private static Map<String,Student> studentStore;
-    private static Map<String,Subject> subjectStore;
-    private static List<Score> scoreStore;
+    private static Map<String, Student> studentStore;
+    private static Map<String, Subject> subjectStore;
+    private static Map<String, Map<String, Score>> scoreStore;
+
 
     // 과목 타입
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
@@ -47,19 +48,27 @@ public class CampManagementApplication {
     //생성자임 보니까.
     private static void setInitData() {
         studentStore = new HashMap<>();
+        scoreStore = new HashMap<>();
+        subjectStore = new HashMap<>();
 
-        subjectStore = new HashMap<>(); //Map으로 타입 변환으로 인한 초기화 방식 수정
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Java", SUBJECT_TYPE_MANDATORY));
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "객체지향", SUBJECT_TYPE_MANDATORY));
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Spring", SUBJECT_TYPE_MANDATORY));
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "JPA", SUBJECT_TYPE_MANDATORY));
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "MySQL", SUBJECT_TYPE_MANDATORY));
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "디자인 패턴", SUBJECT_TYPE_CHOICE));
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Spring Security", SUBJECT_TYPE_CHOICE));
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Redis", SUBJECT_TYPE_CHOICE));
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "MongoDB", SUBJECT_TYPE_CHOICE));
-
-        scoreStore = new ArrayList<>();
+        String subjectId = sequence(INDEX_TYPE_SUBJECT);
+        subjectStore.put(subjectId, new Subject(subjectId, "Java", SUBJECT_TYPE_MANDATORY));
+        subjectId = sequence(INDEX_TYPE_SUBJECT);
+        subjectStore.put(subjectId, new Subject(subjectId, "객체지향", SUBJECT_TYPE_MANDATORY));
+        subjectId = sequence(INDEX_TYPE_SUBJECT);
+        subjectStore.put(subjectId, new Subject(subjectId, "Spring", SUBJECT_TYPE_MANDATORY));
+        subjectId = sequence(INDEX_TYPE_SUBJECT);
+        subjectStore.put(subjectId, new Subject(subjectId, "JPA", SUBJECT_TYPE_MANDATORY));
+        subjectId = sequence(INDEX_TYPE_SUBJECT);
+        subjectStore.put(subjectId, new Subject(subjectId, "MySQL", SUBJECT_TYPE_MANDATORY));
+        subjectId = sequence(INDEX_TYPE_SUBJECT);
+        subjectStore.put(subjectId, new Subject(subjectId, "디자인 패턴", SUBJECT_TYPE_CHOICE));
+        subjectId = sequence(INDEX_TYPE_SUBJECT);
+        subjectStore.put(subjectId, new Subject(subjectId, "Spring Security", SUBJECT_TYPE_CHOICE));
+        subjectId = sequence(INDEX_TYPE_SUBJECT);
+        subjectStore.put(subjectId, new Subject(subjectId, "Redis", SUBJECT_TYPE_CHOICE));
+        subjectId = sequence(INDEX_TYPE_SUBJECT);
+        subjectStore.put(subjectId, new Subject(subjectId, "MongoDB", SUBJECT_TYPE_CHOICE));
     }
     private static void addSubject(Subject subject) {
         subjectStore.put(subject.getSubjectId(), subject);
@@ -254,15 +263,34 @@ public class CampManagementApplication {
     }
 
     private static String getStudentId() {
+        printStudentInfo();
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
+        return sc.next();
+    }
+
+    private static String getSubjectId(String studentId) {
+        printSubjectInfoByStudentId(studentId);
+        System.out.print("\n점수를 등록할 과목을 입력하시오...");
         return sc.next();
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        System.out.println("시험 점수를 등록합니다...");
-        // 기능 구현
+        String subjectId = getSubjectId(studentId); // 등록할 과목 고유 번호
+
+        System.out.println("등록할 시험 회차를 입력하시오...");
+        String index = sc.next();
+        System.out.println("점수를 입력하시오...");
+        String score = sc.next();
+
+        Map<String, Score> inner = new HashMap<>();
+        if(scoreStore.get(studentId).get(subjectId) == null){
+            inner.put(subjectId, new Score(index, score));
+            scoreStore.put(studentId, inner);
+        } else {
+            scoreStore.get(studentId).get(subjectId).setScores(index, score);
+        }
         System.out.println("\n점수 등록 성공!");
     }
 
@@ -307,5 +335,9 @@ public class CampManagementApplication {
         System.out.println("=====         3. Redis            =====");
         System.out.println("=====         4. MongoDB          =====");
         System.out.println("=======================================");
+    }
+  
+    private static void printSubjectInfoByStudentId(String studentId) {
+        System.out.println("수강중인 과목명과 고유번호를 출력합니다");
     }
 }
