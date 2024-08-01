@@ -8,7 +8,7 @@ public class Student {
     private String studentName;
     private ArrayList<String> subjectList;
 
-    public Student(String studentName, ArrayList subjectList) {
+    public Student(String studentName, ArrayList<String> subjectList) {
         this.subjectList = subjectList;
         this.studentName = studentName;
     }

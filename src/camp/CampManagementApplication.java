@@ -172,74 +172,50 @@ public class CampManagementApplication {
 
         ArrayList<String> getSubject = new ArrayList<>(); //수강하는 과목코드를 저장할 리스트
         printSubjecttInfo();//과목 출력
+
         /*필수 과목 받기*/
         sc.nextLine(); //개행문자 날리기
         System.out.println("수강하실 필수 과목의 번호를 입력해 주세요 (필수 : 3개 이상)(띄어쓰기로 구분)");
-        String wantSubject =sc.nextLine();
-        String[] useSubject = wantSubject.split(" ");
-        Set<String> useSet = new HashSet<>(Arrays.asList(useSubject));
-        String[] changeSubject = useSet.toArray(new String[0]);
-        if(changeSubject.length<3)throw new IllegalArgumentException("필수 과목의 개수가 적습니다.");
-        for(String val : changeSubject){
-            switch (val){
-                case "1":
-                    getSubject.add(subjectStore.get(0).getSubjectId());
-                    break;
-                case "2":
-                    getSubject.add(subjectStore.get(1).getSubjectId());
-                    break;
-                case "3":
-                    getSubject.add(subjectStore.get(2).getSubjectId());
-                    break;
-                case "4":
-                    getSubject.add(subjectStore.get(3).getSubjectId());
-                    break;
-                case "5":
-                    getSubject.add(subjectStore.get(4).getSubjectId());
-                    break;
-                default:
-                    throw new IllegalArgumentException("해당 과목은 존재하지 않습니다.");
-            }
-        }
+        String[] mandatorySubjects = sc.nextLine().split(" ");
+        addSubjects(mandatorySubjects, SUBJECT_TYPE_MANDATORY, getSubject);
+        int mandatorySize = getSubject.size();
+        if(mandatorySize<3) throw new IllegalArgumentException("필수 과목 개수가 부족합니다.");
+
 
         /*선택 과목 받기*/
-        sc.nextLine(); //개행문자 날리기
         System.out.println("수강하실 선택 과목의 번호를 입력해 주세요 (선택 : 2개 이상)(띄어쓰기로 구분)");
-        wantSubject =sc.nextLine();
-        changeSubject = wantSubject.split(" ");
-        useSet = new HashSet<>(Arrays.asList(useSubject));
-        changeSubject = useSet.toArray(new String[0]);
-        if(changeSubject.length<2)throw new IllegalArgumentException("선택 과목의 개수가 적습니다.");
-        for(String val : changeSubject){
-            switch (val){
-                case "1":
-                    getSubject.add(subjectStore.get(5).getSubjectId());
-                    break;
-                case "2":
-                    getSubject.add(subjectStore.get(6).getSubjectId());
-                    break;
-                case "3":
-                    getSubject.add(subjectStore.get(7).getSubjectId());
-                    break;
-                case "4":
-                    getSubject.add(subjectStore.get(8).getSubjectId());
-                    break;
-                default:
-                    throw new IllegalArgumentException("해당 과목은 존재하지 않습니다.");
-            }
-        }
+        String[] optionalSubjects = sc.nextLine().split(" ");
+        addSubjects(optionalSubjects, SUBJECT_TYPE_MANDATORY, getSubject);
+        int optionalSize = getSubject.size()-mandatorySize;
+        if(optionalSize<2) throw new IllegalArgumentException("선택 과목 개수가 부족합니다.");
 
         Student student = new Student(studentName, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
         // 기능 구현
         studentStore.put(studentId, student); //맵에 저장
-        System.out.println(studentStore.get(studentId).getStudentName());
-        System.out.println(getSubject.get(0));
+//        System.out.println(studentStore.get(studentId).getStudentName());
+//        System.out.println(getSubject.get(0));
         System.out.println("수강생 등록 성공!\n");
+    }
+    //추가했음
+    private static void addSubjects(String[] subjects, String subjectType, List<String> getSubject){
+        Set<String> subjectSet = new HashSet<>(Arrays.asList(subjects));
+        if (subjectSet.isEmpty()) {
+            throw new IllegalArgumentException("과목번호 미기입");
+        }
+        for (String subjectNumber : subjectSet) {
+            int index = Integer.parseInt(subjectNumber) - 1;
+            if (index < 0 || index >= subjectStore.size()) {
+                throw new IllegalArgumentException("해당 과목 번호는 존재하지 않습니다.");
+            }
+            Subject subject = subjectStore.get(index);
+            getSubject.add(subject.getSubjectId());
+        }
     }
 
     // 수강생 목록 조회 - 김창민
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
+        printStudentInfo();
         // 기능 구현
         System.out.println("\n수강생 목록 조회 성공!");
     }
@@ -300,7 +276,12 @@ public class CampManagementApplication {
         System.out.println("\n등급 조회 성공!");
     }
 
-    private static void printStudentInfo(){}
+    private static void printStudentInfo(){
+        Set<String> keys = studentStore.keySet();
+        for(String key : keys){
+            System.out.println(studentStore.get(key).getStudentName()+":"+key);
+        }
+    }
     private static void printSubjecttInfo(){
         System.out.println("=====   수강 가능한 과목 리스트 입니다.  =====");
         System.out.println("=======================================");
