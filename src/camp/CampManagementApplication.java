@@ -174,7 +174,7 @@ public class CampManagementApplication {
             Subject useSubject = subjectStore.get(val);
             if(!useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE)) //타 과목시 예외처리
                 throw new IllegalArgumentException();
-            getSubject.add(val);
+
         }
 
         Student student = new Student(studentName, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
