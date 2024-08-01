@@ -1,18 +1,20 @@
 package camp.model;
 
-public class Student {
-    private String studentId;
-    private String studentName;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Student(String seq, String studentName) {
-        this.studentId = seq;
+public class Student {
+
+    private String studentName;
+    private ArrayList<String> subjectList;
+
+    public Student(String studentName, ArrayList subjectList) {
+        this.subjectList = subjectList;
         this.studentName = studentName;
     }
 
     // Getter
-    public String getStudentId() {
-        return studentId;
-    }
+
 
     public String getStudentName() {
         return studentName;

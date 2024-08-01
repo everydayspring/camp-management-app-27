@@ -4,9 +4,7 @@ import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Notification
@@ -18,7 +16,7 @@ import java.util.Scanner;
  */
 public class CampManagementApplication {
     // 데이터 저장소
-    private static List<Student> studentStore;
+    private static Map<String,Student> studentStore;
     private static List<Subject> subjectStore;
     private static List<Score> scoreStore;
 
@@ -46,9 +44,9 @@ public class CampManagementApplication {
         }
     }
 
-    // 초기 데이터 생성
+    //생성자임 보니까.
     private static void setInitData() {
-        studentStore = new ArrayList<>();
+        studentStore = new HashMap<>();
         subjectStore = List.of(
                 new Subject(
                         sequence(INDEX_TYPE_SUBJECT),
@@ -164,19 +162,79 @@ public class CampManagementApplication {
         }
     }
 
-    // 수강생 등록
+    // 수강생 등록 - 김창민
     private static void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
-        String studentName = sc.next();
+        String studentName = sc.next();                     //이름
+        String studentId = sequence(INDEX_TYPE_STUDENT);    //고유번호
         // 기능 구현 (필수 과목, 선택 과목)
 
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        ArrayList<String> getSubject = new ArrayList<>(); //수강하는 과목코드를 저장할 리스트
+        printSubjecttInfo();//과목 출력
+        /*필수 과목 받기*/
+        System.out.println("수강하실 필수 과목의 번호를 입력해 주세요 (필수 : 3개 이상)(띄어쓰기로 구분)");
+        String wantSubject =sc.next();
+        String[] useSubject = wantSubject.split(" ");
+        Set<String> useSet = new HashSet<>(Arrays.asList(useSubject));
+        String[] changeSubject = useSet.toArray(new String[0]);
+        if(changeSubject.length<3)throw new IllegalArgumentException("필수 과목의 개수가 적습니다.");
+        for(String val : changeSubject){
+            switch (val){
+                case "1":
+                    getSubject.add(subjectStore.get(0).getSubjectId());
+                    break;
+                case "2":
+                    getSubject.add(subjectStore.get(1).getSubjectId());
+                    break;
+                case "3":
+                    getSubject.add(subjectStore.get(2).getSubjectId());
+                    break;
+                case "4":
+                    getSubject.add(subjectStore.get(3).getSubjectId());
+                    break;
+                case "5":
+                    getSubject.add(subjectStore.get(4).getSubjectId());
+                    break;
+                default:
+                    throw new IllegalArgumentException("해당 과목은 존재하지 않습니다.");
+            }
+        }
+
+        /*선택 과목 받기*/
+        System.out.println("수강하실 선택 과목의 번호를 입력해 주세요 (선택 : 2개 이상)(띄어쓰기로 구분)");
+        wantSubject =sc.next();
+        changeSubject = wantSubject.split(" ");
+        useSet = new HashSet<>(Arrays.asList(useSubject));
+        changeSubject = useSet.toArray(new String[0]);
+        if(changeSubject.length<2)throw new IllegalArgumentException("선택 과목의 개수가 적습니다.");
+        for(String val : changeSubject){
+            switch (val){
+                case "1":
+                    getSubject.add(subjectStore.get(5).getSubjectId());
+                    break;
+                case "2":
+                    getSubject.add(subjectStore.get(6).getSubjectId());
+                    break;
+                case "3":
+                    getSubject.add(subjectStore.get(7).getSubjectId());
+                    break;
+                case "4":
+                    getSubject.add(subjectStore.get(8).getSubjectId());
+                    break;
+                default:
+                    throw new IllegalArgumentException("해당 과목은 존재하지 않습니다.");
+            }
+        }
+
+        Student student = new Student(studentName, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
         // 기능 구현
+        studentStore.put(studentId, student); //맵에 저장
+
         System.out.println("수강생 등록 성공!\n");
     }
 
-    // 수강생 목록 조회
+    // 수강생 목록 조회 - 김창민
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         // 기능 구현
@@ -239,4 +297,22 @@ public class CampManagementApplication {
         System.out.println("\n등급 조회 성공!");
     }
 
+    private static void printStudentInfo(){}
+    private static void printSubjecttInfo(){
+        System.out.println("=====   수강 가능한 과목 리스트 입니다.  =====");
+        System.out.println("=======================================");
+        System.out.println("=====         필수 과목             =====");
+        System.out.println("=====         1. Java             =====");
+        System.out.println("=====         2. 객체지향           =====");
+        System.out.println("=====         3. Spring           =====");
+        System.out.println("=====         4. JPA              =====");
+        System.out.println("=====         5. MySQL            =====");
+        System.out.println("=======================================");
+        System.out.println("=====         선택 과목             =====");
+        System.out.println("=====         1. 디자인 패턴         =====");
+        System.out.println("=====         2. Spring Security  =====");
+        System.out.println("=====         3. Redis            =====");
+        System.out.println("=====         4. MongoDB          =====");
+        System.out.println("=======================================");
+    }
 }
