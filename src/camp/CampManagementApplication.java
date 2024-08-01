@@ -6,6 +6,7 @@ import camp.model.Subject;
 
 import java.util.*;
 
+
 /**
  * Notification
  * Java, 객체지향이 아직 익숙하지 않은 분들은 위한 소스코드 틀입니다.
@@ -307,9 +308,46 @@ public class CampManagementApplication {
     private static void inquireRoundGradeBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (조회할 특정 과목)
+
         System.out.println("회차별 등급을 조회합니다...");
         // 기능 구현
-        System.out.println("\n등급 조회 성공!");
+        System.out.println("원하는 수강생의 고유번호를 입력하세요");
+        Scanner sc = new Scanner(System.in);
+
+        //전체 저장된 학생의 고유번호를 보여줌
+        printStudentInfo();
+
+        //유저가 입력한 값을 저장하는 객체생성
+        String inputStudentId = sc.nextLine();
+        try{
+            //scoreStore 맵에 입력한 학생고유번호가 존재할경우
+            if(scoreStore.containsKey(inputStudentId)){
+                System.out.println("점수 조회를 원하는 과목의 고유번호를 입력하세요");
+                //전체보유중인 subject 의 고유번호 전체를 보여줌
+                printSubjectInfo();
+                String inputSubjectId = sc.nextLine();
+
+                //scoreStore안에있는 Map 을 지정해줌
+                Map<String,Score> innerScoreStore = scoreStore.get(inputStudentId);
+
+                //만약 2중 맵안에 고유학생번호키가 가진 Value의 Map안에 고유 과목 키값이 존재할경우
+                if(innerScoreStore.containsKey(inputSubjectId)){
+                    System.out.println(innerScoreStore.get(inputSubjectId));
+                    System.out.println("\n등급 조회 성공!");
+
+                }//해당 고유번호를지닌 과목이 없을시
+                else{
+                    throw new Exception("잘못된 과목 고유번호를 입력하였습니다.");
+                }
+            }//해당 고유번호를지닌 학생이 없을시
+            else {
+                throw new Exception("해당 고유번호를 가진 수강생이 존재하지않습니다");
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
     }
 
     private static void printStudentInfo(){
