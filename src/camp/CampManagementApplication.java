@@ -173,8 +173,9 @@ public class CampManagementApplication {
         ArrayList<String> getSubject = new ArrayList<>(); //수강하는 과목코드를 저장할 리스트
         printSubjecttInfo();//과목 출력
         /*필수 과목 받기*/
+        sc.nextLine(); //개행문자 날리기
         System.out.println("수강하실 필수 과목의 번호를 입력해 주세요 (필수 : 3개 이상)(띄어쓰기로 구분)");
-        String wantSubject =sc.next();
+        String wantSubject =sc.nextLine();
         String[] useSubject = wantSubject.split(" ");
         Set<String> useSet = new HashSet<>(Arrays.asList(useSubject));
         String[] changeSubject = useSet.toArray(new String[0]);
@@ -202,8 +203,9 @@ public class CampManagementApplication {
         }
 
         /*선택 과목 받기*/
+        sc.nextLine(); //개행문자 날리기
         System.out.println("수강하실 선택 과목의 번호를 입력해 주세요 (선택 : 2개 이상)(띄어쓰기로 구분)");
-        wantSubject =sc.next();
+        wantSubject =sc.nextLine();
         changeSubject = wantSubject.split(" ");
         useSet = new HashSet<>(Arrays.asList(useSubject));
         changeSubject = useSet.toArray(new String[0]);
@@ -230,7 +232,8 @@ public class CampManagementApplication {
         Student student = new Student(studentName, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
         // 기능 구현
         studentStore.put(studentId, student); //맵에 저장
-
+        System.out.println(studentStore.get(studentId).getStudentName());
+        System.out.println(getSubject.get(0));
         System.out.println("수강생 등록 성공!\n");
     }
 
