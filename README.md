@@ -39,42 +39,42 @@
 
 # Template Method
 
-- void setInitData()
+- `void setInitData()`
     - `*StudentStore` ,`subjectStore`, `scoreStore`  초기화 함수*
         - `*StudentStore`* : 학생 정보 저장 공간, ArrayList로 받음
         - `*subjectStore*` : 과목 정보, 필수 학습이랑, 선택 학습이랑 같이 관리되고있음
         - `*scoreStore`*  : 점수 저장 공간 ,ArrayList로 받음
-- String sequence(String type)
+- `String sequence(String type)`
     - 입력되는 `type` 의 현 작업 index를 증가시키는 메소드
-- void displayMainView() throws InterruptedException
+- `void displayMainView() throws InterruptedException`
     - 메인 화면 출력 및 페이지 입력중에 오류가 나면 프로그램을 종료시키는 메소드
     - 추가해야되는 예외 : ?
-- void displayStudentView()
+- `void displayStudentView()`
     - 초기화면에서 1번 수강생 관리 선택시 다음 선택 페이지 프린트.
-- void createStudent()
+- `void createStudent()`
     - 수강생 등록
     - 필요한 기능 : 등록 일자, 수강생이 원하는 과목
-- void inquireStudent()
+- `void inquireStudent()`
     - 수강생 목록 조회
     - 필요한기능
         - 수강생 목록 출력
-- void displayScoreView()
+- `void displayScoreView()`
     - 점수 관리 페이지
-- String getStudentId()
+- `String getStudentId()`
     - 수강생 고유 번호 getter
-- void createScore()
+- `void createScore()`
     - 수강생 점수 등록
     - getStudentId()를 이용해서 수강생의 고유 번호를 받아옴
     - 구현해야할 내용
         - 입력할 과목, 회차, 점수를 입력받아서
         - 등록하면 된다.
-- void updateRoundScoreBySubject()
+- `void updateRoundScoreBySubject()`
     - 수강생의 과목별 회차 점수 수정
     - getStudentId()를 이용해서 수강생의 고유 번호를 받아옴
     - 구현해야할 내용
         - 수정할 과목, 회차, 점수를 입력받아서
         - 수정하면 된다.
-- void inquireRoundGradeBySubject()
+- `void inquireRoundGradeBySubject()`
     - 특정 과목 회차별 등급 조회 목적 메소드
     - getStudentId()를 이용해서 수강생의 고유 번호를 받아옴
     - 구현해야할 내용
