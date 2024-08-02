@@ -279,6 +279,7 @@ public class CampManagementApplication {
         }
     }
 
+    //고유 번호 입력 검증 - 김창민
     private static String getStudentId() {
         printStudentInfo();
         System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
