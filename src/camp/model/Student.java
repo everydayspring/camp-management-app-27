@@ -3,10 +3,10 @@ package camp.model;
 import java.util.ArrayList;
 
 public class Student {
-    private String studentId;
+    private final String studentId;
     private String studentName;
     private String studentState; //수강생 상태
-    private ArrayList<String> subjectList; // 수강 과목
+    private final ArrayList<String> subjectList; // 수강 과목
 
     public Student(String studentId,String studentName, String studentState,ArrayList<String> subjectList) {
         this.studentId=studentId;
