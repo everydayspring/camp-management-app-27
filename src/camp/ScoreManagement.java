@@ -73,7 +73,7 @@ public class ScoreManagement {
 
         Map<String, Score> inner = new HashMap<>();
 
-        if (!scoreStore.containsKey(studentId)) {
+        if (!scoreStore.containsKey(studentId) || !scoreStore.get(studentId).containsKey(subjectId)) {
             inner.put(subjectId, new Score(index, score));
             scoreStore.put(studentId, inner);
         } else {
