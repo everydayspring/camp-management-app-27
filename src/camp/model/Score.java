@@ -13,13 +13,12 @@ public class Score {
     }
 
     public void setScores(String index, String score) {
-        int indexInt;
-        int ScoreInt;
+        int indexInt; //번호
+        int ScoreInt; //점수
 
         // 인덱스 예외처리
         try {
-            indexInt = Integer.parseInt(index);
-            indexInt--;
+            indexInt = Integer.parseInt(index)-1;
             ScoreInt = Integer.parseInt(score);
 
             if(indexInt < 1 || indexInt > 10){
