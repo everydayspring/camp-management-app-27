@@ -41,15 +41,16 @@ public class StudentManagement {
     // 수강생 등록 --> 김창민
     private static void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
+
         System.out.print("수강생 이름 입력: ");
         String studentName = CampManagementApplication.sc.next();                     //이름
         String studentId = CampManagementApplication.sequence(INDEX_TYPE_STUDENT);    //고유번호
+
         // 기능 구현 (필수 과목, 선택 과목)
+        // 상태 저장
         System.out.print("수강생 상태 입력(Green,Red,Yellow): ");
         String studentState = sc.next();
-        if (!studentState.equals("Green") && !studentState.equals("Red") && !studentState.equals("Yellow")) {
-            throw new IllegalArgumentException("올바른 상태가 아닙니다");
-        }
+        if(!cheackStatus(studentState))throw new IllegalArgumentException("올바른 상태가 아닙니다");
 
         ArrayList<String> getSubject = new ArrayList<>(); //수강하는 과목코드를 저장할 리스트
         CampManagementApplication.printSubjectInfo();//과목 출력
@@ -73,10 +74,8 @@ public class StudentManagement {
         //필수 과목 저장.
         for (String val : mandatorySet) {
             val = INDEX_TYPE_SUBJECT + val;
-            Subject useSubject = subjectStore.get(val);
-            if (!useSubject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY)) //타 과목시 예외처리
-                throw new IllegalArgumentException();
-            getSubject.add(val);
+
+            makeSubject(val,getSubject,SUBJECT_TYPE_MANDATORY);
         }
 
         //선택 과목 저장
@@ -84,33 +83,20 @@ public class StudentManagement {
             int useVal = Integer.parseInt(val) + 5;
             val = INDEX_TYPE_SUBJECT + useVal;
 
-            Subject useSubject = subjectStore.get(val);
-            if (!useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE)) //타 과목시 예외처리
-                throw new IllegalArgumentException();
-            getSubject.add(val);
+            makeSubject(val,getSubject,SUBJECT_TYPE_CHOICE);
         }
 
         Student student = new Student(studentId, studentName, studentState, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
-
-        // 기능 구현
         studentStore.put(studentId, student); //맵에 저장
-
-
         System.out.println("수강생 등록 성공!\n");
     }
 
     // 수강생 목록 조회 --> 김창민
     private static void inquireStudent() {
 
-        System.out.println("\n수강생 목록을 조회합니다...");
-        if (studentStore.isEmpty()) {
-            System.out.println("수강생이 없습니다");
-            return;
-        }
+        if(!checkStudentStore()) return;
 
-        printStudentInfo();  // 기능 구현
-
-
+        printStudentInfo();
         sc.nextLine();//개행문자 날리기
         System.out.print("조회 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
@@ -132,6 +118,7 @@ public class StudentManagement {
                 viewOptional.add(useSubject.getSubjectName());
             }
         }
+
         System.out.println("==============검색완료===============");
         System.out.println("[이름]: " + student.getStudentName() + " [번호]: " + useKey + " [상태]: " + student.getStudentState());
 
@@ -156,11 +143,7 @@ public class StudentManagement {
     private static void updateStudent() {
         // 번호 받아와서
         // set 시리즈로 수정
-        System.out.println("\n수강생 목록을 조회합니다...");
-        if (studentStore.isEmpty()) {
-            System.out.println("수강생이 없습니다");
-            return;
-        }
+        if(!checkStudentStore()) return;
         printStudentInfo();  // 기능 구현
 
 
@@ -175,9 +158,7 @@ public class StudentManagement {
         System.out.println("[이름]: " + student.getStudentName() + "\n[상태]: " + student.getStudentState());
         System.out.println("====[덮어씌울 정보]====\n이름과 상태 순으로 입력하세요\n(상태: Green,Red,Yellow)(띄어쓰기 구분): ");
         String[] newNameAndState = sc.nextLine().split(" ");
-        if (!newNameAndState[1].equals("Green") && !newNameAndState[1].equals("Red") && !newNameAndState[1].equals("Yellow")) {
-            throw new IllegalArgumentException("올바른 상태가 아닙니다");
-        }
+        if(!cheackStatus(newNameAndState[1]))throw new IllegalArgumentException("올바른 상태가 아닙니다");
         student.setStudentName(newNameAndState[0]);
         student.setStudentState(newNameAndState[1]);
         System.out.println("====[업데이트 된 정보]====\n");
@@ -187,10 +168,8 @@ public class StudentManagement {
 
     // 상태별 수강생 조회 --> 김창민
     private static void inquireStudentByState() {
-        if (studentStore.isEmpty()) {
-            System.out.println("수강생이 없습니다");
-            return;
-        }
+        if(!checkStudentStore()) return;
+
         Set<String> keys = studentStore.keySet();
         List<String> keyList = new ArrayList<>(keys);
         Collections.sort(keyList);
@@ -208,28 +187,28 @@ public class StudentManagement {
         }
 
         System.out.println("====Green 상태 학생====");
-        for (Student std : greenStu) {
-            System.out.print("[이름]: " + std.getStudentName() + " [번호]" + std.getStudentId());
-        }
+        printInquireStudentByState(greenStu);
         System.out.println();
+
         System.out.println("====Red 상태 학생====");
-        for (Student std : redStu) {
-            System.out.print("[이름]: " + std.getStudentName() + " [번호]" + std.getStudentId());
-        }
+        printInquireStudentByState(redStu);
         System.out.println();
+
         System.out.println("====Yellow 상태 학생====");
-        for (Student std : yellowStu) {
-            System.out.print("[이름]: " + std.getStudentName() + " [번호]" + std.getStudentId());
+        printInquireStudentByState(yellowStu);
+        System.out.println();
+    }
+
+    //중복 출력 기능 메소드화
+    private static void printInquireStudentByState(ArrayList<Student> stu){
+        for(Student std : stu){
+            System.out.println(std.getStudentId()+" : " + std.getStudentName() );
         }
     }
 
     // 수강생 삭제 --> 김창민
     private static void deleteStudent() {
-        System.out.println("\n수강생 목록을 조회합니다...");
-        if (studentStore.isEmpty()) {
-            System.out.println("수강생이 없습니다");
-            return;
-        }
+        if(!checkStudentStore()) return;
         printStudentInfo();  // 기능 구현
 
         sc.nextLine();//개행문자 날리기
@@ -242,5 +221,28 @@ public class StudentManagement {
         studentStore.remove(useKey);
         if (!studentStore.containsKey(useKey))
             System.out.println("삭제 완료되었습니다.");
+    }
+
+    //중복 studentStore 검증 기능 메소드화 -> 김창민
+    private static boolean checkStudentStore(){
+        System.out.println("\n수강생 목록을 조회합니다...");
+        if (studentStore.isEmpty()) {
+            System.out.println("수강생이 없습니다");
+            return false;
+        }
+        return true;
+    }
+
+    //중복 Status 검증 기능 메소드화 -> 김창민
+    private static boolean cheackStatus(String studentState){
+        return studentState.equals("Green") || studentState.equals("Red") || studentState.equals("Yellow");
+    }
+
+    //중복 Subject 저장 기능 메소드화 -> 김창민
+    public static void makeSubject(String val,ArrayList<String> getSubject,String type){
+        Subject useSubject = subjectStore.get(val);
+        if (!useSubject.getSubjectType().equals(type)) //타 과목시 예외처리
+            throw new IllegalArgumentException();
+        getSubject.add(val);
     }
 }
