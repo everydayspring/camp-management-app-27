@@ -77,7 +77,9 @@ public class CampManagementApplication {
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "디자인 패턴", SUBJECT_TYPE_CHOICE));
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Spring Security", SUBJECT_TYPE_CHOICE));
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Redis", SUBJECT_TYPE_CHOICE));
-        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "MongoDB", SUBJECT_TYPE_CHOICE));        
+
+        addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "MongoDB", SUBJECT_TYPE_CHOICE));
+
         */
     }
     private static void addSubject(Subject subject) {
@@ -201,10 +203,6 @@ public class CampManagementApplication {
         // 기능 구현
         studentStore.put(studentId, student); //맵에 저장
 
-        //여기서 score생성하고, scoreStore도 생성해야할거같음..
-        //score는 <studentId,<val,scores[]>>로 이뤄진다고 생각해야함.
-
-
 
         System.out.println("수강생 등록 성공!\n");
     }
@@ -282,6 +280,7 @@ public class CampManagementApplication {
     //고유 번호 입력 검증 - 김창민
     private static String getStudentId() {
         printStudentInfo();
+
         System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
         String useName = sc.next();
         if(!studentStore.containsKey(useName))
@@ -306,6 +305,7 @@ public class CampManagementApplication {
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록 -> 이봄
+
     private static void createScore() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         String subjectId = getSubjectIdByStudent(studentId); // 등록할 과목 고유 번호
@@ -328,6 +328,7 @@ public class CampManagementApplication {
 
             scoreStore.get(studentId).get(subjectId).setScores(index, score);
         }
+
         System.out.println("\n점수 등록 성공!");
     }
 
@@ -423,39 +424,79 @@ public class CampManagementApplication {
 
     }
 
+
     // 수강생의 특정 과목 회차별 등급 조회
     private static void inquireRoundGradeBySubject() {
+        Scanner sc = new Scanner(System.in);
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (조회할 특정 과목)
 
         System.out.println("회차별 등급을 조회합니다...");
         // 기능 구현
-        System.out.println("원하는 수강생의 고유번호를 입력하세요");
-        Scanner sc = new Scanner(System.in);
 
-        //전체 저장된 학생의 고유번호를 보여줌
-        printStudentInfo();
-
-        //유저가 입력한 값을 저장하는 객체생성
-        String inputStudentId = sc.nextLine();
         try{
             //scoreStore 맵에 입력한 학생고유번호가 존재할경우
-            if(scoreStore.containsKey(inputStudentId)){
+            if(scoreStore.containsKey(studentId)){
                 System.out.println("점수 조회를 원하는 과목의 고유번호를 입력하세요");
                 //전체보유중인 subject 의 고유번호 전체를 보여줌
                 printSubjectInfo();
                 String inputSubjectId = sc.nextLine();
-
+                int indicator = Character.getNumericValue(inputSubjectId.charAt(2));
+                System.out.println(indicator);
                 //scoreStore안에있는 Map 을 지정해줌
-                Map<String,Score> innerScoreStore = scoreStore.get(inputStudentId);
+                Map<String,Score> innerScoreStore = scoreStore.get(studentId);
 
                 //만약 2중 맵안에 고유학생번호키가 가진 Value의 Map안에 고유 과목 키값이 존재할경우
-                if(innerScoreStore.containsKey(inputSubjectId)){
-                    System.out.println(innerScoreStore.get(inputSubjectId));
+                if(innerScoreStore.containsKey(inputSubjectId) && indicator < 6){
+                    int[] d = innerScoreStore.get(inputSubjectId).getScores();
+
+                    for(int i = 0; i< d.length; i++){
+                        int num = d[i];
+
+                        if( num> 94){
+                            System.out.println((i+1)+"회차 등급: A");
+
+                        }else if(num > 89){
+                            System.out.println((i+1)+"회차 등급: B");
+
+                        }else if(num > 80){
+                            System.out.println((i+1)+"회차 등급 : C");
+                        }else if(num >70){
+                            System.out.println((i+1)+"회차 등급 : D");
+                        }else if(num >60){
+                            System.out.println((i+1)+"회차 등급 : F");
+                        }else{
+                            System.out.println((i+1)+"회차 등급 : N");
+                        }
+
+                    }
                     System.out.println("\n등급 조회 성공!");
 
-                }//해당 고유번호를지닌 과목이 없을시
-                else{
+                }else if(innerScoreStore.containsKey(inputSubjectId) && indicator > 5) {
+                    int[] d = innerScoreStore.get(inputSubjectId).getScores();
+
+                    for (int i = 0; i < d.length; i++) {
+                        int num = d[i];
+
+                        if (num > 89) {
+                            System.out.println((i + 1) + "회차 등급: A");
+
+                        } else if (num > 79) {
+                            System.out.println((i + 1) + "회차 등급: B");
+
+                        } else if (num > 69) {
+                            System.out.println((i + 1) + "회차 등급 : C");
+                        } else if (num > 59) {
+                            System.out.println((i + 1) + "회차 등급 : D");
+                        } else if (num > 49) {
+                            System.out.println((i + 1) + "회차 등급 : F");
+                        } else {
+                            System.out.println((i + 1) + "회차 등급 : N");
+                        }
+
+                    }
+                    System.out.println("\n등급 조회 성공!");
+                }else{
                     throw new Exception("잘못된 과목 고유번호를 입력하였습니다.");
                 }
             }//해당 고유번호를지닌 학생이 없을시
@@ -468,6 +509,7 @@ public class CampManagementApplication {
         }
 
     }
+
 
     private static void printStudentInfo(){
         Set<String> keys = studentStore.keySet();
@@ -495,6 +537,7 @@ public class CampManagementApplication {
         System.out.println("=====         4. MongoDB          =====");
         System.out.println("=======================================");
     }
+
 
     // 수강생이 등록한 과목만 출력 --> 이봄
     private static void printSubjectInfoByStudentId(String studentId) {
