@@ -451,42 +451,42 @@ public class CampManagementApplication {
     public static void updateRoundScoreBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         String subjectId = getSubjectIdByStudent(studentId); // 등록할 과목 고유 번호
-        printsScoreInfoByStudentId();
+        printsScoreInfoByStudentId(studentId);
         System.out.println("등록할 시험 회차를 입력하시오...");
         String index = sc.next();
         System.out.println("점수를 입력하시오...");
         String score = sc.next();
 
         if(!scoreStore.containsKey(studentId)) {
-        Map<String, Score> inner = new HashMap<>();
+            Map<String, Score> inner = new HashMap<>();
 
 
-        throw new IllegalArgumentException("해당 수강생의 등록된 점수가 없습니다.");
-    }else{
-        int indexInt;
-        int ScoreInt;
+            throw new IllegalArgumentException("해당 수강생의 등록된 점수가 없습니다.");
+        }else{
+            int indexInt;
+            int ScoreInt;
 
-        // 인덱스 예외처리
-        try {
-            indexInt = Integer.parseInt(index);
-            indexInt--;
-            ScoreInt = Integer.parseInt(score);
+            // 인덱스 예외처리
+            try {
+                indexInt = Integer.parseInt(index);
+                indexInt--;
+                ScoreInt = Integer.parseInt(score);
 
-            if(indexInt < 1 || indexInt > 10){
-                throw new NumberFormatException();
+                if(indexInt < 1 || indexInt > 10){
+                    throw new NumberFormatException();
+                }
+
+                int[] scores =  scoreStore.get(studentId).get(subjectId).getScores();
+                if(indexInt == -1){
+                    System.out.println(index + "회차의 점수가 등록되어 있지 않습니다.");
+                } else {
+                    scores[indexInt] = ScoreInt;
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("수강생 점수 등록에 유효한 값이 아닙니다."+ e.getMessage());
             }
-
-            int[] scores =  scoreStore.get(studentId).get(subjectId).getScores();
-            if(indexInt == -1){
-                System.out.println(index + "회차의 점수가 등록되어 있지 않습니다.");
-            } else {
-                scores[indexInt] = ScoreInt;
-            }
-
-        } catch (NumberFormatException e) {
-            System.out.println("수강생 점수 등록에 유효한 값이 아닙니다."+ e.getMessage());
         }
-    }
 
     }
 
@@ -623,19 +623,26 @@ public class CampManagementApplication {
         System.out.println("=======================================");
     }
 
-    //현재 등록 된 과목 점수 -김민주
-    private static void printsScoreInfoByStudentId(){
-        Set<String> sckey = scoreStore.keySet();
-        List<String> sckeyList = new ArrayList<>(sckey);
-        Collections.sort(sckeyList);
-        System.out.println("=================현재 점수=================");
-        for(String ad : sckeyList) {
-            System.out.println(ad + " : , 점수"  "회차 :" );
 
-        }
-             System.out.println("=======================================");
+    //현재 등록 된 과목 점수 -김민주
+    private static void printsScoreInfoByStudentId(String studentId) {
+        Map<String, Score> scores = scoreStore.get(studentId);
+
+        System.out.println("=================현재 점수=================");
+        for (Map.Entry<String, Score> entry : scores.entrySet()) {
+            String subjectId = entry.getKey();
+            Score score = entry.getValue();
+
+            System.out.println("과목 ID: " + subjectId);
+            System.out.println("회차별 점수: ");
+            for (int i = 0; i < score.getScores().length; i++) {
+                if(-1<score.getScores()[i]) {
+                    System.out.println((i + 1) + "회차: " + score.getScores()[i]);
+                }
+            }
+            System.out.println("=======================================");
         }
     }
-
+}
 
 
