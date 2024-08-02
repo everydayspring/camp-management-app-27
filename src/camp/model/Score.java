@@ -23,7 +23,7 @@ public class Score {
             ScoreInt = Integer.parseInt(score);
 
             if(indexInt < 1 || indexInt > 10){
-                throw new NumberFormatException();
+                throw new NumberFormatException("유효하지 않은 숫자");
             }
 
             if(scores[indexInt] == -1){
@@ -33,7 +33,7 @@ public class Score {
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("수강생 점수 등록 중 Invalid index");
+            System.out.println("숫자가 아닌 값이 입력됨");
         }
 
     }

@@ -37,14 +37,21 @@ public class CampManagementApplication {
     // 스캐너
     private static Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws InterruptedException {
         setInitData();
-        try {
-            displayMainView();
-        } catch (Exception e) {
-            System.out.println("\n오류 발생!\n프로그램을 종료합니다.");
-        }
+        displayMainView();
     }
+
+//    public static void main(String[] args) {
+//        setInitData();
+//
+//        try {
+//            displayMainView();
+//        } catch (Exception e) {
+//            System.out.println("\n오류 발생!\n프로그램을 종료합니다.");
+//        }
+//    }
 
     //생성자임 보니까.
     private static void setInitData() {
@@ -280,16 +287,16 @@ public class CampManagementApplication {
         return sc.next();
     }
 
-    private static String getSubjectId(String studentId) {
+    private static String getSubjectIdByStudent(String studentId) {
         printSubjectInfoByStudentId(studentId);
         System.out.print("\n점수를 등록할 과목을 입력하시오...");
-        return sc.next();
+        return sc.next();  //SU1
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        String subjectId = getSubjectId(studentId); // 등록할 과목 고유 번호
+        String subjectId = getSubjectIdByStudent(studentId); // 등록할 과목 고유 번호
 
         System.out.println("등록할 시험 회차를 입력하시오...");
         String index = sc.next();
@@ -297,9 +304,10 @@ public class CampManagementApplication {
         String score = sc.next();
 
         Map<String, Score> inner = new HashMap<>();
-        if(scoreStore.get(studentId).get(subjectId) == null){
+        if(!scoreStore.containsKey(studentId)){
             inner.put(subjectId, new Score(index, score));
             scoreStore.put(studentId, inner);
+
         } else {
             scoreStore.get(studentId).get(subjectId).setScores(index, score);
         }
@@ -308,6 +316,7 @@ public class CampManagementApplication {
 
     // 수강생의 과목별 회차 점수 수정
     public static void updateRoundScoreBySubject() {
+        /*
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         System.out.println("원하는 수강생의 고유번호 입력: ");
         String fixstudentId = sc.nextLine();
@@ -391,6 +400,8 @@ public class CampManagementApplication {
 
 
         }
+
+         */
     }
 
     // 수강생의 특정 과목 회차별 등급 조회
