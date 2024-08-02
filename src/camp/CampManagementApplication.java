@@ -201,6 +201,11 @@ public class CampManagementApplication {
         // 기능 구현
         studentStore.put(studentId, student); //맵에 저장
 
+        //여기서 score생성하고, scoreStore도 생성해야할거같음..
+        //score는 <studentId,<val,scores[]>>로 이뤄진다고 생각해야함.
+
+
+
         System.out.println("수강생 등록 성공!\n");
     }
 
@@ -249,6 +254,7 @@ public class CampManagementApplication {
     }
 
     private static void displayScoreView() {
+        System.out.println(scoreStore.size());
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -285,8 +291,16 @@ public class CampManagementApplication {
 
     private static String getSubjectIdByStudent(String studentId) {
         printSubjectInfoByStudentId(studentId);
-        System.out.print("\n점수를 등록할 과목을 입력하시오...");
-        return sc.next();  //SU1
+
+        Student stu = studentStore.get(studentId);
+        ArrayList<String> arr = stu.getSubjectList();
+
+        System.out.print("\n관리할 과목의 고유 번호를 입력하세요 (ex. SU1) : ");
+        String subName =  sc.next();  //SU1
+        if(!arr.contains(subName)){
+            throw new IllegalArgumentException("선택한 수강생이 수강중인 과목이 아닙니다.");
+        }
+        return subName;
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록
@@ -483,4 +497,5 @@ public class CampManagementApplication {
     private static void printSubjectInfoByStudentId(String studentId) {
         System.out.println("수강중인 과목명과 고유번호를 출력합니다");
     }
+
 }
