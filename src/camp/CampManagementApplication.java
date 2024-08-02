@@ -6,15 +6,6 @@ import camp.model.Subject;
 
 import java.util.*;
 
-
-/**
- * Notification
- * Java, 객체지향이 아직 익숙하지 않은 분들은 위한 소스코드 틀입니다.
- * main 메서드를 실행하면 프로그램이 실행됩니다.
- * model 의 클래스들과 아래 (// 기능 구현...) 주석 부분을 완성해주세요!
- * 프로젝트 구조를 변경하거나 기능을 추가해도 괜찮습니다!
- * 구현에 도움을 주기위한 Base 프로젝트입니다. 자유롭게 이용해주세요!
- */
 public class CampManagementApplication {
     // 데이터 저장소
     private static Map<String, Student> studentStore;
@@ -86,7 +77,9 @@ public class CampManagementApplication {
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "디자인 패턴", SUBJECT_TYPE_CHOICE));
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Spring Security", SUBJECT_TYPE_CHOICE));
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "Redis", SUBJECT_TYPE_CHOICE));
+
         addSubject(new Subject(sequence(INDEX_TYPE_SUBJECT), "MongoDB", SUBJECT_TYPE_CHOICE));
+
         */
     }
     private static void addSubject(Subject subject) {
@@ -210,6 +203,7 @@ public class CampManagementApplication {
         // 기능 구현
         studentStore.put(studentId, student); //맵에 저장
 
+
         System.out.println("수강생 등록 성공!\n");
     }
 
@@ -258,6 +252,7 @@ public class CampManagementApplication {
     }
 
     private static void displayScoreView() {
+        System.out.println(scoreStore.size());
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -282,19 +277,35 @@ public class CampManagementApplication {
         }
     }
 
+    //고유 번호 입력 검증 - 김창민
     private static String getStudentId() {
         printStudentInfo();
-        System.out.print("\n관리할 수강생의 번호를 입력하시오...");
-        return sc.next();
+
+        System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
+        String useName = sc.next();
+        if(!studentStore.containsKey(useName))
+            throw new IllegalArgumentException("해당 학생은 존재하지 않습니다.");
+
+        return useName;
     }
 
+    // 수강생이 등록한 과목중 선택 -> 이봄
     private static String getSubjectIdByStudent(String studentId) {
         printSubjectInfoByStudentId(studentId);
-        System.out.print("\n점수를 등록할 과목을 입력하시오...");
-        return sc.next();  //SU1
+
+        Student stu = studentStore.get(studentId);
+        ArrayList<String> arr = stu.getSubjectList();
+
+        System.out.print("\n관리할 과목의 고유 번호를 입력하세요 (ex. SU1) : ");
+        String subName =  sc.next();  //SU1
+        if(!arr.contains(subName)){
+            throw new IllegalArgumentException("선택한 수강생이 수강중인 과목이 아닙니다.");
+        }
+        return subName;
     }
 
-    // 수강생의 과목별 시험 회차 및 점수 등록
+    // 수강생의 과목별 시험 회차 및 점수 등록 -> 이봄
+
     private static void createScore() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         String subjectId = getSubjectIdByStudent(studentId); // 등록할 과목 고유 번호
@@ -316,10 +327,6 @@ public class CampManagementApplication {
         } else {
 
             scoreStore.get(studentId).get(subjectId).setScores(index, score);
-        }
-
-        for(int i = 0; i<scoreStore.get(studentId).get(subjectId).getScores().length;i ++){
-            System.out.print(scoreStore.get(studentId).get(subjectId).getScores()[i]);
         }
 
         System.out.println("\n점수 등록 성공!");
@@ -531,7 +538,17 @@ public class CampManagementApplication {
         System.out.println("=======================================");
     }
 
+
+    // 수강생이 등록한 과목만 출력 --> 이봄
     private static void printSubjectInfoByStudentId(String studentId) {
-        System.out.println("수강중인 과목명과 고유번호를 출력합니다");
+        Student stu = studentStore.get(studentId);
+        ArrayList<String> arr = stu.getSubjectList();
+
+        System.out.println("==============수강중인 과목==============");
+        for(String str : arr){
+            System.out.println(str + " : " + subjectStore.get(str).getSubjectName());
+        }
+        System.out.println("=======================================");
     }
+
 }
