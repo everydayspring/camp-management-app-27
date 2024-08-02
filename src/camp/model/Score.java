@@ -22,8 +22,8 @@ public class Score {
             indexInt--;
             ScoreInt = Integer.parseInt(score);
 
-            if(indexInt < 1 || indexInt > 10){
-                throw new NumberFormatException("유효하지 않은 숫자");
+            if(indexInt < 0 || indexInt > 9){
+                throw new NumberFormatException();
             }
 
             if(scores[indexInt] == -1){
