@@ -438,7 +438,7 @@ public class CampManagementApplication {
             if(scoreStore.containsKey(studentId)){
                 System.out.println("점수 조회를 원하는 과목의 고유번호를 입력하세요");
                 //전체보유중인 subject 의 고유번호 전체를 보여줌
-                printSubjectInfo();
+                printSubjectInfoByStudentId(studentId);
                 String inputSubjectId = sc.nextLine();
                 int indicator = Character.getNumericValue(inputSubjectId.charAt(2));
                 System.out.println(indicator);
@@ -464,8 +464,10 @@ public class CampManagementApplication {
                             System.out.println((i+1)+"회차 등급 : D");
                         }else if(num >60){
                             System.out.println((i+1)+"회차 등급 : F");
-                        }else{
+                        }else if(num > 0){
                             System.out.println((i+1)+"회차 등급 : N");
+                        }else{
+                            continue;
                         }
 
                     }
@@ -489,8 +491,10 @@ public class CampManagementApplication {
                             System.out.println((i + 1) + "회차 등급 : D");
                         } else if (num > 49) {
                             System.out.println((i + 1) + "회차 등급 : F");
-                        } else {
-                            System.out.println((i + 1) + "회차 등급 : N");
+                        }else if (num > 0){
+                            System.out.println((i+1)+"회차 등급 : N");
+                        }else {
+                            continue;
                         }
 
                     }
