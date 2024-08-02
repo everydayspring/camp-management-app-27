@@ -212,9 +212,8 @@ public class CampManagementApplication {
     private static void inquireStudent() {
 
         System.out.println("\n수강생 목록을 조회합니다...");
-        printStudentInfo();
-        // 기능 구현
-        System.out.println("\n수강생 목록 조회 성공!");
+        printStudentInfo();  // 기능 구현
+
 
         sc.nextLine();//개행문자 날리기
         System.out.print("조회 학생의 고유번호를 입력하세요 : ");
@@ -515,9 +514,11 @@ public class CampManagementApplication {
         Set<String> keys = studentStore.keySet();
         List<String> keyList = new ArrayList<>(keys);
         Collections.sort(keyList);
+        System.out.println("==============수강생 리스트================");
         for(String key : keyList){
-            System.out.println(studentStore.get(key).getStudentName()+":"+key);
+            System.out.println("이름:"+studentStore.get(key).getStudentName()+", 번호:"+key);
         }
+        System.out.println("=======================================");
     }
 
     private static void printSubjectInfo(){
