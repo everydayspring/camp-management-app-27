@@ -95,11 +95,11 @@ public class ScoreManagement {
         }
 
         String subjectId = checkSubjectId(studentId); // 등록할 과목 고유 번호
-        if (!scoreStore.get(studentId).containsKey(studentId)) {
+        if (!scoreStore.get(studentId).containsKey(subjectId)) {
             System.out.println("등록된 점수가 없는 학생입니다");
             return;
         }
-
+        printsScoreInfoByStudentId(studentId); // 현제 등록 된 과목 점수 info
         System.out.println("등록할 시험 회차를 입력하시오...");
         String index = sc.next();
         System.out.println("점수를 입력하시오...");
@@ -279,6 +279,26 @@ public class ScoreManagement {
             }
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    //현재 등록 된 과목 점수 -김민주
+    private static void printsScoreInfoByStudentId(String studentId) {
+        Map<String, Score> scores = scoreStore.get(studentId);
+
+        System.out.println("=================현재 점수=================");
+        for (Map.Entry<String, Score> entry : scores.entrySet()) {
+            String subjectId = entry.getKey();
+            Score score = entry.getValue();
+
+            System.out.println("과목 ID: " + subjectId);
+            System.out.println("회차별 점수: ");
+            for (int i = 0; i < score.getScores().length; i++) {
+                if(-1<score.getScores()[i]) {
+                    System.out.println((i + 1) + "회차: " + score.getScores()[i]);
+                }
+            }
+            System.out.println("=======================================");
         }
     }
 }
