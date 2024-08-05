@@ -88,4 +88,3 @@ public class CampManagementApplication {
         System.out.println("=======================================");
     }
 }
-
