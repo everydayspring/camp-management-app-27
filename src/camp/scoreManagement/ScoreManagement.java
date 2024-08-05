@@ -41,14 +41,17 @@ public class ScoreManagement {
 
     // 수강생 고유 번호 입력값 검증 --> 김창민
     private static String checkStudentId() {
-        printStudentInfo();
+            printStudentInfo();
 
-        System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
-        String studentId = sc.next();
-        if (!studentStore.containsKey(studentId))
-            throw new IllegalArgumentException("해당 학생은 존재하지 않습니다.");
-
-        return studentId;
+            System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
+            String studentId = sc.next();
+            try {
+                if (!scoreStore.containsKey(studentId))
+                    throw new IllegalArgumentException("해당 학생은 존재하지 않습니다.");
+            }catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+            return studentId;
     }
 
     // 수강중인 과목 고유 번호 입력값 검증 --> 이봄
@@ -59,8 +62,12 @@ public class ScoreManagement {
 
         System.out.print("\n관리할 과목의 고유 번호를 입력하세요 (ex. SU1) : ");
         String subjectId = sc.next();  //SU1
-        if (!scores.contains(subjectId)) {
-            throw new IllegalArgumentException("선택한 수강생이 수강중인 과목이 아닙니다.");
+        try{
+            if (!scores.contains(subjectId)) {
+                throw new IllegalArgumentException("선택한 수강생이 수강중인 과목이 아닙니다.");
+            }
+        }catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
         return subjectId;
     }
@@ -95,7 +102,7 @@ public class ScoreManagement {
         }
 
         String subjectId = checkSubjectId(studentId); // 등록할 과목 고유 번호
-        if (!scoreStore.get(studentId).containsKey(studentId)) {
+        if (!scoreStore.get(studentId).containsKey(subjectId)) {
             System.out.println("등록된 점수가 없는 학생입니다");
             return;
         }
