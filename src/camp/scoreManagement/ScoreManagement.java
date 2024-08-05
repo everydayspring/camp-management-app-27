@@ -1,11 +1,13 @@
-package camp;
+package camp.scoreManagement;
 
+import camp.CampManagementApplication;
 import camp.model.Score;
 import camp.model.Student;
 
 import java.util.*;
 
 import static camp.CampManagementApplication.*;
+import static camp.storeManagement.stores.*;
 
 public class ScoreManagement {
     // 점수 관리 메뉴

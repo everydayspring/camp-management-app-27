@@ -17,15 +17,12 @@ public class Student {
 
     // Getter
     public String getStudentId() { return studentId; }
+
     public String getStudentName() {
         return studentName;
     }
 
     public String getStudentState() { return studentState; }
-
-    public ArrayList<String> getSubjectList() {
-        return subjectList;
-    }
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
@@ -33,5 +30,9 @@ public class Student {
 
     public void setStudentState(String studentState) {
         this.studentState = studentState;
+    }
+
+    public ArrayList<String> getSubjectList() {
+        return subjectList;
     }
 }
