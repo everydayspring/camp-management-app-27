@@ -78,13 +78,17 @@ public class CampManagementApplication {
 
     // 수강생이 수강중인 과목 리스트 출력 --> 이봄
     public static void printSubjectInfoByStudentId(String studentId) {
-        Student student = studentStore.get(studentId);
-        ArrayList<String> keys = student.getSubjectList();
+        try {
+            Student student = studentStore.get(studentId);
+            ArrayList<String> keys = student.getSubjectList();
 
-        System.out.println("==============수강중인 과목==============");
-        for (String key : keys) {
-            System.out.println(key + " : " + subjectStore.get(key).getSubjectName());
+            System.out.println("==============수강중인 과목==============");
+            for (String key : keys) {
+                System.out.println(key + " : " + subjectStore.get(key).getSubjectName());
+            }
+            System.out.println("=======================================");
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
         }
-        System.out.println("=======================================");
     }
 }
