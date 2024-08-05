@@ -2,7 +2,7 @@ package camp;
 
 import camp.model.Student;
 import camp.scoreManagement.ScoreManagement;
-import camp.studentManagement.StudentManagement;
+import camp.studentManagement.mainStudentManagement;
 
 import java.util.*;
 
@@ -32,7 +32,7 @@ public class CampManagementApplication {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> StudentManagement.displayStudentView(); // 수강생 관리
+                case 1 -> mainStudentManagement.displayStudentView(); // 수강생 관리
                 case 2 -> ScoreManagement.displayScoreView(); // 점수 관리
                 case 3 -> flag = false; // 프로그램 종료
                 default -> {
@@ -78,13 +78,17 @@ public class CampManagementApplication {
 
     // 수강생이 수강중인 과목 리스트 출력 --> 이봄
     public static void printSubjectInfoByStudentId(String studentId) {
-        Student student = studentStore.get(studentId);
-        ArrayList<String> keys = student.getSubjectList();
+        try {
+            Student student = studentStore.get(studentId);
+            ArrayList<String> keys = student.getSubjectList();
 
-        System.out.println("==============수강중인 과목==============");
-        for (String key : keys) {
-            System.out.println(key + " : " + subjectStore.get(key).getSubjectName());
+            System.out.println("==============수강중인 과목==============");
+            for (String key : keys) {
+                System.out.println(key + " : " + subjectStore.get(key).getSubjectName());
+            }
+            System.out.println("=======================================");
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
         }
-        System.out.println("=======================================");
     }
 }

@@ -41,17 +41,17 @@ public class ScoreManagement {
 
     // 수강생 고유 번호 입력값 검증 --> 김창민
     private static String checkStudentId() {
-            printStudentInfo();
+        printStudentInfo();
 
-            System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
-            String studentId = sc.next();
-            try {
-                if (!scoreStore.containsKey(studentId))
-                    throw new IllegalArgumentException("해당 학생은 존재하지 않습니다.");
-            }catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-            return studentId;
+        System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
+        String studentId = sc.next();
+        try {
+            if (!scoreStore.containsKey(studentId))
+                throw new IllegalArgumentException("해당 학생은 존재하지 않습니다.");
+        }catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return studentId;
     }
 
     // 수강중인 과목 고유 번호 입력값 검증 --> 이봄
@@ -74,23 +74,27 @@ public class ScoreManagement {
 
     // 수강생의 과목별 시험 회차 및 점수 등록 --> 이봄
     private static void createScore() {
-        String studentId = checkStudentId(); // 관리할 수강생 고유 번호
-        String subjectId = checkSubjectId(studentId); // 등록할 과목 고유 번호
+        try{
+            String studentId = checkStudentId(); // 관리할 수강생 고유 번호
+            String subjectId = checkSubjectId(studentId); // 등록할 과목 고유 번호
 
-        System.out.println("등록할 시험 회차를 입력하시오...");
-        String index = sc.next();
-        System.out.println("점수를 입력하시오...");
-        String score = sc.next();
+            System.out.println("등록할 시험 회차를 입력하시오...");
+            String index = sc.next();
+            System.out.println("점수를 입력하시오...");
+            String score = sc.next();
 
-        Map<String, Score> inner = new HashMap<>();
+            Map<String, Score> inner = new HashMap<>();
 
-        if (!scoreStore.containsKey(studentId) || !scoreStore.get(studentId).containsKey(subjectId)) {
-            inner.put(subjectId, new Score(index, score));
-            scoreStore.put(studentId, inner);
-        } else {
-            scoreStore.get(studentId).get(subjectId).setScores(index, score);
+            if (!scoreStore.containsKey(studentId) || !scoreStore.get(studentId).containsKey(subjectId)) {
+                inner.put(subjectId, new Score(index, score));
+                scoreStore.put(studentId, inner);
+            } else {
+                scoreStore.get(studentId).get(subjectId).setScores(index, score);
+            }
+            System.out.println("\n점수 등록 성공!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        System.out.println("\n점수 등록 성공!");
     }
 
     // 수강생의 과목별 회차 점수 수정 --> 김민주
@@ -107,6 +111,7 @@ public class ScoreManagement {
             return;
         }
 
+        printsScoreInfoByStudentId(studentId);
         System.out.println("등록할 시험 회차를 입력하시오...");
         String index = sc.next();
         System.out.println("점수를 입력하시오...");
@@ -131,7 +136,6 @@ public class ScoreManagement {
             } else {
                 System.out.println(index + "회차의 점수는 이미 등록되어 있습니다");
             }
-
         } catch (NumberFormatException e) {
             System.out.println("숫자가 아닌 값이 입력됨");
         }
@@ -291,6 +295,26 @@ public class ScoreManagement {
         } catch (Exception e) {
 
             System.out.println(e);
+        }
+    }
+
+    //현재 등록 된 과목 점수 -김민주
+    private static void printsScoreInfoByStudentId(String studentId) {
+        Map<String, Score> scores = scoreStore.get(studentId);
+
+        System.out.println("=================현재 점수=================");
+        for (Map.Entry<String, Score> entry : scores.entrySet()) {
+            String subjectId = entry.getKey();
+            Score score = entry.getValue();
+
+            System.out.println("과목 ID: " + subjectId);
+            System.out.println("회차별 점수: ");
+            for (int i = 0; i < score.getScores().length; i++) {
+                if(-1<score.getScores()[i]) {
+                    System.out.println((i + 1) + "회차: " + score.getScores()[i]);
+                }
+            }
+            System.out.println("=======================================");
         }
     }
 }
