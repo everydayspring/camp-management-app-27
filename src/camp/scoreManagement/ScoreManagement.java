@@ -156,9 +156,20 @@ public class ScoreManagement {
                 //전체보유중인 subject 의 고유번호 전체를 보여줌
                 printSubjectInfoByStudentId(studentId);
                 String inputSubjectId = sc.nextLine();
+
+                //필수과목인지 확인시켜주는 변수
                 int indicator = Character.getNumericValue(inputSubjectId.charAt(2));
+
+                //수강생 수강목록확인
+                ArrayList<String> scores = studentStore.get(studentId).getSubjectList();
+
                 //scoreStore안에있는 Map 을 지정해줌
                 Map<String, Score> innerScoreStore = scoreStore.get(studentId);
+
+                //수강하지않을경우 예외처리
+                if (!scores.contains(inputSubjectId)) {
+                    throw new Exception("선택한 수강생이 수강중인 과목이 아닙니다.");
+                }
 
                 //만약 2중 맵안에 고유학생번호키가 가진 Value의 Map안에 고유 과목 키값이 존재할경우
                 if (innerScoreStore.containsKey(inputSubjectId) && indicator < 6) {
@@ -209,6 +220,7 @@ public class ScoreManagement {
                     }
                     System.out.println("\n등급 조회 성공!");
                 } else {
+                    //해당 등록된 과목에 등록된 점수가없을시
                     throw new Exception("해당 과목에 등록된 점수가 없습니다");
                 }
             }//해당 고유번호를지닌 학생이 없을시
@@ -239,8 +251,20 @@ public class ScoreManagement {
                 printSubjectInfoByStudentId(studentId);
                 String inputSubjectId = sc.nextLine();
 
+                //수강생 수강목록확인
+                ArrayList<String> scores = studentStore.get(studentId).getSubjectList();
                 int indicator = Character.getNumericValue(inputSubjectId.charAt(2));
 
+                //수강생이 입력한 과목을 수강하지않을시 예외처리
+                if (!scores.contains(inputSubjectId)) {
+                    throw new Exception("선택한 수강생이 수강중인 과목이 아닙니다.");
+                }
+
+                //수강 과목의 점수가 등록되지않을시 예외처리
+                if (!scoreStore.get(studentId).containsKey(inputSubjectId)) {
+                    System.out.println("등록된 점수가 없는 학생입니다");
+                    return;
+                }
                 //scoreStore안에있는 Map 을 지정해줌
                 Map<String, Score> innerScoreStore = scoreStore.get(studentId);
                 int[] d = innerScoreStore.get(inputSubjectId).getScores();
