@@ -22,7 +22,7 @@ public class Score {
             ScoreInt = Integer.parseInt(score);
 
             if (indexInt < 0 || indexInt > 9 || ScoreInt < 0 || ScoreInt > 100) {
-                throw new NumberFormatException();
+                throw new NumberFormatException("입력값이 잘못되었습니다");
             }
 
             if (scores[indexInt] == -1) {
@@ -32,7 +32,7 @@ public class Score {
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("숫자가 아닌 값이 입력됨");
+             System.out.println(e);
         }
     }
 }
