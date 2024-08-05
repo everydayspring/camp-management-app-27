@@ -7,13 +7,13 @@ import java.util.*;
 
 import static camp.CampManagementApplication.*;
 import static camp.storeManagement.stores.*;
-import static camp.studentManagement.checkStudentManagement.*;
-import static camp.studentManagement.updateStudentManagement.*;
+import static camp.studentManagement.CheckStudentManagement.*;
+import static camp.studentManagement.UpdateStudentManagement.*;
 
 
 // Student 관련 UI, 비즈니스 로직 분리
 
-public class mainStudentManagement {
+public class MainStudentManagement {
     // 수강생 관리 메뉴 --> 김창민
     public static void displayStudentView() {
         boolean flag = true;

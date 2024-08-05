@@ -13,9 +13,9 @@ import static camp.CampManagementApplication.printStudentInfo;
 import static camp.CampManagementApplication.sc;
 import static camp.storeManagement.stores.*;
 import static camp.storeManagement.stores.studentStore;
-import static camp.studentManagement.checkStudentManagement.*;
+import static camp.studentManagement.CheckStudentManagement.*;
 
-public class updateStudentManagement {
+public class UpdateStudentManagement {
 
     // 수강생 등록 --> 김창민
     public static void createStudent() {
