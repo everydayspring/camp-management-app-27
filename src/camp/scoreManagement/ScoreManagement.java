@@ -134,7 +134,11 @@ public class ScoreManagement {
             if (scores[indexInt] != -1) {
                 scores[indexInt] = ScoreInt;
             } else {
-                System.out.println(index + "회차의 점수는 이미 등록되어 있습니다");
+                if(scores[indexInt] == -1){
+                    System.out.println("점수 등록이 안되어 있어 수정이 불가능합니다.");
+                }else {
+                    System.out.println(index + "회차의 점수는 이미 등록되어 있습니다");
+                }
             }
         } catch (NumberFormatException e) {
             System.out.println("숫자가 아닌 값이 입력됨");
