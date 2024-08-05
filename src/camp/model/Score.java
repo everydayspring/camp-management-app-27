@@ -3,15 +3,11 @@ package camp.model;
 public class Score {
     private int[] scores = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 
-    public Score(String index, String score) {
-        setScores(index, score);
-    }
+    public Score(String index, String score) { setScores(index, score); }
 
-    public int[] getScores() {
-        return scores;
-    }
+    public int[] getScores() { return scores; }
 
-    // 점수 등록 --> 이봄
+    // 점수 등록
     public void setScores(String index, String score) {
         int indexInt; //번호
         int ScoreInt; //점수
@@ -32,7 +28,7 @@ public class Score {
             }
 
         } catch (NumberFormatException e) {
-             System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -15,24 +15,15 @@ public class Student {
         this.studentName = studentName;
     }
 
-    // Getter
     public String getStudentId() { return studentId; }
 
-    public String getStudentName() {
-        return studentName;
-    }
+    public String getStudentName() { return studentName; }
 
     public String getStudentState() { return studentState; }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
+    public void setStudentName(String studentName) { this.studentName = studentName; }
 
-    public void setStudentState(String studentState) {
-        this.studentState = studentState;
-    }
+    public void setStudentState(String studentState) { this.studentState = studentState; }
 
-    public ArrayList<String> getSubjectList() {
-        return subjectList;
-    }
+    public ArrayList<String> getSubjectList() { return subjectList; }
 }

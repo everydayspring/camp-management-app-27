@@ -4,20 +4,14 @@ import camp.CampManagementApplication;
 import camp.model.Student;
 import camp.model.Subject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-import static camp.CampManagementApplication.printStudentInfo;
-import static camp.CampManagementApplication.sc;
-import static camp.storeManagement.stores.*;
-import static camp.storeManagement.stores.studentStore;
-import static camp.studentManagement.checkStudentManagement.*;
+import static camp.CampManagementApplication.*;
+import static camp.storeManagement.Stores.*;
+import static camp.studentManagement.CheckStudentManagement.*;
 
-public class updateStudentManagement {
-
-    // 수강생 등록 --> 김창민
+public class UpdateStudentManagement {
+    // 수강생 등록
     public static void createStudent() {
         String studentName;
         String studentId;
@@ -26,22 +20,22 @@ public class updateStudentManagement {
 
         // 수강생 이름 등록, 이름 길이가 10이 넘으면 예외처리
         System.out.println("\n수강생을 등록합니다...");
-        try{
+        try {
             System.out.print("수강생 이름 입력: ");
             studentName = sc.next();                     //이름
-            if(studentName.length()>10)
-                throw( new Exception("이름이 너무 깁니다."));
-        }catch (Exception e){
+            if (studentName.length() > 10)
+                throw (new Exception("이름이 너무 깁니다."));
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return;
         }
 
         // 상태 저장
-        try{System.out.print("수강생 상태 입력(Green,Red,Yellow): ");
+        try {
+            System.out.print("수강생 상태 입력(Green,Red,Yellow): ");
             studentState = sc.next();
-            if(!cheackStatus(studentState))throw new IllegalArgumentException("올바른 상태가 아닙니다");
-        }
-        catch(IllegalArgumentException e){
+            if (!cheackStatus(studentState)) throw new IllegalArgumentException("올바른 상태가 아닙니다");
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return;
         }
@@ -53,11 +47,10 @@ public class updateStudentManagement {
         System.out.println("수강하실 필수 과목의 번호를 입력해 주세요 (필수 : 3개 이상)(띄어쓰기로 구분)");
         String[] mandatorySubjects = sc.nextLine().split(" ");
         Set<String> mandatorySet = new HashSet<>(Arrays.asList(mandatorySubjects));
-        try{
+        try {
             int mandatorySize = mandatorySet.size();
             if (mandatorySize < 3) throw new IllegalArgumentException("필수 과목 개수가 부족합니다.");
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return;
         }
@@ -66,16 +59,15 @@ public class updateStudentManagement {
         System.out.println("수강하실 선택 과목의 번호를 입력해 주세요 (선택 : 2개 이상)(띄어쓰기로 구분)");
         String[] optionalSubjects = sc.nextLine().split(" ");
         Set<String> optionalSet = new HashSet<>(Arrays.asList(optionalSubjects));
-        try{
+        try {
             int optionalSize = optionalSet.size();
             if (optionalSize < 2) throw new IllegalArgumentException("선택 과목 개수가 부족합니다.");
-        }
-        catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return;
         }
 
-        //필수 과목 저장.
+        //필수 과목 저장
         for (String val : mandatorySet) {
             val = INDEX_TYPE_SUBJECT + val;
 
@@ -96,7 +88,7 @@ public class updateStudentManagement {
         System.out.println("수강생 등록 성공!\n");
     }
 
-    // 수강생 정보 수정 --> 김창민
+    // 수강생 정보 수정
     static void updateStudent() {
 
         if (!checkStudentStore()) return;
@@ -107,7 +99,7 @@ public class updateStudentManagement {
         String useKey = sc.nextLine();
         Student student = studentStore.get(useKey);
 
-        if(!checkStudentId(student)) return;
+        if (!checkStudentId(student)) return;
 
         System.out.println("====[현재 정보]====");
         System.out.println("[이름]: " + student.getStudentName() + "\n[상태]: " + student.getStudentState());
@@ -122,7 +114,7 @@ public class updateStudentManagement {
             if (!cheackStatus(newNameAndState[1])) {
                 throw new IllegalArgumentException("올바른 상태가 아닙니다.");
             }
-            if(newNameAndState[0].length()>10){
+            if (newNameAndState[0].length() > 10) {
                 throw new IllegalArgumentException("이름이 너무 깁니다.");
             }
         } catch (IllegalArgumentException e) {
@@ -138,7 +130,7 @@ public class updateStudentManagement {
         System.out.println("====업데이트 완료====");
     }
 
-    // 수강생 삭제 --> 김창민
+    // 수강생 삭제
     static void deleteStudent() {
         if (!checkStudentStore()) return;
         printStudentInfo();  // 기능 구현
@@ -148,14 +140,14 @@ public class updateStudentManagement {
         String useKey = sc.nextLine();
         Student student = studentStore.get(useKey);
 
-        if(!checkStudentId(student)) return;
+        if (!checkStudentId(student)) return;
 
         studentStore.remove(useKey);
         if (!studentStore.containsKey(useKey))
             System.out.println("삭제 완료되었습니다.");
     }
 
-    // 중복 Subject 저장 기능 메소드화 --> 김창민
+    // 중복 Subject 저장 기능 메소드화
     private static void makeSubject(String val, ArrayList<String> getSubject, String type) {
         Subject useSubject = subjectStore.get(val);
         if (!useSubject.getSubjectType().equals(type)) //타 과목시 예외처리

@@ -2,10 +2,9 @@ package camp.studentManagement;
 
 import camp.model.Student;
 
-import static camp.storeManagement.stores.studentStore;
+import static camp.storeManagement.Stores.studentStore;
 
-public class checkStudentManagement {
-
+public class CheckStudentManagement {
     // 수강생 존재 검증
     public static boolean checkStudentId(Student student) {
         if (student == null) {
@@ -15,9 +14,8 @@ public class checkStudentManagement {
         return true;
     }
 
-    // 중복 studentStore 검증 기능 메소드화 -> 김창민
-    public static boolean checkStudentStore(){
-
+    // 중복 studentStore 검증 기능 메소드화
+    public static boolean checkStudentStore() {
         System.out.println("\n수강생 목록을 조회합니다...");
 
         if (studentStore.isEmpty()) {
@@ -27,7 +25,7 @@ public class checkStudentManagement {
         return true;
     }
 
-    // 중복 Status 검증 기능 메소드화 --> 김창민
+    // 중복 Status 검증 기능 메소드화
     public static boolean cheackStatus(String studentState) {
         return studentState.equals("Green") || studentState.equals("Red") || studentState.equals("Yellow");
     }

@@ -7,7 +7,7 @@ import camp.model.Subject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class stores {
+public class Stores {
     public static Map<String, Student> studentStore;
     public static Map<String, Subject> subjectStore;
     public static Map<String, Map<String, Score>> scoreStore;
@@ -65,7 +65,4 @@ public class stores {
             }
         }
     }
-
-
-
 }

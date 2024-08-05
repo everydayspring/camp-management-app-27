@@ -1,15 +1,16 @@
 package camp.scoreManagement;
 
-import camp.CampManagementApplication;
 import camp.model.Score;
-import camp.model.Student;
+
+import static camp.scoreManagement.UpdateScoreManagement.*;
+import static camp.scoreManagement.CheckScoreManagement.*;
 
 import java.util.*;
 
 import static camp.CampManagementApplication.*;
-import static camp.storeManagement.stores.*;
+import static camp.storeManagement.Stores.*;
 
-public class ScoreManagement {
+public class MainScoreManagement {
     // 점수 관리 메뉴
     public static void displayScoreView() {
         System.out.println(scoreStore.size());
@@ -39,110 +40,7 @@ public class ScoreManagement {
         }
     }
 
-    // 수강생 고유 번호 입력값 검증 --> 김창민
-    private static String checkStudentId() {
-        printStudentInfo();
-
-        System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
-        String studentId = sc.next();
-        try {
-            if (!scoreStore.containsKey(studentId))
-                throw new IllegalArgumentException("해당 학생은 존재하지 않습니다.");
-        }catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-        return studentId;
-    }
-
-    // 수강중인 과목 고유 번호 입력값 검증 --> 이봄
-    private static String checkSubjectId(String studentId) {
-        CampManagementApplication.printSubjectInfoByStudentId(studentId);
-        Student student = studentStore.get(studentId);
-        ArrayList<String> scores = student.getSubjectList();
-
-        System.out.print("\n관리할 과목의 고유 번호를 입력하세요 (ex. SU1) : ");
-        String subjectId = sc.next();  //SU1
-        try{
-            if (!scores.contains(subjectId)) {
-                throw new IllegalArgumentException("선택한 수강생이 수강중인 과목이 아닙니다.");
-            }
-        }catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-        return subjectId;
-    }
-
-    // 수강생의 과목별 시험 회차 및 점수 등록 --> 이봄
-    private static void createScore() {
-        try{
-            String studentId = checkStudentId(); // 관리할 수강생 고유 번호
-            String subjectId = checkSubjectId(studentId); // 등록할 과목 고유 번호
-
-            System.out.println("등록할 시험 회차를 입력하시오...");
-            String index = sc.next();
-            System.out.println("점수를 입력하시오...");
-            String score = sc.next();
-
-            Map<String, Score> inner = new HashMap<>();
-
-            if (!scoreStore.containsKey(studentId) || !scoreStore.get(studentId).containsKey(subjectId)) {
-                inner.put(subjectId, new Score(index, score));
-                scoreStore.put(studentId, inner);
-            } else {
-                scoreStore.get(studentId).get(subjectId).setScores(index, score);
-            }
-            System.out.println("\n점수 등록 성공!");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    // 수강생의 과목별 회차 점수 수정 --> 김민주
-    public static void updateScore() {
-        String studentId = checkStudentId(); // 관리할 수강생 고유 번호
-        if (!scoreStore.containsKey(studentId)) {
-            System.out.println("등록된 점수가 없는 학생입니다");
-            return;
-        }
-
-        String subjectId = checkSubjectId(studentId); // 등록할 과목 고유 번호
-        if (!scoreStore.get(studentId).containsKey(subjectId)) {
-            System.out.println("등록된 점수가 없는 학생입니다");
-            return;
-        }
-
-        printsScoreInfoByStudentId(studentId);
-        System.out.println("등록할 시험 회차를 입력하시오...");
-        String index = sc.next();
-        System.out.println("점수를 입력하시오...");
-        String score = sc.next();
-
-        int indexInt; //번호
-        int ScoreInt; //점수
-
-        // 인덱스 예외처리
-        try {
-            indexInt = Integer.parseInt(index) - 1;
-            ScoreInt = Integer.parseInt(score);
-
-            if (indexInt < 0 || indexInt > 9 || ScoreInt < 0 || ScoreInt > 100) {
-                throw new NumberFormatException();
-            }
-
-            int[] scores = scoreStore.get(studentId).get(subjectId).getScores();
-
-            if (scores[indexInt] != -1) {
-                scores[indexInt] = ScoreInt;
-            } else {
-                System.out.println(index + "회차의 점수는 이미 등록되어 있습니다");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("숫자가 아닌 값이 입력됨");
-        }
-    }
-
-
-    // 수강생의 특정 과목 회차별 등급 조회 --> 김태현
+    // 수강생의 특정 과목 회차별 등급 조회
     private static void inquireRoundGradeBySubject() {
         Scanner sc = new Scanner(System.in);
         String studentId = checkStudentId(); // 관리할 수강생 고유 번호
@@ -232,6 +130,7 @@ public class ScoreManagement {
         }
     }
 
+    // 과목별 전체 회차 점수 조회
     private static void inquireAverageGradeBySubject() {
         Scanner sc = new Scanner(System.in);
         String studentId = checkStudentId(); // 관리할 수강생 고유 번호
@@ -322,8 +221,8 @@ public class ScoreManagement {
         }
     }
 
-    //현재 등록 된 과목 점수 -김민주
-    private static void printsScoreInfoByStudentId(String studentId) {
+    // 현재 등록 된 과목 점수
+    public static void printsScoreInfoByStudentId(String studentId) {
         Map<String, Score> scores = scoreStore.get(studentId);
 
         System.out.println("=================현재 점수=================");
@@ -334,11 +233,12 @@ public class ScoreManagement {
             System.out.println("과목 ID: " + subjectId);
             System.out.println("회차별 점수: ");
             for (int i = 0; i < score.getScores().length; i++) {
-                if(-1<score.getScores()[i]) {
+                if (-1 < score.getScores()[i]) {
                     System.out.println((i + 1) + "회차: " + score.getScores()[i]);
                 }
             }
             System.out.println("=======================================");
         }
     }
+
 }

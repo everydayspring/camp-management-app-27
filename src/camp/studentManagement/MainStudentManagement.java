@@ -6,15 +6,12 @@ import camp.model.Subject;
 import java.util.*;
 
 import static camp.CampManagementApplication.*;
-import static camp.storeManagement.stores.*;
-import static camp.studentManagement.checkStudentManagement.*;
-import static camp.studentManagement.updateStudentManagement.*;
+import static camp.storeManagement.Stores.*;
+import static camp.studentManagement.CheckStudentManagement.*;
+import static camp.studentManagement.UpdateStudentManagement.*;
 
-
-// Student 관련 UI, 비즈니스 로직 분리
-
-public class mainStudentManagement {
-    // 수강생 관리 메뉴 --> 김창민
+public class MainStudentManagement {
+    // 수강생 관리 메뉴
     public static void displayStudentView() {
         boolean flag = true;
         while (flag) {
@@ -44,7 +41,7 @@ public class mainStudentManagement {
         }
     }
 
-    // 수강생 목록 조회 --> 김창민
+    // 수강생 목록 조회
     private static void inquireStudent() {
         if (!checkStudentStore()) return;
 
@@ -54,7 +51,7 @@ public class mainStudentManagement {
         String useKey = sc.nextLine();
         Student student = studentStore.get(useKey);
 
-        if(!checkStudentId(student)) return;
+        if (!checkStudentId(student)) return;
 
 
         ArrayList<String> viewSubject = studentStore.get(useKey).getSubjectList();//과목 아이디가 저장되어있음
@@ -92,7 +89,7 @@ public class mainStudentManagement {
         System.out.println(sb.toString());
     }
 
-    // 상태별 수강생 조회 --> 김창민
+    // 상태별 수강생 조회
     private static void inquireStudentByState() {
         if (!checkStudentStore()) return;
 

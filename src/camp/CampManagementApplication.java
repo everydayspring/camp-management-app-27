@@ -1,12 +1,12 @@
 package camp;
 
 import camp.model.Student;
-import camp.scoreManagement.ScoreManagement;
-import camp.studentManagement.mainStudentManagement;
+import camp.scoreManagement.MainScoreManagement;
+import camp.studentManagement.MainStudentManagement;
 
 import java.util.*;
 
-import static camp.storeManagement.stores.*;
+import static camp.storeManagement.Stores.*;
 
 // UI관련 Field & Method
 public class CampManagementApplication {
@@ -32,8 +32,8 @@ public class CampManagementApplication {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> mainStudentManagement.displayStudentView(); // 수강생 관리
-                case 2 -> ScoreManagement.displayScoreView(); // 점수 관리
+                case 1 -> MainStudentManagement.displayStudentView(); // 수강생 관리
+                case 2 -> MainScoreManagement.displayScoreView(); // 점수 관리
                 case 3 -> flag = false; // 프로그램 종료
                 default -> {
                     System.out.println("잘못된 입력입니다.\n되돌아갑니다!");
