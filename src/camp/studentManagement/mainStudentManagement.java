@@ -13,7 +13,7 @@ import static camp.studentManagement.updateStudentManagement.*;
 
 // Student 관련 UI, 비즈니스 로직 분리
 
-public class StudentManagement {
+public class mainStudentManagement {
     // 수강생 관리 메뉴 --> 김창민
     public static void displayStudentView() {
         boolean flag = true;
