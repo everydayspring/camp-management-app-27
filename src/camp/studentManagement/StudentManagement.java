@@ -1,11 +1,18 @@
-package camp;
+package camp.studentManagement;
 
+import camp.CampManagementApplication;
 import camp.model.Student;
 import camp.model.Subject;
 
 import java.util.*;
 
 import static camp.CampManagementApplication.*;
+import static camp.storeManagement.stores.*;
+
+
+//UI, 비즈니스 로직 분리
+//저장소 -> 지금 main에서 관리를 하는데, 이런걸 하나로 묶으면 더 좋긴 할듯
+
 
 public class StudentManagement {
     // 수강생 관리 메뉴 --> 김창민
@@ -43,8 +50,8 @@ public class StudentManagement {
         System.out.println("\n수강생을 등록합니다...");
 
         System.out.print("수강생 이름 입력: ");
-        String studentName = CampManagementApplication.sc.next();                     //이름
-        String studentId = CampManagementApplication.sequence(INDEX_TYPE_STUDENT);    //고유번호
+        String studentName = sc.next();                     //이름
+        String studentId = sequence(INDEX_TYPE_STUDENT);    //고유번호
 
         // 기능 구현 (필수 과목, 선택 과목)
         // 상태 저장

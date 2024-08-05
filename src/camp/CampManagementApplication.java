@@ -25,7 +25,7 @@ public class CampManagementApplication {
     public static final String INDEX_TYPE_SCORE = "SC";
 
     // 스캐너
-    protecullted static Scanner sc = new Scanner(System.in);
+    protected static Scanner sc = new Scanner(System.in);
 
     // main
     public static void main(String[] args) throws InterruptedException {
