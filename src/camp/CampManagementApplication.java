@@ -9,9 +9,6 @@ import java.util.*;
 import static camp.storeManagement.stores.*;
 
 public class CampManagementApplication {
-
-    //사실상 출력만 모아둠
-
     // 스캐너
     public static Scanner sc = new Scanner(System.in); //메인에 두기
 
@@ -20,6 +17,7 @@ public class CampManagementApplication {
         setInitData();
         displayMainView();
     }
+
     // 메인 메뉴
     private static void displayMainView() throws InterruptedException { // 메인에 둬야함
         boolean flag = true;
@@ -88,6 +86,4 @@ public class CampManagementApplication {
         }
         System.out.println("=======================================");
     }
-
-
 }
