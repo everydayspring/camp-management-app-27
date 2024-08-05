@@ -9,10 +9,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static camp.CampManagementApplication.printStudentInfo;
-import static camp.CampManagementApplication.sc;
+import static camp.CampManagementApplication.*;
 import static camp.storeManagement.stores.*;
-import static camp.storeManagement.stores.studentStore;
 import static camp.studentManagement.CheckStudentManagement.*;
 
 public class UpdateStudentManagement {
