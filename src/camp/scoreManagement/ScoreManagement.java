@@ -41,14 +41,17 @@ public class ScoreManagement {
 
     // 수강생 고유 번호 입력값 검증 --> 김창민
     private static String checkStudentId() {
-        printStudentInfo();
+            printStudentInfo();
 
-        System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
-        String studentId = sc.next();
-        if (!studentStore.containsKey(studentId))
-            throw new IllegalArgumentException("해당 학생은 존재하지 않습니다.");
-
-        return studentId;
+            System.out.print("\n관리할 수강생의 고유 번호를 입력하세요 (ex. ST) : ");
+            String studentId = sc.next();
+            try {
+                if (!scoreStore.containsKey(studentId))
+                    throw new IllegalArgumentException("해당 학생은 존재하지 않습니다.");
+            }catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+            return studentId;
     }
 
     // 수강중인 과목 고유 번호 입력값 검증 --> 이봄
@@ -59,8 +62,12 @@ public class ScoreManagement {
 
         System.out.print("\n관리할 과목의 고유 번호를 입력하세요 (ex. SU1) : ");
         String subjectId = sc.next();  //SU1
-        if (!scores.contains(subjectId)) {
-            throw new IllegalArgumentException("선택한 수강생이 수강중인 과목이 아닙니다.");
+        try{
+            if (!scores.contains(subjectId)) {
+                throw new IllegalArgumentException("선택한 수강생이 수강중인 과목이 아닙니다.");
+            }
+        }catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
         return subjectId;
     }
@@ -99,7 +106,7 @@ public class ScoreManagement {
             System.out.println("등록된 점수가 없는 학생입니다");
             return;
         }
-        printsScoreInfoByStudentId(studentId); // 현제 등록 된 과목 점수 info
+
         System.out.println("등록할 시험 회차를 입력하시오...");
         String index = sc.next();
         System.out.println("점수를 입력하시오...");
@@ -279,26 +286,6 @@ public class ScoreManagement {
             }
         } catch (Exception e) {
             System.out.println(e);
-        }
-    }
-
-    //현재 등록 된 과목 점수 -김민주
-    private static void printsScoreInfoByStudentId(String studentId) {
-        Map<String, Score> scores = scoreStore.get(studentId);
-
-        System.out.println("=================현재 점수=================");
-        for (Map.Entry<String, Score> entry : scores.entrySet()) {
-            String subjectId = entry.getKey();
-            Score score = entry.getValue();
-
-            System.out.println("과목 ID: " + subjectId);
-            System.out.println("회차별 점수: ");
-            for (int i = 0; i < score.getScores().length; i++) {
-                if(-1<score.getScores()[i]) {
-                    System.out.println((i + 1) + "회차: " + score.getScores()[i]);
-                }
-            }
-            System.out.println("=======================================");
         }
     }
 }
