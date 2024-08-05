@@ -8,6 +8,7 @@ import java.util.*;
 
 import static camp.storeManagement.stores.*;
 
+// UI관련 Field & Method
 public class CampManagementApplication {
     // 스캐너
     public static Scanner sc = new Scanner(System.in); //메인에 두기

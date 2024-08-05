@@ -9,7 +9,10 @@ import java.util.*;
 import static camp.CampManagementApplication.*;
 import static camp.storeManagement.stores.*;
 
-//UI, 비즈니스 로직 분리
+
+
+// Student 관련 UI, 비즈니스 로직 분리
+
 public class StudentManagement {
     // 수강생 관리 메뉴 --> 김창민
     public static void displayStudentView() {
@@ -51,6 +54,7 @@ public class StudentManagement {
 
         // 수강생 이름 등록, 이름 길이가 10이 넘으면 예외처리
         System.out.println("\n수강생을 등록합니다...");
+
         try{
             System.out.print("수강생 이름 입력: ");
             studentName = sc.next();                     //이름
@@ -72,6 +76,7 @@ public class StudentManagement {
             System.out.println(e.getMessage());
             return;
         }
+
 
         CampManagementApplication.printSubjectInfo();//과목 출력
 
@@ -111,7 +116,7 @@ public class StudentManagement {
         for (String val : mandatorySet) {
             val = INDEX_TYPE_SUBJECT + val;
 
-            makeSubject(val,getSubject,SUBJECT_TYPE_MANDATORY);
+            makeSubject(val, getSubject, SUBJECT_TYPE_MANDATORY);
         }
 
         //선택 과목 저장
@@ -119,7 +124,7 @@ public class StudentManagement {
             int useVal = Integer.parseInt(val) + 5;
             val = INDEX_TYPE_SUBJECT + useVal;
 
-            makeSubject(val,getSubject,SUBJECT_TYPE_CHOICE);
+            makeSubject(val, getSubject, SUBJECT_TYPE_CHOICE);
         }
 
         studentId = sequence(INDEX_TYPE_STUDENT);    //고유번호
@@ -130,8 +135,7 @@ public class StudentManagement {
 
     // 수강생 목록 조회 --> 김창민
     private static void inquireStudent() {
-
-        if(!checkStudentStore()) return;
+        if (!checkStudentStore()) return;
 
         printStudentInfo();
         sc.nextLine();//개행문자 날리기
@@ -143,10 +147,10 @@ public class StudentManagement {
 
 
         ArrayList<String> viewSubject = studentStore.get(useKey).getSubjectList();//과목 아이디가 저장되어있음
-        ArrayList<String> viewMandatory = new ArrayList<>(); //필수 과목 리스트
-        ArrayList<String> viewOptional = new ArrayList<>(); //선택 과목 리스트
+        ArrayList<String> viewMandatory = new ArrayList<>(); // 필수 과목 리스트
+        ArrayList<String> viewOptional = new ArrayList<>(); // 선택 과목 리스트
 
-        //과목 종류 나눠서 세팅
+        // 과목 종류 나눠서 세팅
         for (String val : viewSubject) {
             Subject useSubject = subjectStore.get(val);
 
@@ -165,15 +169,15 @@ public class StudentManagement {
         for (String vM : viewMandatory) {
             sb.append(vM + ", ");
         }
-        sb.deleteCharAt(sb.length() - 1);//공백 삭제
-        sb.deleteCharAt(sb.length() - 1);//, 삭제
+        sb.deleteCharAt(sb.length() - 1);// 공백 삭제
+        sb.deleteCharAt(sb.length() - 1);// , 삭제
         sb.append("\n");
         sb.append("[선택 과목] :");
         for (String vO : viewOptional) {
             sb.append(vO + ", ");
         }
-        sb.deleteCharAt(sb.length() - 1);//공백 삭제
-        sb.deleteCharAt(sb.length() - 1);//, 삭제
+        sb.deleteCharAt(sb.length() - 1);// 공백 삭제
+        sb.deleteCharAt(sb.length() - 1);// , 삭제
         System.out.println(sb.toString());
     }
 
@@ -181,11 +185,10 @@ public class StudentManagement {
     private static void updateStudent() {
         // 번호 받아와서
         // set 시리즈로 수정
-        if(!checkStudentStore()) return;
+        if (!checkStudentStore()) return;
         printStudentInfo();  // 기능 구현
 
-
-        sc.nextLine();//개행문자 날리기
+        sc.nextLine();// 개행문자 날리기
         System.out.print("조회 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
         Student student = studentStore.get(useKey);
@@ -195,6 +198,7 @@ public class StudentManagement {
         System.out.println("====[현재 정보]====");
         System.out.println("[이름]: " + student.getStudentName() + "\n[상태]: " + student.getStudentState());
         System.out.println("====[덮어씌울 정보]====\n이름과 상태 순으로 입력하세요\n(상태: Green,Red,Yellow)(띄어쓰기 구분): ");
+
         String[] newNameAndState = new String[2];
         try {
             newNameAndState = sc.nextLine().split(" ");
@@ -209,6 +213,7 @@ public class StudentManagement {
             return;
         }
 
+
         student.setStudentName(newNameAndState[0]);
         student.setStudentState(newNameAndState[1]);
         System.out.println("====[업데이트 된 정보]====\n");
@@ -218,7 +223,7 @@ public class StudentManagement {
 
     // 상태별 수강생 조회 --> 김창민
     private static void inquireStudentByState() {
-        if(!checkStudentStore()) return;
+        if (!checkStudentStore()) return;
 
         Set<String> keys = studentStore.keySet();
         List<String> keyList = new ArrayList<>(keys);
@@ -249,16 +254,16 @@ public class StudentManagement {
         System.out.println();
     }
 
-    //중복 출력 기능 메소드화
-    private static void printInquireStudentByState(ArrayList<Student> stu){
-        for(Student std : stu){
-            System.out.println(std.getStudentId()+" : " + std.getStudentName() );
+    // 중복 출력 기능 메소드화
+    private static void printInquireStudentByState(ArrayList<Student> stu) {
+        for (Student std : stu) {
+            System.out.println(std.getStudentId() + " : " + std.getStudentName());
         }
     }
 
     // 수강생 삭제 --> 김창민
     private static void deleteStudent() {
-        if(!checkStudentStore()) return;
+        if (!checkStudentStore()) return;
         printStudentInfo();  // 기능 구현
 
         sc.nextLine();//개행문자 날리기
@@ -273,6 +278,7 @@ public class StudentManagement {
             System.out.println("삭제 완료되었습니다.");
     }
 
+
     private static boolean checkStudentId(Student student) {
         if (student == null) {
             System.out.println("존재하지 않는 학생입니다.");
@@ -283,6 +289,7 @@ public class StudentManagement {
 
     //중복 studentStore 검증 기능 메소드화 -> 김창민
     private static boolean checkStudentStore(){
+
         System.out.println("\n수강생 목록을 조회합니다...");
 
         if (studentStore.isEmpty()) {
@@ -292,13 +299,13 @@ public class StudentManagement {
         return true;
     }
 
-    //중복 Status 검증 기능 메소드화 -> 김창민
-    private static boolean cheackStatus(String studentState){
+    // 중복 Status 검증 기능 메소드화 --> 김창민
+    private static boolean cheackStatus(String studentState) {
         return studentState.equals("Green") || studentState.equals("Red") || studentState.equals("Yellow");
     }
 
-    //중복 Subject 저장 기능 메소드화 -> 김창민
-    public static void makeSubject(String val,ArrayList<String> getSubject,String type){
+    // 중복 Subject 저장 기능 메소드화 --> 김창민
+    public static void makeSubject(String val, ArrayList<String> getSubject, String type) {
         Subject useSubject = subjectStore.get(val);
         if (!useSubject.getSubjectType().equals(type)) //타 과목시 예외처리
             throw new IllegalArgumentException();

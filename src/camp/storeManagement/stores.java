@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class stores {
-
     public static Map<String, Student> studentStore;
     public static Map<String, Subject> subjectStore;
     public static Map<String, Map<String, Score>> scoreStore;
@@ -24,7 +23,6 @@ public class stores {
     public static final String INDEX_TYPE_SUBJECT = "SU";
     public static int scoreIndex;
     public static final String INDEX_TYPE_SCORE = "SC";
-
 
     public static void setInitData() {
         studentStore = new HashMap<>();
@@ -68,4 +66,7 @@ public class stores {
         }
     }
 
+
+
 }
+
