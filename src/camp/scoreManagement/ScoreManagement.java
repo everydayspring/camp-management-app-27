@@ -142,14 +142,12 @@ public class ScoreManagement {
     private static void inquireRoundGradeBySubject() {
         Scanner sc = new Scanner(System.in);
         String studentId = checkStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (조회할 특정 과목)
 
-        System.out.println("회차별 등급을 조회합니다...");
         // 기능 구현
-
         try {
             //scoreStore 맵에 입력한 학생고유번호가 존재할경우
             if (scoreStore.containsKey(studentId)) {
+                System.out.println("회차별 등급을 조회합니다...");
                 System.out.println("점수 조회를 원하는 과목의 고유번호를 입력하세요");
                 //전체보유중인 subject 의 고유번호 전체를 보여줌
                 printSubjectInfoByStudentId(studentId);
@@ -207,7 +205,7 @@ public class ScoreManagement {
                     }
                     System.out.println("\n등급 조회 성공!");
                 } else {
-                    throw new Exception("잘못된 과목 고유번호를 입력하였습니다.");
+                    throw new Exception("해당 과목에 등록된 점수가 없습니다");
                 }
             }//해당 고유번호를지닌 학생이 없을시
             else {
@@ -225,20 +223,24 @@ public class ScoreManagement {
         int totalScore = 0;
         int totalRound = 0;
         int averageScore = 0;
-        System.out.println("회차별 등급을 조회합니다...");
         // 기능 구현
 
         try {
             //scoreStore 맵에 입력한 학생고유번호가 존재할경우
             if (scoreStore.containsKey(studentId)) {
+                System.out.println("회차별 등급을 조회합니다...");
                 System.out.println("평균 점수 조회를 원하는 과목의 고유번호를 입력하세요");
+
                 //전체보유중인 subject 의 고유번호 전체를 보여줌
                 printSubjectInfoByStudentId(studentId);
                 String inputSubjectId = sc.nextLine();
+
                 int indicator = Character.getNumericValue(inputSubjectId.charAt(2));
+
                 //scoreStore안에있는 Map 을 지정해줌
                 Map<String, Score> innerScoreStore = scoreStore.get(studentId);
                 int[] d = innerScoreStore.get(inputSubjectId).getScores();
+
                 //평균점수를 위한 총 점수 및 총횟수를 구해줌
                 for (int i = 0; i < d.length; i++) {
                     if (d[i] > 0) {
@@ -248,6 +250,7 @@ public class ScoreManagement {
                         continue;
                     }
                 }
+
                 //평균점수를 구해줌
                 averageScore = totalScore / totalRound;
                 //평균점수를 기반으로한 등급을 구해줌
@@ -281,10 +284,12 @@ public class ScoreManagement {
                     }
                 }
                 System.out.println("\n등급 조회 성공!");
+
             } else {
                 throw new Exception("해당 고유번호를 가진 수강생이 존재하지않습니다");
             }
         } catch (Exception e) {
+
             System.out.println(e);
         }
     }
