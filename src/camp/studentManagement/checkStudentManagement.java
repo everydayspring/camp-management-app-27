@@ -4,7 +4,7 @@ import camp.model.Student;
 
 import static camp.storeManagement.stores.studentStore;
 
-public class checkStudent {
+public class checkStudentManagement {
 
     // 수강생 존재 검증
     public static boolean checkStudentId(Student student) {

@@ -13,10 +13,9 @@ import static camp.CampManagementApplication.printStudentInfo;
 import static camp.CampManagementApplication.sc;
 import static camp.storeManagement.stores.*;
 import static camp.storeManagement.stores.studentStore;
-import static camp.studentManagement.StudentManagement.*;
-import static camp.studentManagement.checkStudent.*;
+import static camp.studentManagement.checkStudentManagement.*;
 
-public class updateStudent {
+public class updateStudentManagement {
 
     // 수강생 등록 --> 김창민
     public static void createStudent() {
@@ -99,8 +98,7 @@ public class updateStudent {
 
     // 수강생 정보 수정 --> 김창민
     static void updateStudent() {
-        // 번호 받아와서
-        // set 시리즈로 수정
+
         if (!checkStudentStore()) return;
         printStudentInfo();  // 기능 구현
 
@@ -119,10 +117,13 @@ public class updateStudent {
         try {
             newNameAndState = sc.nextLine().split(" ");
             if (newNameAndState.length != 2) {
-                throw new IllegalArgumentException("이름과 상태를 모두 입력해야 합니다");
+                throw new IllegalArgumentException("이름과 상태를 모두 입력해야 합니다.");
             }
             if (!cheackStatus(newNameAndState[1])) {
-                throw new IllegalArgumentException("올바른 상태가 아닙니다");
+                throw new IllegalArgumentException("올바른 상태가 아닙니다.");
+            }
+            if(newNameAndState[0].length()>10){
+                throw new IllegalArgumentException("이름이 너무 깁니다.");
             }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());

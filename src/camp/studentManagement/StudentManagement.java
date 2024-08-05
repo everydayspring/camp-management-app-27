@@ -1,6 +1,5 @@
 package camp.studentManagement;
 
-import camp.CampManagementApplication;
 import camp.model.Student;
 import camp.model.Subject;
 
@@ -8,8 +7,8 @@ import java.util.*;
 
 import static camp.CampManagementApplication.*;
 import static camp.storeManagement.stores.*;
-import static camp.studentManagement.checkStudent.*;
-import static camp.studentManagement.updateStudent.*;
+import static camp.studentManagement.checkStudentManagement.*;
+import static camp.studentManagement.updateStudentManagement.*;
 
 
 // Student 관련 UI, 비즈니스 로직 분리
