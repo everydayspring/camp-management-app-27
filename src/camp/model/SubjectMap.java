@@ -12,6 +12,7 @@ public class SubjectMap {
     public final String SUBJECT_TYPE_CHOICE = "CHOICE";
     public final String INDEX_TYPE_SUBJECT = "SU";
 
+    //초기화 할때 모든 과목을 subjectStore에 저장
     public SubjectMap() {
         subjectStore = new HashMap<>();
         this.subjectIndex = 0;
@@ -36,6 +37,7 @@ public class SubjectMap {
         subjectStore.put(subjectId, new Subject(subjectId, "MongoDB", SUBJECT_TYPE_CHOICE));
     }
 
+
     public String subjectSequence() {
         subjectIndex++;
         return INDEX_TYPE_SUBJECT + subjectIndex;
@@ -45,8 +47,7 @@ public class SubjectMap {
         return INDEX_TYPE_SUBJECT + val;
     }
 
-
-    // 중복 Subject 저장 기능 메소드화
+    // 학생의 수강 필수 과목 리스트 생성 메소드 StudentManagement 사용
     public void makeManSubject(String val, ArrayList<String> getSubject) {
         Subject useSubject = this.subjectStore.get(val);
         if (!useSubject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY)) //타 과목시 예외처리
@@ -54,6 +55,7 @@ public class SubjectMap {
         getSubject.add(val);
     }
 
+    // 학생의 수강 선택 과목 리스트 생성 메소드 StudentManagement 사용
     public void makeSubSubject(String val, ArrayList<String> getSubject) {
         Subject useSubject = this.subjectStore.get(val);
         if (!useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE)) //타 과목시 예외처리
@@ -61,6 +63,7 @@ public class SubjectMap {
         getSubject.add(val);
     }
 
+    //scoreManagement에서 사용했었음
     public void printSubjectInfoByStudentId(StudentMap studentMap, String studentId, SubjectMap subjectMap) {
         try {
             Student student = studentMap.getStudent(studentId);
@@ -75,14 +78,17 @@ public class SubjectMap {
         }
     }
 
-    public Subject getSubject(String val) {
-        return this.subjectStore.get(val);
+    //과목 코드에 매칭된 과목 반환
+    public Subject getSubject(String code) {
+        return this.subjectStore.get(code);
     }
 
+    //필수 과목 체크
     public boolean check_MANDATORY(Subject useSubject) {
         return useSubject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY);
     }
 
+    //선택 과목 체크
     public boolean check_CHOICE(Subject useSubject) {
         return useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE);
     }
