@@ -21,7 +21,7 @@ public class StudentMap {
     }
 
     // Map에 저장하는 메소드 - StudentManagement에서 사용
-    public void set_Store(String studentName, String studentId, String studentState, ArrayList<String> getSubject) {
+    public void set_Store(String studentId, String studentName, String studentState, ArrayList<String> getSubject) {
         Student student = new Student(studentId, studentName, studentState, getSubject);    //이름이랑 과목코드 리스트를 담은 객체 생성
         this.studentStore.put(studentId, student);                                          //맵에 저장
     }
@@ -41,7 +41,7 @@ public class StudentMap {
 
     //학생 반환 - StudentManagement, StudentDisplay, SubjectMap에서 사용
     public Student getStudent(String studentId) {
-        return studentStore.get(studentId);
+        return this.studentStore.get(studentId);
     }
 
     //학생 삭제 - StudentManagement 에서 사용

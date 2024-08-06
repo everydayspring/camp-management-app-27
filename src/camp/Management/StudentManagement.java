@@ -9,7 +9,6 @@ import java.util.*;
 
 public class StudentManagement {
 
-
     public static Scanner sc = new Scanner(System.in);
 
     // 수강생 등록
