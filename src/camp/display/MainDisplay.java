@@ -24,8 +24,8 @@ public class MainDisplay {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> StudentDisplay.display(); // 수강생 관리
-                case 2 -> ScoreDisplay.display(); // 점수 관리
+                case 1 -> studentdisplay.display(students,subjects); // 수강생 관리
+                case 2 -> ScoreDisplay.display(scores,subjects); // 점수 관리
                 case 3 -> flag = false; // 프로그램 종료
                 default -> {
                     System.out.println("잘못된 입력입니다.\n되돌아갑니다!");

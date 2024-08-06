@@ -2,15 +2,17 @@ package camp.Management;
 
 import camp.CampManagementApplication;
 import camp.model.Student;
+import camp.model.StudentMap;
 import camp.model.Subject;
 
 import java.util.*;
 
 
 public class StudentManagement extends Management {
+    public static Scanner sc = new Scanner(System.in);
     // 수강생 등록
     @Override
-    public void create() {
+    public void create(StudentMap students) {
         String studentName;
         String studentId;
         String studentState;

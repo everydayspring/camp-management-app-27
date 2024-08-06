@@ -1,6 +1,8 @@
 package camp.display;
 
 import camp.model.Score;
+import camp.model.ScoreMap;
+
 import java.util.*;
 
 
@@ -8,7 +10,7 @@ public class ScoreDisplay implements Display {
 
     // displayScoreView 점수 관리 메뉴
     @Override
-    public static void display() {
+    public void display(ScoreMap scores) {
         System.out.println(scoreStore.size());
         boolean flag = true;
         while (flag) {
@@ -38,7 +40,7 @@ public class ScoreDisplay implements Display {
 
     // inquireAverageGradeBySubject 과목별 전체 회차 점수 조회
     @Override
-    public static void inquireAll() {
+    public void inquireAll() {
 
         Scanner sc = new Scanner(System.in);
         String studentId = checkStudentId(); // 관리할 수강생 고유 번호
@@ -132,7 +134,7 @@ public class ScoreDisplay implements Display {
 
     // inquireRoundGradeBySubject 수강생의 특정 과목 회차별 등급 조회
     @Override
-    public static void inquireByCon() {
+    public void inquireByCon() {
         Scanner sc = new Scanner(System.in);
         String studentId = checkStudentId(); // 관리할 수강생 고유 번호
 
@@ -223,7 +225,7 @@ public class ScoreDisplay implements Display {
 
     // printsScoreInfoByStudentId 현재 등록 된 과목 점수
     @Override
-    public static void print() {
+    public void print() {
         Map<String, Score> scores = scoreStore.get(studentId);
 
         System.out.println("=================현재 점수=================");
