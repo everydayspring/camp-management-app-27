@@ -147,6 +147,6 @@
 
 [다이어그램 링크](https://drive.google.com/file/d/1E_w3Wfiswu1zd-VvQwfa93AKxKGgSiWM/view?usp=sharing)
 
-[수강생 관리 시스템 알고리즘 링크] <!-- draw.io diagram -->
-<div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;url&quot;:&quot;https://drive.google.com/uc?id=1oW-2yKOohWvgEEC-QQ8J4RdEGUmeD9nW&amp;export=download&quot;}"></div>
-<script type="text/javascript" src="https://viewer.diagrams.net/embed2.js?&fetch=https%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1oW-2yKOohWvgEEC-QQ8J4RdEGUmeD9nW%26export%3Ddownload"></script>
+[수강생 관리 시스템 알고리즘 링크][ ](https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1#G1sHl-hTHME85ysMAyyFFidM66dpoh-IQy)
+
+
