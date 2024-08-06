@@ -93,4 +93,42 @@ public class SubjectMap {
         return useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE);
     }
 
+    public String gradeMandatory(int score) {
+        if (score > 94) {
+            return "A";
+        } else if (score > 89) {
+            return "B";
+        } else if (score > 79) {
+            return "C";
+        } else if (score > 69) {
+            return "D";
+        } else if (score > 59) {
+            return "F";
+        } else {
+            return "N";
+        }
+    }
+
+    public String gradeChoice(int score) {
+        if (score > 89) {
+            return "A";
+        } else if (score > 79) {
+            return "B";
+        } else if (score > 69) {
+            return "C";
+        } else if (score > 59) {
+            return "D";
+        } else if (score > 49) {
+            return "F";
+        } else {
+            return "N";
+        }
+    }
+
+    public boolean checkSubjectType(String subjectId){
+        Subject subject = subjectStore.get(subjectId);
+        if(subject.getSubjectType().equals("MANDATORY")) return true;
+        return false;
+    }
+
 }
