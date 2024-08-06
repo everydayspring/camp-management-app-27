@@ -19,7 +19,6 @@ public class CampManagementApplication {
 
     public static void main(String[] args) throws InterruptedException {
         Init();
-
     }
 
     public static void Init() throws InterruptedException {
