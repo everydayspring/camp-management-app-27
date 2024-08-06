@@ -67,6 +67,11 @@ public class StudentManagement {
         try {
             int mandatorySize = mandatorySet.size();
             if (mandatorySize < 3) throw new IllegalArgumentException("필수 과목 개수가 부족합니다.");
+            for(String val : mandatorySet){
+                if(Integer.parseInt(val)<1||Integer.parseInt(val)>5){
+                    throw new IllegalArgumentException("필요 과목이 아닙니다.");
+                }
+            }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return null;
@@ -79,6 +84,11 @@ public class StudentManagement {
         try {
             int optionalSize = optionalSet.size();
             if (optionalSize < 2) throw new IllegalArgumentException("선택 과목 개수가 부족합니다.");
+            for(String val : optionalSet){
+                if(Integer.parseInt(val)<1||Integer.parseInt(val)>4){
+                    throw new IllegalArgumentException("선택 과목이 아닙니다.");
+                }
+            }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return null;
