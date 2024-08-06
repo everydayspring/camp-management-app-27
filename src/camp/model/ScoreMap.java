@@ -32,10 +32,18 @@ public class ScoreMap {
         if (!scoreStore.containsKey(studentId) || !scoreStore.get(studentId).containsKey(subjectId)) {
             inner.put(subjectId, new Score(Integer.parseInt(index), Integer.parseInt(score)));
             scoreStore.put(studentId, inner);
-            System.out.println(" 처음 넣어요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        } else {
+        } else if(scoreStore.get(studentId).get(subjectId).checkScore(Integer.parseInt(index))) {
+            System.out.println("* 해당 회차의 점수가 이미 등록되어 있습니다 *");
+            System.out.println("============점수 등록 실패============");
+            return;
+        }else {
             scoreStore.get(studentId).get(subjectId).setScore(Integer.parseInt(index), Integer.parseInt(score));
-            System.out.println("점수를 등록한 적 있는 과목에 넣어요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
+        System.out.println("============점수 등록 성공============");
+        System.out.println("수강생 : " + studentId);
+        System.out.println("과목 : " + subjectId);
+        System.out.println("회차 : " + index);
+        System.out.println("점수 : " + score);
+        System.out.println("====================================");
     }
 }

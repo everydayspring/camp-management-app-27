@@ -11,6 +11,11 @@ public class Score {
         scores[index - 1] = score;
     }
 
+    public boolean checkScore(int index){
+        if(scores[index-1] == -1) return false;
+        return true;
+    }
+
     /*
     // 점수 등록
     public void setScores(String index, String score) {

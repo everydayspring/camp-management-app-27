@@ -12,7 +12,7 @@ public class ScoreManagement  {
     Scanner sc = new Scanner(System.in);
 
     public void create(StudentManagement studentManagement, StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap){
-        System.out.println("==========점수 등록==========");
+        System.out.println("==============점수 등록==============");
 
         if (studentMap.checkEmpty()) {
             System.out.println("학생이 없습니다.");
@@ -23,31 +23,44 @@ public class ScoreManagement  {
         System.out.print("점수를 등록할 수강생의 고유 번호를 입력하세요 : ");
         String studentId = sc.next();
         Student student = studentMap.getStudent(studentId);
-        if (!studentManagement.checkStudentId(student)) return;
+        if (!studentManagement.checkStudentId(student)) {
+            System.out.println("============점수 등록 실패============");
+            return;
+        }
 
         studentMap.printSubjectInfo();
         System.out.print("점수를 등록할 과목의 고유 번호를 입력하세요 : ");
         String subjectId = sc.next();
-        if(!studentManagement.checkSubjectId(student, subjectId)) return;
+        if(!studentManagement.checkSubjectId(student, subjectId)) {
+            System.out.println("============점수 등록 실패============");
+            return;
+        }
 
         System.out.print("등록할 시험 회차를 입력하세요 : ");
         String index = sc.next();
-        if(!checkTestIndex(index)) return;
+        if(!checkTestIndex(index)) {
+            System.out.println("============점수 등록 실패============");
+            return;
+        }
 
         System.out.print("점수를 입력하세요 : ");
         String score = sc.next();
-        if(!checkTestScore(score)) return;
+        if(!checkTestScore(score)) {
+            System.out.println("============점수 등록 실패============");
+            return;
+        }
 
         scoreMap.setScoreStore(studentId, subjectId, index, score);
     }
 
     public boolean checkTestIndex(String index){
         try{
-            if(Integer.parseInt(index) < 0 || Integer.parseInt(index) > 9){
+            if(Integer.parseInt(index) < 1 || Integer.parseInt(index) > 10){
+                System.out.println("* 유효하지 않은 시험 회차 *");
                 return false;
             }
         } catch (NumberFormatException e){
-            System.out.println("유효하지 않은 시험 회차");
+            System.out.println("* 유효하지 않은 시험 회차 *");
             return false;
         }
         return true;
@@ -55,11 +68,12 @@ public class ScoreManagement  {
 
     public boolean checkTestScore(String index){
         try{
-            if(Integer.parseInt(index) < 0 || Integer.parseInt(index) > 100){
+            if(Integer.parseInt(index) < 1 || Integer.parseInt(index) > 100){
+                System.out.println("* 유효하지 않은 시험 점수 *");
                 return false;
             }
         } catch (NumberFormatException e){
-            System.out.println("유효하지 않은 시험 점수");
+            System.out.println("* 유효하지 않은 시험 점수 *");
             return false;
         }
         return true;
