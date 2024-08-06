@@ -1,18 +1,18 @@
 package camp.view;
 
+import camp.model.ScoreMap;
 import camp.model.Student;
+import camp.model.StudentMap;
+import camp.model.SubjectMap;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
+import java.util.*;
 
 
 public class MainDisplay {
 
+    public static Scanner sc = new Scanner(System.in);
     // 메인 메뉴
-    public void displayMainView() throws InterruptedException { // 메인에 둬야함
+    public static void displayMainView(StudentMap students, SubjectMap subjects, ScoreMap scores) throws InterruptedException { // 메인에 둬야함
         boolean flag = true;
         while (flag) {
             System.out.println("\n==================================");
@@ -24,7 +24,7 @@ public class MainDisplay {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> MainStudentManagement.displayStudentView(); // 수강생 관리
+                case 1 -> MainStudentManagement.display(); // 수강생 관리
                 case 2 -> MainScoreManagement.displayScoreView(); // 점수 관리
                 case 3 -> flag = false; // 프로그램 종료
                 default -> {

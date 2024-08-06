@@ -80,9 +80,9 @@ public class UpdateStudentManagement extends UpdateManagement{
             makeSubject(val, getSubject, SUBJECT_TYPE_CHOICE);
         }
 
-        studentId = sequence(INDEX_TYPE_STUDENT);    //고유번호
-        Student student = new Student(studentId, studentName, studentState, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
-        studentStore.put(studentId, student); //맵에 저장
+        //studentId = sequence(INDEX_TYPE_STUDENT);    //고유번호
+        studentId = studentSequence();    //고유번호
+        set_Store(studentId, studentName, studentState, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
         System.out.println("수강생 등록 성공!\n");
     }
 
