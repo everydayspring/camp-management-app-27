@@ -62,12 +62,28 @@ public class SubjectMap {
         getSubject.add(val);
     }
 
-    public void printSubjectInfoByStudentId(ArrayList<String> keys){
-        System.out.println("==============수강중인 과목==============");
-        for (String key : keys) {
-            System.out.println(key + " : " + subjectStore.get(key).getSubjectName());
+    public void printSubjectInfoByStudentId(StudentMap studentMap,String studentId,SubjectMap subjectMap){
+        try {
+            Student student = studentMap.getStudent(studentId);
+            ArrayList<String> keys = student.getSubjectList();
+            System.out.println("==============수강중인 과목==============");
+            for (String key : keys) {
+                System.out.println(key + " : " + this.subjectStore.get(key).getSubjectName());
+            }
+            System.out.println("=======================================");
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
         }
-        System.out.println("=======================================");
+    }
+
+    public Subject getSubject(String val){
+        return this.subjectStore.get(val);
+    }
+    public boolean check_MANDATORY( Subject useSubject){
+        return useSubject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY);
+    }
+    public boolean check_CHOICE( Subject useSubject){
+        return useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE);
     }
 
 }

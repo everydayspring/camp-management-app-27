@@ -9,10 +9,10 @@ import static camp.Management.StudentManagement.*;
 
 
 public class StudentDisplay  {
-
+    StudentManagement studentManagement = new StudentManagement();
 
     public void display(StudentMap students, SubjectMap subjects) {
-        StudentManagement studentManagement = new StudentManagement();
+
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -28,7 +28,7 @@ public class StudentDisplay  {
 
             switch (input) {
                 case 1 -> studentManagement.create(students,subjects); // 수강생 등록
-                case 2 -> inquireAll(students); // 수강생 목록 조회
+                case 2 -> inquireAll(students,subjects); // 수강생 목록 조회
                 case 3 -> studentManagement.update(students); // 수강생 정보 수정
                 case 4 -> inquireByCon(students); // 상태별 수강생 목록 조회
                 case 5 -> studentManagement.deleteStudent(students); // 수강생 삭제
@@ -49,31 +49,30 @@ public class StudentDisplay  {
 
     //displayStudentView
     //inquireStudent 전체 수강생
+    public void inquireAll(StudentMap studentMap,SubjectMap subjectMap) {
 
-    public void inquireAll(StudentMap students) {
+        if (!studentManagement.checkStudentStore(studentMap)) return;
 
-        if (!checkStudentStore()) return;
-
-        printStudentInfo();
+        studentMap.printStudentInfo();
         sc.nextLine();//개행문자 날리기
         System.out.print("조회 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
-        Student student = studentStore.get(useKey);
+        Student student = studentMap.getStudent(useKey);
 
-        if (!checkStudentId(student)) return;
+        if (!studentManagement.checkStudentId(student)) return;
 
 
-        ArrayList<String> viewSubject = studentStore.get(useKey).getSubjectList();//과목 아이디가 저장되어있음
+        ArrayList<String> viewSubject = student.getSubjectList();//과목 아이디가 저장되어있음
         ArrayList<String> viewMandatory = new ArrayList<>(); // 필수 과목 리스트
         ArrayList<String> viewOptional = new ArrayList<>(); // 선택 과목 리스트
 
         // 과목 종류 나눠서 세팅
         for (String val : viewSubject) {
-            Subject useSubject = subjectStore.get(val);
+            Subject useSubject = subjectMap.getSubject(val);
 
-            if (useSubject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY)) {
+            if (subjectMap.check_MANDATORY(useSubject)) {
                 viewMandatory.add(useSubject.getSubjectName());
-            } else if (useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE)) {
+            } else if (subjectMap.check_CHOICE(useSubject)) {
                 viewOptional.add(useSubject.getSubjectName());
             }
         }
@@ -103,45 +102,39 @@ public class StudentDisplay  {
 
     public void inquireByCon(StudentMap students) {
 
-        if (!checkStudentStore()) return;
+        if (!studentManagement.checkStudentStore(students)) return;
 
-        Set<String> keys = studentStore.keySet();
+        Set<String> keys = students.getKeys();
         List<String> keyList = new ArrayList<>(keys);
         Collections.sort(keyList);
         ArrayList<Student> greenStu = new ArrayList<>();
         ArrayList<Student> redStu = new ArrayList<>();
         ArrayList<Student> yellowStu = new ArrayList<>();
         for (String key : keyList) {
-            if (studentStore.get(key).getStudentState().equals("Green")) {
-                greenStu.add(studentStore.get(key));
-            } else if (studentStore.get(key).getStudentState().equals("Red")) {
-                redStu.add(studentStore.get(key));
+            if (students.getterStudensStore().get(key).getStudentState().equals("Green")) {
+                greenStu.add(students.getterStudensStore().get(key));
+            } else if (students.getterStudensStore().get(key).getStudentState().equals("Red")) {
+                redStu.add(students.getterStudensStore().get(key));
             } else {
-                yellowStu.add(studentStore.get(key));
+                yellowStu.add(students.getterStudensStore().get(key));
             }
         }
 
         System.out.println("====Green 상태 학생====");
-        printInquireStudentByState(greenStu);
+        students.print(greenStu);
         System.out.println();
 
         System.out.println("====Red 상태 학생====");
-        printInquireStudentByState(redStu);
+        students.print(redStu);
         System.out.println();
 
         System.out.println("====Yellow 상태 학생====");
-        printInquireStudentByState(yellowStu);
+        students.print(yellowStu);
         System.out.println();
 
     }
 
     //printInquireStudentByState 중복 출력 기능 메소드화
 
-    public void print(StudentMap students) {
 
-        for (Student std : stu) {
-            System.out.println(std.getStudentId() + " : " + std.getStudentName());
-        }
-
-    }
 }

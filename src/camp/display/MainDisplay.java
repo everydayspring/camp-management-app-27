@@ -59,14 +59,5 @@ public class MainDisplay {
         System.out.println("=======================================");
     }
 
-    // 수강생이 수강중인 과목 리스트 출력 --> 이봄
-    public static void printSubjectInfoByStudentId(StudentMap studentMap,String studentId,SubjectMap subjectMap) {
-        try {
-            Student student = studentMap.getStudent(studentId);
-            ArrayList<String> keys = student.getSubjectList();
-            subjectMap.printSubjectInfoByStudentId(keys);
-        } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+
 }

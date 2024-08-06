@@ -51,4 +51,16 @@ public class StudentMap {
         return this.studentStore.isEmpty();
     }
 
+    public Set<String> getKeys(){
+        return this.studentStore.keySet();
+    }
+    public Map<String, Student> getterStudensStore(){
+        return this.studentStore;
+    }
+
+    public void print(ArrayList<Student> stu) {
+        for (Student std : stu) {
+            System.out.println(std.getStudentId() + " : " + std.getStudentName());
+        }
+    }
 }
