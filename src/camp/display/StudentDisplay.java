@@ -6,12 +6,12 @@ import camp.model.*;
 import java.util.*;
 
 
-public class StudentDisplay  {
+public class StudentDisplay {
 
     StudentManagement studentManagement;
     public Scanner sc;
 
-    public StudentDisplay(){
+    public StudentDisplay() {
         this.studentManagement = new StudentManagement();
         this.sc = new Scanner(System.in);
     }
@@ -31,8 +31,8 @@ public class StudentDisplay  {
             int input = sc.nextInt();
 
             switch (input) {//1,3,5는 Management, 2,4는 display
-                case 1 -> studentManagement.create(students,subjects); // 수강생 등록
-                case 2 -> inquireAll(students,subjects); // 수강생 목록 조회
+                case 1 -> studentManagement.create(students, subjects); // 수강생 등록
+                case 2 -> inquireAll(students, subjects); // 수강생 목록 조회
                 case 3 -> studentManagement.update(students); // 수강생 정보 수정
                 case 4 -> inquireByCon(students); // 상태별 수강생 목록 조회
                 case 5 -> studentManagement.deleteStudent(students); // 수강생 삭제
@@ -49,7 +49,7 @@ public class StudentDisplay  {
     //displayStudentView
 
     //inquireStudent 전체 수강생
-    public void inquireAll(StudentMap studentMap,SubjectMap subjectMap) {
+    public void inquireAll(StudentMap studentMap, SubjectMap subjectMap) {
         if (studentMap.checkEmpty()) {
             System.out.println("학생이 없습니다.");
             return;
@@ -62,7 +62,6 @@ public class StudentDisplay  {
         Student student = studentMap.getStudent(useKey);
 
         if (!studentManagement.checkStudentId(student)) return;
-
 
         ArrayList<String> viewSubject = student.getSubjectList();//과목 아이디가 저장되어있음
         ArrayList<String> viewMandatory = new ArrayList<>(); // 필수 과목 리스트
@@ -115,9 +114,9 @@ public class StudentDisplay  {
         ArrayList<Student> redStu = new ArrayList<>();
         ArrayList<Student> yellowStu = new ArrayList<>();
         for (String key : keyList) {
-            if (studentMap.checkState(key,"Green")) {
+            if (studentMap.checkState(key, "Green")) {
                 greenStu.add(studentMap.getStudent(key));
-            } else if (studentMap.checkState(key,"Red")) {
+            } else if (studentMap.checkState(key, "Red")) {
                 redStu.add(studentMap.getStudent(key));
             } else {
                 yellowStu.add(studentMap.getStudent(key));

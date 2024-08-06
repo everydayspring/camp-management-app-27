@@ -28,8 +28,7 @@ public class StudentManagement {
         storeStudent(students, studentName, studentState, getSubject);
     }
 
-    ////////////////////////////
-    //create 기능 세부화
+    // create 기능 세부화 1.
     private String getStudentName() {
         try {
             System.out.print("수강생 이름 입력: ");
@@ -43,6 +42,7 @@ public class StudentManagement {
         }
     }
 
+    // create 기능 세부화 2.
     private String getStudentState() {
         try {
             System.out.print("수강생 상태 입력(Green,Red,Yellow): ");
@@ -55,6 +55,7 @@ public class StudentManagement {
         }
     }
 
+    // create 기능 세부화 3.
     private ArrayList<String> getSubjects(SubjectMap subjects) {
         ArrayList<String> getSubject = new ArrayList<>();
         printSubjectInfo(); // 과목 출력
@@ -99,14 +100,14 @@ public class StudentManagement {
         return getSubject;
     }
 
+    // create 기능 세부화 4.
     private void storeStudent(StudentMap students, String studentName, String studentState, ArrayList<String> getSubject) {
         String studentId = students.studentSequence(); // 고유번호
         students.set_Store(studentId, studentName, studentState, getSubject); // 이름이랑 과목코드 리스트를 담은 객체 생성
         System.out.println("수강생 등록 성공!\n");
     }
 
-    ////////////////////////////
-    // 수강생 정보 수정
+    //데이터 수정
     public void update(StudentMap studentMap) {
 
         if (studentMap.checkEmpty()) {
