@@ -3,19 +3,18 @@ package camp.model;
 import java.util.*;
 
 public class SubjectMap {
+
     public Map<String, Subject> subjectStore;
+    public int subjectIndex;
 
     // 과목 타입
-    public String SUBJECT_TYPE_MANDATORY = "MANDATORY";
-    public String SUBJECT_TYPE_CHOICE = "CHOICE";
-
-    public int subjectIndex;
+    public final String SUBJECT_TYPE_MANDATORY = "MANDATORY";
+    public final String SUBJECT_TYPE_CHOICE = "CHOICE";
     public final String INDEX_TYPE_SUBJECT = "SU";
 
-
-    public SubjectMap(){
+    public SubjectMap() {
         subjectStore = new HashMap<>();
-        this.subjectIndex=0;
+        this.subjectIndex = 0;
 
         String subjectId = subjectSequence();
         subjectStore.put(subjectId, new Subject(subjectId, "Java", SUBJECT_TYPE_MANDATORY));
@@ -37,12 +36,12 @@ public class SubjectMap {
         subjectStore.put(subjectId, new Subject(subjectId, "MongoDB", SUBJECT_TYPE_CHOICE));
     }
 
-    public String subjectSequence(){
+    public String subjectSequence() {
         subjectIndex++;
         return INDEX_TYPE_SUBJECT + subjectIndex;
     }
 
-    public String makeSequence(String val){
+    public String makeSequence(String val) {
         return INDEX_TYPE_SUBJECT + val;
     }
 
@@ -62,7 +61,7 @@ public class SubjectMap {
         getSubject.add(val);
     }
 
-    public void printSubjectInfoByStudentId(StudentMap studentMap,String studentId,SubjectMap subjectMap){
+    public void printSubjectInfoByStudentId(StudentMap studentMap, String studentId, SubjectMap subjectMap) {
         try {
             Student student = studentMap.getStudent(studentId);
             ArrayList<String> keys = student.getSubjectList();
@@ -76,13 +75,15 @@ public class SubjectMap {
         }
     }
 
-    public Subject getSubject(String val){
+    public Subject getSubject(String val) {
         return this.subjectStore.get(val);
     }
-    public boolean check_MANDATORY( Subject useSubject){
+
+    public boolean check_MANDATORY(Subject useSubject) {
         return useSubject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY);
     }
-    public boolean check_CHOICE( Subject useSubject){
+
+    public boolean check_CHOICE(Subject useSubject) {
         return useSubject.getSubjectType().equals(SUBJECT_TYPE_CHOICE);
     }
 

@@ -4,28 +4,31 @@ import java.util.*;
 
 public class StudentMap {
 
-    public Map<String, Student> studentStore;
-    public int studentIndex;
-    public static final String INDEX_TYPE_STUDENT = "ST";
+    public Map<String, Student> studentStore;               // 학생번호-학생 쌍 저장 공간
+    public int studentIndex;                                // 표기 학생 번호
+    public static final String INDEX_TYPE_STUDENT = "ST";   //학생 코드
 
-    public StudentMap(){
+    // 생성자
+    public StudentMap() {
         studentStore = new HashMap<>();
-        this.studentIndex=0;
+        this.studentIndex = 0;
     }
 
-    public String studentSequence(){
+    //번호 증가시키고 학생코드 생성 - StudentManagement에서 사용
+    public String studentSequence() {
         this.studentIndex++;
         return INDEX_TYPE_STUDENT + studentIndex;
     }
 
+    // Map에 저장하는 메소드 - StudentManagement에서 사용
     public void set_Store(String studentName, String studentId, String studentState, ArrayList<String> getSubject) {
-        Student student = new Student(studentId, studentName, studentState, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
-        this.studentStore.put(studentId, student); //맵에 저장
+        Student student = new Student(studentId, studentName, studentState, getSubject);    //이름이랑 과목코드 리스트를 담은 객체 생성
+        this.studentStore.put(studentId, student);                                          //맵에 저장
     }
 
-
-    public void printStudentInfo(){
-        Set<String> keys = studentStore.keySet();
+    //학생 전부를 출력하는 메소드 - StudentManagement, StudentDisplay에서 사용
+    public void printStudentInfo() {
+        Set<String> keys = getKeys();
         List<String> keyList = new ArrayList<>(keys);
 
         Collections.sort(keyList);
@@ -36,31 +39,31 @@ public class StudentMap {
         System.out.println("===================================");
     }
 
-    public Student getStudent(String studentId){
+    //학생 코드 반환 - StudentManagement, StudentDisplay, SubjectMap에서 사용
+    public Student getStudent(String studentId) {
         return studentStore.get(studentId);
     }
 
-
-    public void deleteKey(String Key){
+    //학생 삭제 - StudentManagement 에서 사용
+    public void deleteKey(String Key) {
         this.studentStore.remove(Key);
         if (!this.studentStore.containsKey(Key))
             System.out.println("삭제 완료되었습니다.");
     }
 
-    public boolean checkEmpty(){
+    //Map 비어있는지 체크 - StudentManagement, StudentDisplay에서 사용
+    public boolean checkEmpty() {
         return this.studentStore.isEmpty();
     }
 
-    public Set<String> getKeys(){
+    //키 전부 반환 - StudentDisplay에서 사용
+    public Set<String> getKeys() {
         return this.studentStore.keySet();
     }
-    public Map<String, Student> getterStudensStore(){
+
+    //임시용 studentStore직접반환 - StudentDisplay에서 사용
+    public Map<String, Student> getterStudentsStore() {
         return this.studentStore;
     }
 
-    public void print(ArrayList<Student> stu) {
-        for (Student std : stu) {
-            System.out.println(std.getStudentId() + " : " + std.getStudentName());
-        }
-    }
 }

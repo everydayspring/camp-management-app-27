@@ -2,16 +2,18 @@ package camp.display;
 
 import camp.model.Score;
 import camp.model.ScoreMap;
+import camp.model.StudentMap;
+import camp.model.SubjectMap;
 
 import java.util.*;
 
 
-public class ScoreDisplay implements Display {
+public class ScoreDisplay {
 
+    public static Scanner sc = new Scanner(System.in);
     // displayScoreView 점수 관리 메뉴
-    @Override
-    public void display(ScoreMap scores) {
-        System.out.println(scoreStore.size());
+    public void display(StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap) {
+        //System.out.println(scoreStore.size());
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -39,7 +41,6 @@ public class ScoreDisplay implements Display {
     }
 
     // inquireAverageGradeBySubject 과목별 전체 회차 점수 조회
-    @Override
     public void inquireAll() {
 
         Scanner sc = new Scanner(System.in);
@@ -133,7 +134,6 @@ public class ScoreDisplay implements Display {
     }
 
     // inquireRoundGradeBySubject 수강생의 특정 과목 회차별 등급 조회
-    @Override
     public void inquireByCon() {
         Scanner sc = new Scanner(System.in);
         String studentId = checkStudentId(); // 관리할 수강생 고유 번호
@@ -224,7 +224,6 @@ public class ScoreDisplay implements Display {
     }
 
     // printsScoreInfoByStudentId 현재 등록 된 과목 점수
-    @Override
     public void print() {
         Map<String, Score> scores = scoreStore.get(studentId);
 

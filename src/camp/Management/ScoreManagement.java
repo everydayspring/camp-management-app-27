@@ -8,9 +8,9 @@ import camp.display.ScoreDisplay;
 import java.util.*;
 
 
-public class ScoreManagement extends Management {
+public class ScoreManagement  {
     // 수강생의 과목별 시험 회차 및 점수 등록
-    @Override
+
     public void create() {
         try {
             String studentId = CheckScoreManagement.checkStudentId(); // 관리할 수강생 고유 번호
@@ -36,7 +36,7 @@ public class ScoreManagement extends Management {
     }
 
     // 수강생의 과목별 회차 점수 수정 --> 김민주
-    @Override
+
     public void update() {
         String studentId = CheckScoreManagement.checkStudentId(); // 관리할 수강생 고유 번호
         if (!scoreStore.containsKey(studentId)) {

@@ -5,14 +5,18 @@ import camp.model.*;
 
 import java.util.*;
 
-import static camp.Management.StudentManagement.*;
-
 
 public class StudentDisplay  {
-    StudentManagement studentManagement = new StudentManagement();
+
+    StudentManagement studentManagement;
+    public Scanner sc;
+
+    public StudentDisplay(){
+        this.studentManagement = new StudentManagement();
+        this.sc = new Scanner(System.in);
+    }
 
     public void display(StudentMap students, SubjectMap subjects) {
-
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -26,7 +30,7 @@ public class StudentDisplay  {
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
-            switch (input) {
+            switch (input) {//1,3,5는 Management, 2,4는 display
                 case 1 -> studentManagement.create(students,subjects); // 수강생 등록
                 case 2 -> inquireAll(students,subjects); // 수강생 목록 조회
                 case 3 -> studentManagement.update(students); // 수강생 정보 수정
@@ -42,16 +46,14 @@ public class StudentDisplay  {
 
 
     }
-
-
-    public void display(ScoreMap scoreMap, StudentMap studentMap, SubjectMap subjectMap) {
-    }
-
     //displayStudentView
+
     //inquireStudent 전체 수강생
     public void inquireAll(StudentMap studentMap,SubjectMap subjectMap) {
-
-        if (!studentManagement.checkStudentStore(studentMap)) return;
+        if (studentMap.checkEmpty()) {
+            System.out.println("학생이 없습니다.");
+            return;
+        }
 
         studentMap.printStudentInfo();
         sc.nextLine();//개행문자 날리기
@@ -97,44 +99,49 @@ public class StudentDisplay  {
         System.out.println(sb.toString());
 
     }
-
     //inquireStudentByState    상태별 수강생 조회
 
-    public void inquireByCon(StudentMap students) {
+    public void inquireByCon(StudentMap studentMap) {
 
-        if (!studentManagement.checkStudentStore(students)) return;
+        if (studentMap.checkEmpty()) {
+            System.out.println("학생이 없습니다.");
+            return;
+        }
 
-        Set<String> keys = students.getKeys();
+        Set<String> keys = studentMap.getKeys();
         List<String> keyList = new ArrayList<>(keys);
         Collections.sort(keyList);
         ArrayList<Student> greenStu = new ArrayList<>();
         ArrayList<Student> redStu = new ArrayList<>();
         ArrayList<Student> yellowStu = new ArrayList<>();
         for (String key : keyList) {
-            if (students.getterStudensStore().get(key).getStudentState().equals("Green")) {
-                greenStu.add(students.getterStudensStore().get(key));
-            } else if (students.getterStudensStore().get(key).getStudentState().equals("Red")) {
-                redStu.add(students.getterStudensStore().get(key));
+            if (studentMap.getterStudentsStore().get(key).getStudentState().equals("Green")) {
+                greenStu.add(studentMap.getterStudentsStore().get(key));
+            } else if (studentMap.getterStudentsStore().get(key).getStudentState().equals("Red")) {
+                redStu.add(studentMap.getterStudentsStore().get(key));
             } else {
-                yellowStu.add(students.getterStudensStore().get(key));
+                yellowStu.add(studentMap.getterStudentsStore().get(key));
             }
         }
 
         System.out.println("====Green 상태 학생====");
-        students.print(greenStu);
+        print(greenStu);
         System.out.println();
 
         System.out.println("====Red 상태 학생====");
-        students.print(redStu);
+        print(redStu);
         System.out.println();
 
         System.out.println("====Yellow 상태 학생====");
-        students.print(yellowStu);
+        print(yellowStu);
         System.out.println();
 
     }
-
     //printInquireStudentByState 중복 출력 기능 메소드화
 
-
+    public void print(ArrayList<Student> stu) {
+        for (Student std : stu) {
+            System.out.println(std.getStudentId() + " : " + std.getStudentName());
+        }
+    }
 }

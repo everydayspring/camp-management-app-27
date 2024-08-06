@@ -8,11 +8,10 @@ import camp.model.SubjectMap;
 
 import java.util.*;
 
-
-
-
 public class StudentManagement {
+
     public static Scanner sc = new Scanner(System.in);
+
     // 수강생 등록
     public void create(StudentMap students, SubjectMap subjects) {
         String studentName;
@@ -89,15 +88,18 @@ public class StudentManagement {
     }
 
     // 수강생 정보 수정
-    public void update(StudentMap students) {
+    public void update(StudentMap studentMap) {
 
-        if (!checkStudentStore(students)) return;
-        students.printStudentInfo();  // 기능 구현
+        if (studentMap.checkEmpty()) {
+            System.out.println("학생이 없습니다.");
+            return;
+        }
+        studentMap.printStudentInfo();  // 기능 구현
 
         sc.nextLine();// 개행문자 날리기
         System.out.print("조회 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
-        Student student = students.getStudent(useKey);
+        Student student = studentMap.getStudent(useKey);
 
         if (!checkStudentId(student)) return;
 
@@ -130,29 +132,22 @@ public class StudentManagement {
     }
 
     // 수강생 삭제
-    public void deleteStudent(StudentMap students) {
-        if (!checkStudentStore(students)) return;
-        students.printStudentInfo();  // 기능 구현
+    public void deleteStudent(StudentMap studentMap) {
+        if (studentMap.checkEmpty()) {
+            System.out.println("학생이 없습니다.");
+            return;
+        }
+
+        studentMap.printStudentInfo();  // 기능 구현
 
         sc.nextLine();//개행문자 날리기
         System.out.print("삭제 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
-        Student student = students.getStudent(useKey);
+        Student student = studentMap.getStudent(useKey);
 
         if (!checkStudentId(student)) return;
 
-        students.deleteKey(useKey);
-    }
-
-    // 중복 studentStore 검증 기능 메소드화
-    public  boolean checkStudentStore(StudentMap students) {
-        System.out.println("\n수강생 목록을 조회합니다...");
-
-        if (students.checkEmpty()) {
-            System.out.println("수강생이 없습니다");
-            return false;
-        }
-        return true;
+        studentMap.deleteKey(useKey);
     }
 
     // 입력된 상태 검증
@@ -160,6 +155,7 @@ public class StudentManagement {
         return studentState.equals("Green") || studentState.equals("Red") || studentState.equals("Yellow");
     }
 
+    // 학생 존재 체크
     public boolean checkStudentId(Student student) {
         if (student == null) {
             System.out.println("존재하지 않는 학생입니다.");
