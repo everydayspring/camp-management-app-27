@@ -1,14 +1,12 @@
 package camp.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class StudentMap {
 
     public Map<String, Student> studentStore;
     public int studentIndex;
-    public final String INDEX_TYPE_STUDENT = "ST";
+    public static final String INDEX_TYPE_STUDENT = "ST";
 
     public StudentMap(){
         studentStore = new HashMap<>();
@@ -16,15 +14,30 @@ public class StudentMap {
     }
 
     public String studentSequence(){
-        studentIndex++;
+        this.studentIndex++;
         return INDEX_TYPE_STUDENT + studentIndex;
     }
 
-    public
-
-    private set_Store(String studentName, String studentId, String studentState, ArrayList<String> getSubject) {
+    public void set_Store(String studentName, String studentId, String studentState, ArrayList<String> getSubject) {
         Student student = new Student(studentId, studentName, studentState, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
         this.studentStore.put(studentId, student); //맵에 저장
+    }
+
+
+    public void printStudentInfo(){
+        Set<String> keys = studentStore.keySet();
+        List<String> keyList = new ArrayList<>(keys);
+
+        Collections.sort(keyList);
+        System.out.println("=============수강생 리스트============");
+        for (String key : keyList) {
+            System.out.println(key + " : " + studentStore.get(key).getStudentName());
+        }
+        System.out.println("===================================");
+    }
+
+    public Student get_ID(String studentId){
+        return studentStore.get(studentId);
     }
 
 

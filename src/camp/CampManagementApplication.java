@@ -3,6 +3,8 @@ package camp;
 
 
 
+import camp.Management.ScoreManagement;
+import camp.Management.StudentManagement;
 import camp.model.ScoreMap;
 import camp.model.StudentMap;
 import camp.model.SubjectMap;
@@ -17,16 +19,14 @@ public class CampManagementApplication {
 
     public static void main(String[] args) throws InterruptedException {
         Init();
+
     }
 
     public static void Init() throws InterruptedException {
         StudentMap students = new StudentMap();
         SubjectMap subjects = new SubjectMap();
         ScoreMap scores = new ScoreMap();
-        StudentDisplay mainStudentManagement = new StudentDisplay();
-        ScoreDisplay mainScoreManagement = new ScoreDisplay();
-
-        displayMainView(students,subjects,scores,mainStudentManagement,mainScoreManagement);
+        displayMainView(students,subjects,scores);
     }
 
 }

@@ -1,5 +1,7 @@
 package camp.display;
 
+import camp.Management.ScoreManagement;
+import camp.Management.StudentManagement;
 import camp.model.ScoreMap;
 import camp.model.Student;
 import camp.model.StudentMap;
@@ -9,10 +11,12 @@ import java.util.*;
 
 
 public class MainDisplay {
-
+    //여기서 ScoreDislpay 두개 만들고
     public static Scanner sc = new Scanner(System.in);
     // 메인 메뉴
-    public static void displayMainView(StudentMap students, SubjectMap subjects, ScoreMap scores, StudentDisplay studentdisplay, ScoreDisplay scoredisplay) throws InterruptedException { // 메인에 둬야함
+    public static void displayMainView(StudentMap students, SubjectMap subjects, ScoreMap scores) throws InterruptedException { // 메인에 둬야함
+        StudentDisplay mainStudentManagement = new StudentDisplay();
+        ScoreDisplay mainScoreManagement = new ScoreDisplay();
         boolean flag = true;
         while (flag) {
             System.out.println("\n==================================");
@@ -24,8 +28,8 @@ public class MainDisplay {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> studentdisplay.display(students,subjects); // 수강생 관리
-                case 2 -> ScoreDisplay.display(scores,subjects); // 점수 관리
+                case 1 -> mainStudentManagement.display(students,subjects); // 수강생 관리
+                case 2 -> mainScoreManagement.display(scores,students,subjects); // 점수 관리
                 case 3 -> flag = false; // 프로그램 종료
                 default -> {
                     System.out.println("잘못된 입력입니다.\n되돌아갑니다!");
@@ -56,22 +60,14 @@ public class MainDisplay {
     }
 
     // 수강생 리스트 출력 --> 김창민
-    public static void printStudentInfo() {
-        Set<String> keys = studentStore.keySet();
-        List<String> keyList = new ArrayList<>(keys);
-
-        Collections.sort(keyList);
-        System.out.println("=============수강생 리스트============");
-        for (String key : keyList) {
-            System.out.println(key + " : " + studentStore.get(key).getStudentName());
-        }
-        System.out.println("===================================");
+    public static void printStudentInfo(StudentMap studentMap) {
+        studentMap.printStudentInfo();
     }
 
     // 수강생이 수강중인 과목 리스트 출력 --> 이봄
-    public static void printSubjectInfoByStudentId(String studentId) {
+    public static void printSubjectInfoByStudentId(StudentMap studentMap,String studentId) {
         try {
-            Student student = studentStore.get(studentId);
+            Student student = studentMap.get_ID(studentId);
             ArrayList<String> keys = student.getSubjectList();
 
             System.out.println("==============수강중인 과목==============");

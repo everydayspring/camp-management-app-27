@@ -1,9 +1,7 @@
 package camp.display;
 
-import camp.model.Student;
-import camp.model.StudentMap;
-import camp.model.Subject;
-import camp.model.SubjectMap;
+import camp.Management.StudentManagement;
+import camp.model.*;
 
 import java.util.*;
 
@@ -13,7 +11,8 @@ import static camp.Management.StudentManagement.*;
 public class StudentDisplay implements Display {
 
     @Override
-    public <T,U>void display(T students, U subjects) {
+    public void display(StudentMap students, SubjectMap subjects) {
+        //StudentManagement
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -28,11 +27,11 @@ public class StudentDisplay implements Display {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> create(students,subjects); // 수강생 등록
-                case 2 -> inquireStudent(students); // 수강생 목록 조회
-                case 3 -> update(students); // 수강생 정보 수정
-                case 4 -> inquireStudentByState(students); // 상태별 수강생 목록 조회
-                case 5 -> deleteStudent(students); // 수강생 삭제
+                case 1 -> studentManagement.create(students,subjects); // 수강생 등록
+                case 2 -> studentManagement.inquireStudent(students); // 수강생 목록 조회
+                case 3 -> studentManagement.update(students); // 수강생 정보 수정
+                case 4 -> studentManagement.inquireStudentByState(students); // 상태별 수강생 목록 조회
+                case 5 -> studentManagement.deleteStudent(students); // 수강생 삭제
                 case 6 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
@@ -41,6 +40,11 @@ public class StudentDisplay implements Display {
             }
         }
 
+
+    }
+
+    @Override
+    public void display(ScoreMap scoreMap, StudentMap studentMap, SubjectMap subjectMap) {
     }
 
     //displayStudentView

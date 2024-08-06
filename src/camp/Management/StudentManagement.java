@@ -1,9 +1,11 @@
 package camp.Management;
 
 import camp.CampManagementApplication;
+import camp.display.MainDisplay;
 import camp.model.Student;
 import camp.model.StudentMap;
 import camp.model.Subject;
+import camp.model.SubjectMap;
 
 import java.util.*;
 
@@ -12,7 +14,7 @@ public class StudentManagement extends Management {
     public static Scanner sc = new Scanner(System.in);
     // 수강생 등록
     @Override
-    public void create(StudentMap students) {
+    public void create(StudentMap students, SubjectMap subjects) {
         String studentName;
         String studentId;
         String studentState;
@@ -41,7 +43,7 @@ public class StudentManagement extends Management {
         }
 
         // 과목 입력
-        CampManagementApplication.printSubjectInfo();//과목 출력
+        MainDisplay.printSubjectInfo();//과목 출력
         sc.nextLine(); //개행문자 날리기
         /*필수 과목 받기*/
         System.out.println("수강하실 필수 과목의 번호를 입력해 주세요 (필수 : 3개 이상)(띄어쓰기로 구분)");
@@ -83,8 +85,8 @@ public class StudentManagement extends Management {
         }
 
         //studentId = sequence(INDEX_TYPE_STUDENT);    //고유번호
-        studentId = studentSequence();    //고유번호
-        set_Store(studentId, studentName, studentState, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
+        studentId = ((StudentMap)students).studentSequence();    //고유번호
+        ((StudentMap)students).set_Store(studentId, studentName, studentState, getSubject); //이름이랑 과목코드 리스트를 담은 객체 생성
         System.out.println("수강생 등록 성공!\n");
     }
 

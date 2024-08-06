@@ -1,6 +1,8 @@
 package camp.Management;
 
 import camp.model.Student;
+import camp.model.StudentMap;
+import camp.model.SubjectMap;
 
 public abstract class Management {
 
@@ -12,7 +14,7 @@ public abstract class Management {
         return true;
     }
 
-    abstract void create();
+    abstract void create(StudentMap student, SubjectMap subjectMap);
     abstract void update();
 
 }
