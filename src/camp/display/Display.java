@@ -1,6 +1,6 @@
-package camp.view;
+package camp.display;
 
-public interface Management {
+public interface Display {
 
     void display();
     void inquireAll();

@@ -1,15 +1,14 @@
-package camp.view;
+package camp.display;
 
 import camp.model.Student;
 import camp.model.Subject;
 import java.util.*;
 
-import static camp.model.checkAndUpdate.UpdateStudentManagement.*;
+import static camp.Management.StudentManagement.*;
 
 
-public class MainStudentManagement implements Management {
+public class StudentDisplay implements Display {
 
-    //displayStudentView
     @Override
     public void display() {
         boolean flag = true;
@@ -41,6 +40,7 @@ public class MainStudentManagement implements Management {
 
     }
 
+    //displayStudentView
     //inquireStudent 전체 수강생
     @Override
     public void inquireAll() {

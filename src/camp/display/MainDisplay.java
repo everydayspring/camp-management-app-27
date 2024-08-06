@@ -1,4 +1,4 @@
-package camp.view;
+package camp.display;
 
 import camp.model.ScoreMap;
 import camp.model.Student;
@@ -12,7 +12,7 @@ public class MainDisplay {
 
     public static Scanner sc = new Scanner(System.in);
     // 메인 메뉴
-    public static void displayMainView(StudentMap students, SubjectMap subjects, ScoreMap scores) throws InterruptedException { // 메인에 둬야함
+    public static void displayMainView(StudentMap students, SubjectMap subjects, ScoreMap scores, StudentDisplay studentdisplay, ScoreDisplay scoredisplay) throws InterruptedException { // 메인에 둬야함
         boolean flag = true;
         while (flag) {
             System.out.println("\n==================================");
@@ -24,8 +24,8 @@ public class MainDisplay {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> MainStudentManagement.display(); // 수강생 관리
-                case 2 -> MainScoreManagement.displayScoreView(); // 점수 관리
+                case 1 -> StudentDisplay.display(); // 수강생 관리
+                case 2 -> ScoreDisplay.display(); // 점수 관리
                 case 3 -> flag = false; // 프로그램 종료
                 default -> {
                     System.out.println("잘못된 입력입니다.\n되돌아갑니다!");
@@ -37,7 +37,7 @@ public class MainDisplay {
     }
 
     // 전체 과목 리스트 출력 --> 김창민
-    public void printSubjectInfo() {
+    public static void printSubjectInfo() {
         System.out.println("=====   수강 가능한 과목 리스트 입니다.  =====");
         System.out.println("=======================================");
         System.out.println("=====         필수 과목             =====");
@@ -56,7 +56,7 @@ public class MainDisplay {
     }
 
     // 수강생 리스트 출력 --> 김창민
-    public void printStudentInfo() {
+    public static void printStudentInfo() {
         Set<String> keys = studentStore.keySet();
         List<String> keyList = new ArrayList<>(keys);
 
@@ -69,7 +69,7 @@ public class MainDisplay {
     }
 
     // 수강생이 수강중인 과목 리스트 출력 --> 이봄
-    public void printSubjectInfoByStudentId(String studentId) {
+    public static void printSubjectInfoByStudentId(String studentId) {
         try {
             Student student = studentStore.get(studentId);
             ArrayList<String> keys = student.getSubjectList();

@@ -1,9 +1,9 @@
-package camp.model.checkAndUpdate;
+package camp.Management;
 
 import camp.CampManagementApplication;
 import camp.model.Score;
 import camp.model.Student;
-import camp.view.MainScoreManagement;
+import camp.display.ScoreDisplay;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import static camp.CampManagementApplication.sc;
 import static camp.Init.Stores.scoreStore;
 import static camp.Init.Stores.studentStore;
 
-public class UpdateScoreManagement extends UpdateManagement{
+public class ScoreManagement extends Management {
     // 수강생의 과목별 시험 회차 및 점수 등록
     @Override
     public void create() {
@@ -53,7 +53,7 @@ public class UpdateScoreManagement extends UpdateManagement{
             return;
         }
 
-        MainScoreManagement.printsScoreInfoByStudentId(studentId);
+        ScoreDisplay.printsScoreInfoByStudentId(studentId);
         System.out.println("등록할 시험 회차를 입력하시오...");
         String index = sc.next();
         System.out.println("점수를 입력하시오...");

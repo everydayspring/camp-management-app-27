@@ -1,4 +1,4 @@
-package camp.model.checkAndUpdate;
+package camp.Management;
 
 import camp.CampManagementApplication;
 import camp.model.Student;
@@ -7,7 +7,7 @@ import camp.model.Subject;
 import java.util.*;
 
 
-public class UpdateStudentManagement extends UpdateManagement{
+public class StudentManagement extends Management {
     // 수강생 등록
     @Override
     public void create() {

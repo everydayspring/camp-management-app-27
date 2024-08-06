@@ -1,8 +1,8 @@
-package camp.model.checkAndUpdate;
+package camp.Management;
 
 import camp.model.Student;
 
-public abstract class UpdateManagement {
+public abstract class Management {
 
     public boolean checkStudentId(Student student) {
         if (student == null) {
