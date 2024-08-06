@@ -66,4 +66,9 @@ public class StudentMap {
         return this.studentStore;
     }
 
+    // 수강중인 목록 출력
+    public void printSubjectInfo(Student student){
+        student.getSubjectList();
+    }
+
 }

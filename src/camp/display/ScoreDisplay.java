@@ -1,5 +1,6 @@
 package camp.display;
 
+import camp.Management.ScoreManagement;
 import camp.model.Score;
 import camp.model.ScoreMap;
 import camp.model.StudentMap;
@@ -9,10 +10,10 @@ import java.util.*;
 
 
 public class ScoreDisplay {
-
     public static Scanner sc = new Scanner(System.in);
     // displayScoreView 점수 관리 메뉴
-    public void display(StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap) {
+    public void display(StudentMap students, SubjectMap subjects, ScoreMap scores) {
+        ScoreManagement scoreManagement = new ScoreManagement();
         //System.out.println(scoreStore.size());
         boolean flag = true;
         while (flag) {
@@ -27,7 +28,7 @@ public class ScoreDisplay {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
+                case 1 -> scoreManagement.createScore(students, subjects, scores); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateScore(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
                 case 4 -> inquireAverageGradeBySubject();

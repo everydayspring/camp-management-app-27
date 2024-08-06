@@ -61,9 +61,8 @@ public class SubjectMap {
         getSubject.add(val);
     }
 
-    public void printSubjectInfoByStudentId(StudentMap studentMap, String studentId, SubjectMap subjectMap) {
+    public void printSubjectInfoByStudentId(Student student) {
         try {
-            Student student = studentMap.getStudent(studentId);
             ArrayList<String> keys = student.getSubjectList();
             System.out.println("==============수강중인 과목==============");
             for (String key : keys) {

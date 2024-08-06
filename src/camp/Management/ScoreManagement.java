@@ -1,17 +1,36 @@
 package camp.Management;
 
 import camp.CampManagementApplication;
-import camp.model.Score;
-import camp.model.Student;
+import camp.model.*;
 import camp.display.ScoreDisplay;
 
 import java.util.*;
 
 
 public class ScoreManagement  {
+    public static Scanner sc = new Scanner(System.in);
     // 수강생의 과목별 시험 회차 및 점수 등록
 
-    public void create() {
+    public void createScore(StudentMap students,SubjectMap subjects, ScoreMap scores) {
+        if(students.checkEmpty()){
+            System.out.println("학생이 없습니다.");
+            return;
+        }
+        students.printStudentInfo();
+
+        System.out.print("\n점수를 등록할 수강생의 고유 번호를 입력하세요 : ");
+        String studentId = sc.next();
+        Student student = students.getStudent(studentId);
+
+        if(!checkStudentId(student)) return;
+
+        subjects.printSubjectInfoByStudentId(student);
+        System.out.print("\n점수를 등록할 과목의 고유 번호를 입력하세요 : ");
+        String subjectId = sc.next();
+
+
+
+
         try {
             String studentId = CheckScoreManagement.checkStudentId(); // 관리할 수강생 고유 번호
             String subjectId = CheckScoreManagement.checkSubjectId(studentId); // 등록할 과목 고유 번호
@@ -96,5 +115,22 @@ public class ScoreManagement  {
             System.out.println(e.getMessage());
         }
         return subjectId;
+    }
+
+    // 학생 존재 체크
+    public boolean checkStudentId(Student student) {
+        if (student == null) {
+            System.out.println("존재하지 않는 학생입니다.");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSubjectIdIdByStudent(ScoreMap scores) {
+        if (student == null) {
+            System.out.println("존재하지 않는 학생입니다.");
+            return false;
+        }
+        return true;
     }
 }
