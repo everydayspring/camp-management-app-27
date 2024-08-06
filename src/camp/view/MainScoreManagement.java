@@ -1,18 +1,15 @@
-package camp.scoreManagement;
+package camp.view;
 
 import camp.model.Score;
-
-import static camp.scoreManagement.UpdateScoreManagement.*;
-import static camp.scoreManagement.CheckScoreManagement.*;
-
 import java.util.*;
-
 import static camp.CampManagementApplication.*;
-import static camp.storeManagement.Stores.*;
 
-public class MainScoreManagement {
-    // 점수 관리 메뉴
-    public static void displayScoreView() {
+
+public class MainScoreManagement implements Management {
+
+    // displayScoreView 점수 관리 메뉴
+    @Override
+    public void display() {
         System.out.println(scoreStore.size());
         boolean flag = true;
         while (flag) {
@@ -40,8 +37,103 @@ public class MainScoreManagement {
         }
     }
 
-    // 수강생의 특정 과목 회차별 등급 조회
-    private static void inquireRoundGradeBySubject() {
+    // inquireAverageGradeBySubject 과목별 전체 회차 점수 조회
+    @Override
+    public void inquireAll() {
+
+        Scanner sc = new Scanner(System.in);
+        String studentId = checkStudentId(); // 관리할 수강생 고유 번호
+        // 기능 구현 (조회할 특정 과목)
+        int totalScore = 0;
+        int totalRound = 0;
+        int averageScore = 0;
+        // 기능 구현
+
+        try {
+            //scoreStore 맵에 입력한 학생고유번호가 존재할경우
+            if (scoreStore.containsKey(studentId)) {
+                System.out.println("회차별 등급을 조회합니다...");
+                System.out.println("평균 점수 조회를 원하는 과목의 고유번호를 입력하세요");
+
+                //전체보유중인 subject 의 고유번호 전체를 보여줌
+                printSubjectInfoByStudentId(studentId);
+                String inputSubjectId = sc.nextLine();
+
+                //수강생 수강목록확인
+                ArrayList<String> scores = studentStore.get(studentId).getSubjectList();
+                int indicator = Character.getNumericValue(inputSubjectId.charAt(2));
+
+                //수강생이 입력한 과목을 수강하지않을시 예외처리
+                if (!scores.contains(inputSubjectId)) {
+                    throw new Exception("선택한 수강생이 수강중인 과목이 아닙니다.");
+                }
+
+                //수강 과목의 점수가 등록되지않을시 예외처리
+                if (!scoreStore.get(studentId).containsKey(inputSubjectId)) {
+                    System.out.println("등록된 점수가 없는 학생입니다");
+                    return;
+                }
+                //scoreStore안에있는 Map 을 지정해줌
+                Map<String, Score> innerScoreStore = scoreStore.get(studentId);
+                int[] d = innerScoreStore.get(inputSubjectId).getScores();
+
+                //평균점수를 위한 총 점수 및 총횟수를 구해줌
+                for (int i = 0; i < d.length; i++) {
+                    if (d[i] > 0) {
+                        totalScore += d[i];
+                        totalRound++;
+                    } else {
+                        continue;
+                    }
+                }
+
+                //평균점수를 구해줌
+                averageScore = totalScore / totalRound;
+                //평균점수를 기반으로한 등급을 구해줌
+                if (innerScoreStore.containsKey(inputSubjectId) && indicator < 6) {
+                    if (averageScore > 94) {
+                        System.out.println("평균 등급: A");
+                    } else if (averageScore > 89) {
+                        System.out.println("평균 등급: B");
+                    } else if (averageScore > 79) {
+                        System.out.println("평균 등급 : C");
+                    } else if (averageScore > 69) {
+                        System.out.println("평균 등급 : D");
+                    } else if (averageScore > 59) {
+                        System.out.println("평균 등급 : F");
+                    } else if (averageScore > 0) {
+                        System.out.println("평균 등급 : N");
+                    }
+                } else if (innerScoreStore.containsKey(inputSubjectId) && indicator > 5) {
+                    if (averageScore > 89) {
+                        System.out.println("평균 등급: A");
+                    } else if (averageScore > 79) {
+                        System.out.println("평균 등급: B");
+                    } else if (averageScore > 69) {
+                        System.out.println("평균등급 : C");
+                    } else if (averageScore > 59) {
+                        System.out.println("평균 등급 : D");
+                    } else if (averageScore > 49) {
+                        System.out.println("평균 등급 : F");
+                    } else if (averageScore > 0) {
+                        System.out.println("평균 등급 : N");
+                    }
+                }
+                System.out.println("\n등급 조회 성공!");
+
+            } else {
+                throw new Exception("해당 고유번호를 가진 수강생이 존재하지않습니다");
+            }
+        } catch (Exception e) {
+
+            System.out.println(e);
+        }
+
+    }
+
+    // inquireRoundGradeBySubject 수강생의 특정 과목 회차별 등급 조회
+    @Override
+    public void inquireByCon() {
         Scanner sc = new Scanner(System.in);
         String studentId = checkStudentId(); // 관리할 수강생 고유 번호
 
@@ -130,99 +222,9 @@ public class MainScoreManagement {
         }
     }
 
-    // 과목별 전체 회차 점수 조회
-    private static void inquireAverageGradeBySubject() {
-        Scanner sc = new Scanner(System.in);
-        String studentId = checkStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (조회할 특정 과목)
-        int totalScore = 0;
-        int totalRound = 0;
-        int averageScore = 0;
-        // 기능 구현
-
-        try {
-            //scoreStore 맵에 입력한 학생고유번호가 존재할경우
-            if (scoreStore.containsKey(studentId)) {
-                System.out.println("회차별 등급을 조회합니다...");
-                System.out.println("평균 점수 조회를 원하는 과목의 고유번호를 입력하세요");
-
-                //전체보유중인 subject 의 고유번호 전체를 보여줌
-                printSubjectInfoByStudentId(studentId);
-                String inputSubjectId = sc.nextLine();
-
-                //수강생 수강목록확인
-                ArrayList<String> scores = studentStore.get(studentId).getSubjectList();
-                int indicator = Character.getNumericValue(inputSubjectId.charAt(2));
-
-                //수강생이 입력한 과목을 수강하지않을시 예외처리
-                if (!scores.contains(inputSubjectId)) {
-                    throw new Exception("선택한 수강생이 수강중인 과목이 아닙니다.");
-                }
-
-                //수강 과목의 점수가 등록되지않을시 예외처리
-                if (!scoreStore.get(studentId).containsKey(inputSubjectId)) {
-                    System.out.println("등록된 점수가 없는 학생입니다");
-                    return;
-                }
-                //scoreStore안에있는 Map 을 지정해줌
-                Map<String, Score> innerScoreStore = scoreStore.get(studentId);
-                int[] d = innerScoreStore.get(inputSubjectId).getScores();
-
-                //평균점수를 위한 총 점수 및 총횟수를 구해줌
-                for (int i = 0; i < d.length; i++) {
-                    if (d[i] > 0) {
-                        totalScore += d[i];
-                        totalRound++;
-                    } else {
-                        continue;
-                    }
-                }
-
-                //평균점수를 구해줌
-                averageScore = totalScore / totalRound;
-                //평균점수를 기반으로한 등급을 구해줌
-                if (innerScoreStore.containsKey(inputSubjectId) && indicator < 6) {
-                    if (averageScore > 94) {
-                        System.out.println("평균 등급: A");
-                    } else if (averageScore > 89) {
-                        System.out.println("평균 등급: B");
-                    } else if (averageScore > 79) {
-                        System.out.println("평균 등급 : C");
-                    } else if (averageScore > 69) {
-                        System.out.println("평균 등급 : D");
-                    } else if (averageScore > 59) {
-                        System.out.println("평균 등급 : F");
-                    } else if (averageScore > 0) {
-                        System.out.println("평균 등급 : N");
-                    }
-                } else if (innerScoreStore.containsKey(inputSubjectId) && indicator > 5) {
-                    if (averageScore > 89) {
-                        System.out.println("평균 등급: A");
-                    } else if (averageScore > 79) {
-                        System.out.println("평균 등급: B");
-                    } else if (averageScore > 69) {
-                        System.out.println("평균등급 : C");
-                    } else if (averageScore > 59) {
-                        System.out.println("평균 등급 : D");
-                    } else if (averageScore > 49) {
-                        System.out.println("평균 등급 : F");
-                    } else if (averageScore > 0) {
-                        System.out.println("평균 등급 : N");
-                    }
-                }
-                System.out.println("\n등급 조회 성공!");
-
-            } else {
-                throw new Exception("해당 고유번호를 가진 수강생이 존재하지않습니다");
-            }
-        } catch (Exception e) {
-
-            System.out.println(e);
-        }
-    }
-
-    // 현재 등록 된 과목 점수
-    public static void printsScoreInfoByStudentId(String studentId) {
+    // printsScoreInfoByStudentId 현재 등록 된 과목 점수
+    @Override
+    public void print() {
         Map<String, Score> scores = scoreStore.get(studentId);
 
         System.out.println("=================현재 점수=================");
@@ -240,5 +242,4 @@ public class MainScoreManagement {
             System.out.println("=======================================");
         }
     }
-
 }

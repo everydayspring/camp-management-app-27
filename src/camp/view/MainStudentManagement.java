@@ -1,18 +1,17 @@
-package camp.studentManagement;
+package camp.view;
 
 import camp.model.Student;
 import camp.model.Subject;
-
 import java.util.*;
 
-import static camp.CampManagementApplication.*;
-import static camp.storeManagement.Stores.*;
-import static camp.studentManagement.CheckStudentManagement.*;
-import static camp.studentManagement.UpdateStudentManagement.*;
+import static camp.model.checkAndUpdate.UpdateStudentManagement.*;
 
-public class MainStudentManagement {
-    // 수강생 관리 메뉴
-    public static void displayStudentView() {
+
+public class MainStudentManagement implements Management {
+
+    //displayStudentView
+    @Override
+    public void display() {
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -27,9 +26,9 @@ public class MainStudentManagement {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> createStudent(); // 수강생 등록
+                case 1 -> create(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
-                case 3 -> updateStudent(); // 수강생 정보 수정
+                case 3 -> update(); // 수강생 정보 수정
                 case 4 -> inquireStudentByState(); // 상태별 수강생 목록 조회
                 case 5 -> deleteStudent(); // 수강생 삭제
                 case 6 -> flag = false; // 메인 화면 이동
@@ -39,10 +38,13 @@ public class MainStudentManagement {
                 }
             }
         }
+
     }
 
-    // 수강생 목록 조회
-    private static void inquireStudent() {
+    //inquireStudent 전체 수강생
+    @Override
+    public void inquireAll() {
+
         if (!checkStudentStore()) return;
 
         printStudentInfo();
@@ -87,10 +89,13 @@ public class MainStudentManagement {
         sb.deleteCharAt(sb.length() - 1);// 공백 삭제
         sb.deleteCharAt(sb.length() - 1);// , 삭제
         System.out.println(sb.toString());
+
     }
 
-    // 상태별 수강생 조회
-    private static void inquireStudentByState() {
+    //inquireStudentByState    상태별 수강생 조회
+    @Override
+    public void inquireByCon() {
+
         if (!checkStudentStore()) return;
 
         Set<String> keys = studentStore.keySet();
@@ -120,12 +125,16 @@ public class MainStudentManagement {
         System.out.println("====Yellow 상태 학생====");
         printInquireStudentByState(yellowStu);
         System.out.println();
+
     }
 
-    // 중복 출력 기능 메소드화
-    private static void printInquireStudentByState(ArrayList<Student> stu) {
+    //printInquireStudentByState 중복 출력 기능 메소드화
+    @Override
+    public void print() {
+
         for (Student std : stu) {
             System.out.println(std.getStudentId() + " : " + std.getStudentName());
         }
+
     }
 }

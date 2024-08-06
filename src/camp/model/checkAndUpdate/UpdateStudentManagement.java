@@ -1,4 +1,4 @@
-package camp.studentManagement;
+package camp.model.checkAndUpdate;
 
 import camp.CampManagementApplication;
 import camp.model.Student;
@@ -6,13 +6,11 @@ import camp.model.Subject;
 
 import java.util.*;
 
-import static camp.CampManagementApplication.*;
-import static camp.storeManagement.Stores.*;
-import static camp.studentManagement.CheckStudentManagement.*;
 
-public class UpdateStudentManagement {
+public class UpdateStudentManagement extends UpdateManagement{
     // 수강생 등록
-    public static void createStudent() {
+    @Override
+    public void create() {
         String studentName;
         String studentId;
         String studentState;
@@ -89,7 +87,8 @@ public class UpdateStudentManagement {
     }
 
     // 수강생 정보 수정
-    static void updateStudent() {
+    @Override
+    public void update() {
 
         if (!checkStudentStore()) return;
         printStudentInfo();  // 기능 구현
@@ -153,5 +152,21 @@ public class UpdateStudentManagement {
         if (!useSubject.getSubjectType().equals(type)) //타 과목시 예외처리
             throw new IllegalArgumentException();
         getSubject.add(val);
+    }
+
+    // 중복 studentStore 검증 기능 메소드화
+    public static boolean checkStudentStore() {
+        System.out.println("\n수강생 목록을 조회합니다...");
+
+        if (studentStore.isEmpty()) {
+            System.out.println("수강생이 없습니다");
+            return false;
+        }
+        return true;
+    }
+
+    // 중복 Status 검증 기능 메소드화
+    public static boolean cheackStatus(String studentState) {
+        return studentState.equals("Green") || studentState.equals("Red") || studentState.equals("Yellow");
     }
 }

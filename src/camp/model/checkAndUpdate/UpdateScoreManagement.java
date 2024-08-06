@@ -1,15 +1,20 @@
-package camp.scoreManagement;
+package camp.model.checkAndUpdate;
 
+import camp.CampManagementApplication;
 import camp.model.Score;
+import camp.model.Student;
+import camp.view.MainScoreManagement;
 
 import java.util.*;
 
 import static camp.CampManagementApplication.sc;
-import static camp.storeManagement.Stores.scoreStore;
+import static camp.Init.Stores.scoreStore;
+import static camp.Init.Stores.studentStore;
 
-public class UpdateScoreManagement {
+public class UpdateScoreManagement extends UpdateManagement{
     // 수강생의 과목별 시험 회차 및 점수 등록
-    public static void createScore() {
+    @Override
+    public void create() {
         try {
             String studentId = CheckScoreManagement.checkStudentId(); // 관리할 수강생 고유 번호
             String subjectId = CheckScoreManagement.checkSubjectId(studentId); // 등록할 과목 고유 번호
@@ -34,7 +39,8 @@ public class UpdateScoreManagement {
     }
 
     // 수강생의 과목별 회차 점수 수정 --> 김민주
-    public static void updateScore() {
+    @Override
+    public void update() {
         String studentId = CheckScoreManagement.checkStudentId(); // 관리할 수강생 고유 번호
         if (!scoreStore.containsKey(studentId)) {
             System.out.println("등록된 점수가 없는 학생입니다");
@@ -75,5 +81,23 @@ public class UpdateScoreManagement {
         } catch (NumberFormatException e) {
             System.out.println("숫자가 아닌 값이 입력됨");
         }
+    }
+
+    // 수강중인 과목 고유 번호 입력값 검증
+    public static String checkSubjectId(String studentId) {
+        CampManagementApplication.printSubjectInfoByStudentId(studentId);
+        Student student = studentStore.get(studentId);
+        ArrayList<String> scores = student.getSubjectList();
+
+        System.out.print("\n관리할 과목의 고유 번호를 입력하세요 (ex. SU1) : ");
+        String subjectId = sc.next();  //SU1
+        try {
+            if (!scores.contains(subjectId)) {
+                throw new IllegalArgumentException("선택한 수강생이 수강중인 과목이 아닙니다.");
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return subjectId;
     }
 }
