@@ -65,10 +65,4 @@ public class StudentMap {
     public boolean checkState(String key, String type){
         return this.studentStore.get(key).getStudentState().equals(type);
     }
-
-    public void printSubjectInfo() {
-        System.out.println("==========수강중인 과목==========");
-        System.out.println("수강생이 수강중이 목록 출력 해야함~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println("===============================");
-    }
 }

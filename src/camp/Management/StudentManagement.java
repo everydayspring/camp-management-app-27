@@ -185,8 +185,11 @@ public class StudentManagement {
 
     // 학생 존재 체크
     public boolean checkSubjectId(Student student, String subjectId) {
-        System.out.println("해당 수강생이 수강하고 있는 과목인지 체크 추가해야함~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        return true;
+        if(student.getSubjectList().contains(subjectId)){
+            System.out.println("* 수강중인 과목이 아닙니다");
+            return true;
+        }
+        return false;
     }
 
     // 전체 과목 리스트 출력

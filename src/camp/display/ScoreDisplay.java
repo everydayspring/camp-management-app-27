@@ -33,8 +33,8 @@ public class ScoreDisplay {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> scoreManagement.create(studentManagement, studentMap, scoreMap); // 수강생의 과목별 시험 회차 및 점수 등록
-                case 2 -> scoreManagement.update(studentMap, scoreMap); // 수강생의 과목별 회차 점수 수정
+                case 1 -> scoreManagement.create(studentManagement, studentMap, subjectMap, scoreMap); // 수강생의 과목별 시험 회차 및 점수 등록
+                case 2 -> scoreManagement.update(studentMap, subjectMap, scoreMap); // 수강생의 과목별 회차 점수 수정
                 case 3 -> inquireAll(studentMap, subjectMap, scoreMap); // 수강생의 특정 과목 회차별 등급 조회
                 case 4 -> inquireByCon(studentMap, subjectMap, scoreMap);
                 case 5 -> flag = false; // 메인 화면 이동
@@ -64,7 +64,7 @@ public class ScoreDisplay {
             return;
         }
 
-        studentMap.printSubjectInfo();
+        subjectMap.printSubjectInfoByStudentId(studentMap,studentId);
         System.out.print("점수를 조회할 과목의 고유 번호를 입력하세요 : ");
         String subjectId = sc.next();
         if(innerMap.get(subjectId) == null) {
@@ -106,7 +106,7 @@ public class ScoreDisplay {
             return;
         }
 
-        studentMap.printSubjectInfo();
+        subjectMap.printSubjectInfoByStudentId(studentMap,studentId);
         System.out.print("평균 등급을 과목의 고유 번호를 입력하세요 : ");
         String subjectId = sc.next();
         if(innerMap.get(subjectId) == null) {

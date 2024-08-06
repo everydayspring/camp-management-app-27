@@ -11,7 +11,7 @@ public class ScoreManagement  {
 
     Scanner sc = new Scanner(System.in);
 
-    public void create(StudentManagement studentManagement, StudentMap studentMap, ScoreMap scoreMap){
+    public void create(StudentManagement studentManagement, StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap){
         System.out.println("==============점수 등록==============");
 
         if (studentMap.checkEmpty()) {
@@ -28,7 +28,7 @@ public class ScoreManagement  {
             return;
         }
 
-        studentMap.printSubjectInfo();
+        subjectMap.printSubjectInfoByStudentId(studentMap,studentId);
         System.out.print("점수를 등록할 과목의 고유 번호를 입력하세요 : ");
         String subjectId = sc.next();
         if(!studentManagement.checkSubjectId(student, subjectId)) {
@@ -53,7 +53,7 @@ public class ScoreManagement  {
         scoreMap.setScoreStore(studentId, subjectId, index, score);
     }
 
-    public void update(StudentMap studentMap, ScoreMap scoreMap){
+    public void update(StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap){
         System.out.println("==============점수 수정==============");
 
         if (studentMap.checkEmpty()) {
@@ -70,7 +70,7 @@ public class ScoreManagement  {
             return;
         }
 
-        studentMap.printSubjectInfo();
+        subjectMap.printSubjectInfoByStudentId(studentMap,studentId);
         System.out.print("점수를 수정할 과목의 고유 번호를 입력하세요 : ");
         String subjectId = sc.next();
         if(innerMap.get(subjectId) == null) {
