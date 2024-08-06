@@ -40,11 +40,6 @@ public class StudentMap {
         return studentStore.get(studentId);
     }
 
-    public void printAllStudent(StudentMap students){
-        for (Student std : students) {
-            System.out.println(std.getStudentId() + " : " + std.getStudentName());
-        }
-    }
 
     public void deleteKey(String Key){
         this.studentStore.remove(Key);

@@ -1,20 +1,10 @@
 package camp;
 
-
-
-
-import camp.Management.ScoreManagement;
-import camp.Management.StudentManagement;
+import camp.display.MainDisplay;
 import camp.model.ScoreMap;
 import camp.model.StudentMap;
 import camp.model.SubjectMap;
-import camp.display.ScoreDisplay;
-import camp.display.StudentDisplay;
 
-import static camp.display.MainDisplay.displayMainView;
-
-
-// UI관련 Field & Method
 public class CampManagementApplication {
 
     public static void main(String[] args) throws InterruptedException {
@@ -25,7 +15,7 @@ public class CampManagementApplication {
         StudentMap students = new StudentMap();
         SubjectMap subjects = new SubjectMap();
         ScoreMap scores = new ScoreMap();
-        displayMainView(students,subjects,scores);
+        MainDisplay.displayMainView(students,subjects,scores);
     }
 
 }

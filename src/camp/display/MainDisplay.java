@@ -1,6 +1,6 @@
 package camp.display;
 
-import camp.Management.ScoreManagement;
+//import camp.Management.ScoreManagement;
 import camp.Management.StudentManagement;
 import camp.model.ScoreMap;
 import camp.model.Student;
@@ -60,16 +60,11 @@ public class MainDisplay {
     }
 
     // 수강생이 수강중인 과목 리스트 출력 --> 이봄
-    public static void printSubjectInfoByStudentId(StudentMap studentMap,String studentId) {
+    public static void printSubjectInfoByStudentId(StudentMap studentMap,String studentId,SubjectMap subjectMap) {
         try {
             Student student = studentMap.getStudent(studentId);
             ArrayList<String> keys = student.getSubjectList();
-
-            System.out.println("==============수강중인 과목==============");
-            for (String key : keys) {
-                System.out.println(key + " : " + subjectStore.get(key).getSubjectName());
-            }
-            System.out.println("=======================================");
+            subjectMap.printSubjectInfoByStudentId(keys);
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }

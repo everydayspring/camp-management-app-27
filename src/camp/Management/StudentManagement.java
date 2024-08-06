@@ -1,10 +1,9 @@
 package camp.Management;
 
-import camp.CampManagementApplication;
+
 import camp.display.MainDisplay;
 import camp.model.Student;
 import camp.model.StudentMap;
-import camp.model.Subject;
 import camp.model.SubjectMap;
 
 import java.util.*;
@@ -71,18 +70,16 @@ public class StudentManagement {
         }
 
         //필수 과목 저장
-        for (String val : mandatorySet) {
-            val = INDEX_TYPE_SUBJECT + val;
-
-            makeSubject(val, getSubject, SUBJECT_TYPE_MANDATORY);
+        for (String val : mandatorySet) { //1 2 3 입력하면 makeSequence로 SU1로 바궈서 makeManSubject로 넣는거임
+            val = subjects.makeSequence(val);
+            subjects.makeManSubject(val, getSubject);
         }
 
         //선택 과목 저장
         for (String val : optionalSet) {
             int useVal = Integer.parseInt(val) + 5;
-            val = INDEX_TYPE_SUBJECT + useVal;
-
-            makeSubject(val, getSubject, SUBJECT_TYPE_CHOICE);
+            val = subjects.makeSequence(Integer.toString(useVal));
+            subjects.makeSubSubject(val, getSubject);
         }
 
         //studentId = sequence(INDEX_TYPE_STUDENT);    //고유번호
@@ -94,7 +91,7 @@ public class StudentManagement {
     // 수강생 정보 수정
     public void update(StudentMap students) {
 
-        if (!checkStudentStore()) return;
+        if (!checkStudentStore(students)) return;
         students.printStudentInfo();  // 기능 구현
 
         sc.nextLine();// 개행문자 날리기
@@ -125,7 +122,6 @@ public class StudentManagement {
             return;
         }
 
-
         student.setStudentName(newNameAndState[0]);
         student.setStudentState(newNameAndState[1]);
         System.out.println("====[업데이트 된 정보]====\n");
@@ -135,7 +131,7 @@ public class StudentManagement {
 
     // 수강생 삭제
     public void deleteStudent(StudentMap students) {
-        if (!checkStudentStore()) return;
+        if (!checkStudentStore(students)) return;
         students.printStudentInfo();  // 기능 구현
 
         sc.nextLine();//개행문자 날리기
@@ -146,14 +142,6 @@ public class StudentManagement {
         if (!checkStudentId(student)) return;
 
         students.deleteKey(useKey);
-    }
-
-    // 중복 Subject 저장 기능 메소드화
-    private  void makeSubject(String val, ArrayList<String> getSubject, String type) {
-        Subject useSubject = subjectStore.get(val);
-        if (!useSubject.getSubjectType().equals(type)) //타 과목시 예외처리
-            throw new IllegalArgumentException();
-        getSubject.add(val);
     }
 
     // 중복 studentStore 검증 기능 메소드화
