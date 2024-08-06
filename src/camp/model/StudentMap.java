@@ -39,7 +39,7 @@ public class StudentMap {
         System.out.println("===================================");
     }
 
-    //학생 코드 반환 - StudentManagement, StudentDisplay, SubjectMap에서 사용
+    //학생 반환 - StudentManagement, StudentDisplay, SubjectMap에서 사용
     public Student getStudent(String studentId) {
         return studentStore.get(studentId);
     }
@@ -61,9 +61,9 @@ public class StudentMap {
         return this.studentStore.keySet();
     }
 
-    //임시용 studentStore직접반환 - StudentDisplay에서 사용
-    public Map<String, Student> getterStudentsStore() {
-        return this.studentStore;
+    //상태 확인 - StudentDisplay에서 사용
+    public boolean checkState(String key, String type){
+        return this.studentStore.get(key).getStudentState().equals(type);
     }
 
 }

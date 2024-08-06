@@ -99,8 +99,8 @@ public class StudentDisplay  {
         System.out.println(sb.toString());
 
     }
-    //inquireStudentByState    상태별 수강생 조회
 
+    //inquireStudentByState    상태별 수강생 조회
     public void inquireByCon(StudentMap studentMap) {
 
         if (studentMap.checkEmpty()) {
@@ -115,12 +115,12 @@ public class StudentDisplay  {
         ArrayList<Student> redStu = new ArrayList<>();
         ArrayList<Student> yellowStu = new ArrayList<>();
         for (String key : keyList) {
-            if (studentMap.getterStudentsStore().get(key).getStudentState().equals("Green")) {
-                greenStu.add(studentMap.getterStudentsStore().get(key));
-            } else if (studentMap.getterStudentsStore().get(key).getStudentState().equals("Red")) {
-                redStu.add(studentMap.getterStudentsStore().get(key));
+            if (studentMap.checkState(key,"Green")) {
+                greenStu.add(studentMap.getStudent(key));
+            } else if (studentMap.checkState(key,"Red")) {
+                redStu.add(studentMap.getStudent(key));
             } else {
-                yellowStu.add(studentMap.getterStudentsStore().get(key));
+                yellowStu.add(studentMap.getStudent(key));
             }
         }
 
@@ -137,7 +137,6 @@ public class StudentDisplay  {
         System.out.println();
 
     }
-    //printInquireStudentByState 중복 출력 기능 메소드화
 
     public void print(ArrayList<Student> stu) {
         for (Student std : stu) {
