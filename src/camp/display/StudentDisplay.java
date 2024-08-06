@@ -8,11 +8,11 @@ import java.util.*;
 import static camp.Management.StudentManagement.*;
 
 
-public class StudentDisplay implements Display {
+public class StudentDisplay  {
 
-    @Override
+
     public void display(StudentMap students, SubjectMap subjects) {
-        //StudentManagement
+        StudentManagement studentManagement = new StudentManagement();
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
@@ -28,9 +28,9 @@ public class StudentDisplay implements Display {
 
             switch (input) {
                 case 1 -> studentManagement.create(students,subjects); // 수강생 등록
-                case 2 -> studentManagement.inquireStudent(students); // 수강생 목록 조회
+                case 2 -> inquireAll(students); // 수강생 목록 조회
                 case 3 -> studentManagement.update(students); // 수강생 정보 수정
-                case 4 -> studentManagement.inquireStudentByState(students); // 상태별 수강생 목록 조회
+                case 4 -> inquireByCon(students); // 상태별 수강생 목록 조회
                 case 5 -> studentManagement.deleteStudent(students); // 수강생 삭제
                 case 6 -> flag = false; // 메인 화면 이동
                 default -> {
@@ -43,14 +43,14 @@ public class StudentDisplay implements Display {
 
     }
 
-    @Override
+
     public void display(ScoreMap scoreMap, StudentMap studentMap, SubjectMap subjectMap) {
     }
 
     //displayStudentView
     //inquireStudent 전체 수강생
-    @Override
-    public void inquireAll() {
+
+    public void inquireAll(StudentMap students) {
 
         if (!checkStudentStore()) return;
 
@@ -100,8 +100,8 @@ public class StudentDisplay implements Display {
     }
 
     //inquireStudentByState    상태별 수강생 조회
-    @Override
-    public void inquireByCon() {
+
+    public void inquireByCon(StudentMap students) {
 
         if (!checkStudentStore()) return;
 
@@ -136,8 +136,8 @@ public class StudentDisplay implements Display {
     }
 
     //printInquireStudentByState 중복 출력 기능 메소드화
-    @Override
-    public void print() {
+
+    public void print(StudentMap students) {
 
         for (Student std : stu) {
             System.out.println(std.getStudentId() + " : " + std.getStudentName());

@@ -10,10 +10,11 @@ import camp.model.SubjectMap;
 import java.util.*;
 
 
-public class StudentManagement extends Management {
+
+
+public class StudentManagement {
     public static Scanner sc = new Scanner(System.in);
     // 수강생 등록
-    @Override
     public void create(StudentMap students, SubjectMap subjects) {
         String studentName;
         String studentId;
@@ -91,16 +92,15 @@ public class StudentManagement extends Management {
     }
 
     // 수강생 정보 수정
-    @Override
-    public void update() {
+    public void update(StudentMap students) {
 
         if (!checkStudentStore()) return;
-        printStudentInfo();  // 기능 구현
+        students.printStudentInfo();  // 기능 구현
 
         sc.nextLine();// 개행문자 날리기
         System.out.print("조회 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
-        Student student = studentStore.get(useKey);
+        Student student = students.getStudent(useKey);
 
         if (!checkStudentId(student)) return;
 
@@ -134,24 +134,22 @@ public class StudentManagement extends Management {
     }
 
     // 수강생 삭제
-    static void deleteStudent() {
+    public void deleteStudent(StudentMap students) {
         if (!checkStudentStore()) return;
-        printStudentInfo();  // 기능 구현
+        students.printStudentInfo();  // 기능 구현
 
         sc.nextLine();//개행문자 날리기
         System.out.print("삭제 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
-        Student student = studentStore.get(useKey);
+        Student student = students.getStudent(useKey);
 
         if (!checkStudentId(student)) return;
 
-        studentStore.remove(useKey);
-        if (!studentStore.containsKey(useKey))
-            System.out.println("삭제 완료되었습니다.");
+        students.deleteKey(useKey);
     }
 
     // 중복 Subject 저장 기능 메소드화
-    private static void makeSubject(String val, ArrayList<String> getSubject, String type) {
+    private  void makeSubject(String val, ArrayList<String> getSubject, String type) {
         Subject useSubject = subjectStore.get(val);
         if (!useSubject.getSubjectType().equals(type)) //타 과목시 예외처리
             throw new IllegalArgumentException();
@@ -159,18 +157,26 @@ public class StudentManagement extends Management {
     }
 
     // 중복 studentStore 검증 기능 메소드화
-    public static boolean checkStudentStore() {
+    public  boolean checkStudentStore(StudentMap students) {
         System.out.println("\n수강생 목록을 조회합니다...");
 
-        if (studentStore.isEmpty()) {
+        if (students.checkEmpty()) {
             System.out.println("수강생이 없습니다");
             return false;
         }
         return true;
     }
 
-    // 중복 Status 검증 기능 메소드화
-    public static boolean cheackStatus(String studentState) {
+    // 입력된 상태 검증
+    public  boolean cheackStatus(String studentState) {
         return studentState.equals("Green") || studentState.equals("Red") || studentState.equals("Yellow");
+    }
+
+    public boolean checkStudentId(Student student) {
+        if (student == null) {
+            System.out.println("존재하지 않는 학생입니다.");
+            return false;
+        }
+        return true;
     }
 }

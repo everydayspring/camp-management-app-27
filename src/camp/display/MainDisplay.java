@@ -59,15 +59,10 @@ public class MainDisplay {
         System.out.println("=======================================");
     }
 
-    // 수강생 리스트 출력 --> 김창민
-    public static void printStudentInfo(StudentMap studentMap) {
-        studentMap.printStudentInfo();
-    }
-
     // 수강생이 수강중인 과목 리스트 출력 --> 이봄
     public static void printSubjectInfoByStudentId(StudentMap studentMap,String studentId) {
         try {
-            Student student = studentMap.get_ID(studentId);
+            Student student = studentMap.getStudent(studentId);
             ArrayList<String> keys = student.getSubjectList();
 
             System.out.println("==============수강중인 과목==============");

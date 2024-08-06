@@ -36,11 +36,24 @@ public class StudentMap {
         System.out.println("===================================");
     }
 
-    public Student get_ID(String studentId){
+    public Student getStudent(String studentId){
         return studentStore.get(studentId);
     }
 
+    public void printAllStudent(StudentMap students){
+        for (Student std : students) {
+            System.out.println(std.getStudentId() + " : " + std.getStudentName());
+        }
+    }
 
+    public void deleteKey(String Key){
+        this.studentStore.remove(Key);
+        if (!this.studentStore.containsKey(Key))
+            System.out.println("삭제 완료되었습니다.");
+    }
 
+    public boolean checkEmpty(){
+        return this.studentStore.isEmpty();
+    }
 
 }
