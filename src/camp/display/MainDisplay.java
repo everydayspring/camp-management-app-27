@@ -1,7 +1,5 @@
 package camp.display;
 
-//import camp.Management.ScoreManagement;
-import camp.Management.StudentManagement;
 import camp.model.ScoreMap;
 import camp.model.Student;
 import camp.model.StudentMap;

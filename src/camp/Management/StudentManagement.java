@@ -183,6 +183,12 @@ public class StudentManagement {
         return true;
     }
 
+    // 학생 존재 체크
+    public boolean checkSubjectId(Student student, String subjectId) {
+        System.out.println("해당 수강생이 수강하고 있는 과목인지 체크 추가해야함~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        return true;
+    }
+
     // 전체 과목 리스트 출력
     private void printSubjectInfo() {
         System.out.println("=====   수강 가능한 과목 리스트 입니다.  =====");

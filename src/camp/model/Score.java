@@ -3,10 +3,15 @@ package camp.model;
 public class Score {
     private int[] scores = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 
-    public Score(String index, String score) { setScores(index, score); }
+    public Score(int index, int score) { setScore(index, score);}
 
     public int[] getScores() { return scores; }
 
+    public void setScore(int index, int score) {
+        scores[index - 1] = score;
+    }
+
+    /*
     // 점수 등록
     public void setScores(String index, String score) {
         int indexInt; //번호
@@ -31,4 +36,5 @@ public class Score {
             System.out.println(e.getMessage());
         }
     }
+    */
 }

@@ -1,16 +1,72 @@
 package camp.Management;
 
 import camp.CampManagementApplication;
-import camp.model.Score;
-import camp.model.Student;
+import camp.model.*;
 import camp.display.ScoreDisplay;
 
 import java.util.*;
 
 
 public class ScoreManagement  {
-    // 수강생의 과목별 시험 회차 및 점수 등록
 
+    Scanner sc = new Scanner(System.in);
+
+    public void create(StudentManagement studentManagement, StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap){
+        System.out.println("==========점수 등록==========");
+
+        if (studentMap.checkEmpty()) {
+            System.out.println("학생이 없습니다.");
+            return;
+        }
+
+        studentMap.printStudentInfo();
+        System.out.print("점수를 등록할 수강생의 고유 번호를 입력하세요 : ");
+        String studentId = sc.next();
+        Student student = studentMap.getStudent(studentId);
+        if (!studentManagement.checkStudentId(student)) return;
+
+        studentMap.printSubjectInfo();
+        System.out.print("점수를 등록할 과목의 고유 번호를 입력하세요 : ");
+        String subjectId = sc.next();
+        if(!studentManagement.checkSubjectId(student, subjectId)) return;
+
+        System.out.print("등록할 시험 회차를 입력하세요 : ");
+        String index = sc.next();
+        if(!checkTestIndex(index)) return;
+
+        System.out.print("점수를 입력하세요 : ");
+        String score = sc.next();
+        if(!checkTestScore(score)) return;
+
+        scoreMap.setScoreStore(studentId, subjectId, index, score);
+    }
+
+    public boolean checkTestIndex(String index){
+        try{
+            if(Integer.parseInt(index) < 0 || Integer.parseInt(index) > 9){
+                return false;
+            }
+        } catch (NumberFormatException e){
+            System.out.println("유효하지 않은 시험 회차");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkTestScore(String index){
+        try{
+            if(Integer.parseInt(index) < 0 || Integer.parseInt(index) > 100){
+                return false;
+            }
+        } catch (NumberFormatException e){
+            System.out.println("유효하지 않은 시험 점수");
+            return false;
+        }
+        return true;
+    }
+
+
+/*
     public void create() {
         try {
             String studentId = CheckScoreManagement.checkStudentId(); // 관리할 수강생 고유 번호
@@ -97,4 +153,5 @@ public class ScoreManagement  {
         }
         return subjectId;
     }
+ */
 }

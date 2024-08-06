@@ -1,16 +1,23 @@
 package camp.display;
 
-import camp.model.Score;
-import camp.model.ScoreMap;
-import camp.model.StudentMap;
-import camp.model.SubjectMap;
+import camp.Management.ScoreManagement;
+import camp.Management.StudentManagement;
+import camp.model.*;
 
 import java.util.*;
 
 
 public class ScoreDisplay {
+    ScoreManagement scoreManagement;
+    StudentManagement studentManagement;
+    public Scanner sc;
 
-    public static Scanner sc = new Scanner(System.in);
+    public ScoreDisplay() {
+        this.studentManagement = new StudentManagement();
+        this.scoreManagement = new ScoreManagement();
+        this.sc = new Scanner(System.in);
+    }
+
     // displayScoreView 점수 관리 메뉴
     public void display(StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap) {
         //System.out.println(scoreStore.size());
@@ -27,10 +34,10 @@ public class ScoreDisplay {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> create(); // 수강생의 과목별 시험 회차 및 점수 등록
-                case 2 -> update(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> inquireAll(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> inquireByCon();
+                case 1 -> scoreManagement.create(studentManagement, studentMap, subjectMap, scoreMap); // 수강생의 과목별 시험 회차 및 점수 등록
+//                case 2 -> scoreManagement.update(); // 수강생의 과목별 회차 점수 수정
+//                case 3 -> inquireAll(studentMap, scoreMap); // 수강생의 특정 과목 회차별 등급 조회
+//                case 4 -> inquireByCon();
                 case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
@@ -39,17 +46,30 @@ public class ScoreDisplay {
             }
         }
     }
-
+/*
     // inquireAverageGradeBySubject 과목별 전체 회차 점수 조회
-    public void inquireAll() {
+    public void inquireAll(StudentMap studentMap, ScoreMap scoreMap) {
+        if (scoreMap.checkEmpty()) {
+            System.out.println("점수가 등록된 학생이 없습니다.");
+            return;
+        }
 
-        Scanner sc = new Scanner(System.in);
-        String studentId = checkStudentId(); // 관리할 수강생 고유 번호
+        studentMap.printStudentInfo();
+        sc.nextLine();//개행문자 날리기
+        System.out.print("조회 학생의 고유번호를 입력하세요 : ");
+        String useKey = sc.nextLine();
+        Student student = studentMap.getStudent(useKey);
+
+        if (!studentManagement.checkStudentId(student)) return;
+
         // 기능 구현 (조회할 특정 과목)
         int totalScore = 0;
         int totalRound = 0;
         int averageScore = 0;
         // 기능 구현
+
+
+
 
         try {
             //scoreStore 맵에 입력한 학생고유번호가 존재할경우
@@ -242,4 +262,6 @@ public class ScoreDisplay {
             System.out.println("=======================================");
         }
     }
+
+ */
 }
