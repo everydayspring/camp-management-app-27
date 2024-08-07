@@ -21,7 +21,7 @@ public class StudentMap {
     // Map에 저장
     public void set_Store(String studentId, String studentName, String studentState, ArrayList<String> getSubject) {
         Student student = new Student(studentId, studentName, studentState, getSubject); // 이름과 수강중인 과목 리스트를 담은 객체 생성
-        this.studentStore.put(studentId, student); // Map에 저장
+        this.studentStore.put(studentId, student);
     }
 
     // 수강생 전체 출력

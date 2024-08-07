@@ -26,7 +26,7 @@ public class StudentDisplay {
             System.out.println("4. 상태별 수강생 목록 조회");
             System.out.println("5. 수강생 삭제");
             System.out.println("6. 메인 화면 이동");
-            System.out.print("관리 항목을 선택하세요...");
+            System.out.print("관리 항목을 선택하세요 : ");
             int input = sc.nextInt();
 
             switch (input) {

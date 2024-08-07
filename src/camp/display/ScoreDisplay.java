@@ -28,7 +28,7 @@ public class ScoreDisplay {
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
             System.out.println("4. 수강생의 특정 과목 평균 등급 조회");
             System.out.println("5. 메인 화면 이동");
-            System.out.print("관리 항목을 선택하세요...");
+            System.out.print("관리 항목을 선택하세요 : ");
             int input = sc.nextInt();
 
             switch (input) {
