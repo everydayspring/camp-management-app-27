@@ -125,7 +125,6 @@ public class StudentManagement {
         }
         studentMap.printStudentInfo();  // 기능 구현
 
-        sc.nextLine();// 개행문자 날리기
         System.out.print("조회 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
         Student student = studentMap.getStudent(useKey);
@@ -169,7 +168,6 @@ public class StudentManagement {
 
         studentMap.printStudentInfo();  // 기능 구현
 
-        sc.nextLine();//개행문자 날리기
         System.out.print("삭제 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
         Student student = studentMap.getStudent(useKey);
@@ -195,11 +193,11 @@ public class StudentManagement {
 
     // 학생 존재 체크
     public boolean checkSubjectId(Student student, String subjectId) {
-        if(student.getSubjectList().contains(subjectId)){
+        if(!student.getSubjectList().contains(subjectId)){
             System.out.println("* 수강중인 과목이 아닙니다");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     // 전체 과목 리스트 출력
