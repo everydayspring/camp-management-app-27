@@ -125,7 +125,6 @@ public class StudentManagement {
         }
         studentMap.printStudentInfo();  // 기능 구현
 
-        sc.nextLine();// 개행문자 날리기
         System.out.print("조회 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
         Student student = studentMap.getStudent(useKey);
@@ -169,7 +168,6 @@ public class StudentManagement {
 
         studentMap.printStudentInfo();  // 기능 구현
 
-        sc.nextLine();//개행문자 날리기
         System.out.print("삭제 학생의 고유번호를 입력하세요 : ");
         String useKey = sc.nextLine();
         Student student = studentMap.getStudent(useKey);
