@@ -195,11 +195,11 @@ public class StudentManagement {
 
     // 학생 존재 체크
     public boolean checkSubjectId(Student student, String subjectId) {
-        if(student.getSubjectList().contains(subjectId)){
+        if(!student.getSubjectList().contains(subjectId)){
             System.out.println("* 수강중인 과목이 아닙니다");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     // 전체 과목 리스트 출력
