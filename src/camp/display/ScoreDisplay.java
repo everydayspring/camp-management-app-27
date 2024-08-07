@@ -76,14 +76,14 @@ public class ScoreDisplay {
         int[] scores = innerMap.get(subjectId).getScores();
         System.out.println("============ " + studentId + " - " + subjectId + " ============");
         for(int i = 0; i < scores.length; i++) {
-            String grede = "";
+            String grade = "";
             if(scores[i] != -1) {
                 if(subjectMap.checkSubjectType(subjectId)){
-                    grede = subjectMap.gradeMandatory(scores[i]);
+                    grade = subjectMap.gradeMandatory(scores[i]);
                 } else {
-                    grede = subjectMap.gradeChoice(scores[i]);
+                    grade = subjectMap.gradeChoice(scores[i]);
                 }
-                System.out.println(i + 1 + "회차 : " + grede);
+                System.out.println(i + 1 + "회차 : " + grade);
             }
         }
     }
@@ -117,7 +117,7 @@ public class ScoreDisplay {
 
         int[] scores = innerMap.get(subjectId).getScores();
         System.out.println("============ " + studentId + " - " + subjectId + " ============");
-        String grede = "";
+        String grade = "";
         int scoreCount = 0;
         int totalScore = 0;
 
@@ -129,10 +129,10 @@ public class ScoreDisplay {
         }
 
         if(subjectMap.checkSubjectType(subjectId)){
-            grede = subjectMap.gradeMandatory(totalScore / scoreCount);
+            grade = subjectMap.gradeMandatory(totalScore / scoreCount);
         } else {
-            grede = subjectMap.gradeChoice(totalScore / scoreCount);
+            grade = subjectMap.gradeChoice(totalScore / scoreCount);
         }
-        System.out.println("평균등급 : " + grede);
+        System.out.println("평균등급 : " + grade);
     }
 }
