@@ -147,6 +147,6 @@
 
 [다이어그램 링크](https://drive.google.com/file/d/1E_w3Wfiswu1zd-VvQwfa93AKxKGgSiWM/view?usp=sharing)
 
-[수강생 관리 시스템 알고리즘 링크] (https://drive.google.com/file/d/1FI6e69Ep2d_KuBgNbcLCB4iAdkOAnPP8/view?usp=sharing)
+[수강생 관리 시스템 flow chart] https://drive.google.com/file/d/1kn5cER_2Tbb8DieV9MowFvmJDkS6rxva/view?usp=sharing
 
 
