@@ -1,18 +1,16 @@
 package camp.display;
 
 import camp.model.ScoreMap;
-import camp.model.Student;
 import camp.model.StudentMap;
 import camp.model.SubjectMap;
 
 import java.util.*;
 
-
 public class MainDisplay {
-
     public static Scanner sc = new Scanner(System.in);
+
     // 메인 메뉴
-    public static void displayMainView(StudentMap students, SubjectMap subjects, ScoreMap scores) throws InterruptedException { // 메인에 둬야함
+    public static void displayMainView(StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap) throws InterruptedException {
         StudentDisplay studentDisplay = new StudentDisplay();
         ScoreDisplay scoreDisplay = new ScoreDisplay();
         boolean flag = true;
@@ -26,8 +24,8 @@ public class MainDisplay {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> studentDisplay.display(students,subjects); // 수강생 관리
-                case 2 -> scoreDisplay.display(students,subjects,scores); // 점수 관리
+                case 1 -> studentDisplay.display(studentMap, subjectMap); // 수강생 관리
+                case 2 -> scoreDisplay.display(studentMap, subjectMap, scoreMap); // 점수 관리
                 case 3 -> flag = false; // 프로그램 종료
                 default -> {
                     System.out.println("잘못된 입력입니다.\n되돌아갑니다!");
@@ -37,7 +35,4 @@ public class MainDisplay {
         }
         System.out.println("프로그램을 종료합니다.");
     }
-
-
-
 }

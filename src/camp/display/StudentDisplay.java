@@ -5,9 +5,7 @@ import camp.model.*;
 
 import java.util.*;
 
-
 public class StudentDisplay {
-
     StudentManagement studentManagement;
     public Scanner sc;
 
@@ -16,26 +14,27 @@ public class StudentDisplay {
         this.sc = new Scanner(System.in);
     }
 
-    public void display(StudentMap students, SubjectMap subjects) {
+    // 수강생 관리 메뉴
+    public void display(StudentMap studentMap, SubjectMap subjectMap) {
         boolean flag = true;
         while (flag) {
             System.out.println("==================================");
             System.out.println("수강생 관리 실행 중...");
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 목록 조회");
-            System.out.println("3. 수강생 정보 수정"); //추가 기능 1.
-            System.out.println("4. 상태별 수강생 목록 조회"); //추가 기능 2.
+            System.out.println("3. 수강생 정보 수정");
+            System.out.println("4. 상태별 수강생 목록 조회");
             System.out.println("5. 수강생 삭제");
             System.out.println("6. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
-            switch (input) {//1,3,5는 Management, 2,4는 display
-                case 1 -> studentManagement.create(students, subjects); // 수강생 등록
-                case 2 -> inquireAll(students, subjects); // 수강생 목록 조회
-                case 3 -> studentManagement.update(students); // 수강생 정보 수정
-                case 4 -> inquireByCon(students); // 상태별 수강생 목록 조회
-                case 5 -> studentManagement.deleteStudent(students); // 수강생 삭제
+            switch (input) {
+                case 1 -> studentManagement.create(studentMap, subjectMap); // 수강생 등록
+                case 2 -> inquireAll(studentMap, subjectMap); // 수강생 목록 조회
+                case 3 -> studentManagement.update(studentMap); // 수강생 정보 수정
+                case 4 -> inquireByCon(studentMap); // 상태별 수강생 목록 조회
+                case 5 -> studentManagement.deleteStudent(studentMap); // 수강생 삭제
                 case 6 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
@@ -43,27 +42,26 @@ public class StudentDisplay {
                 }
             }
         }
-
-
     }
-    //displayStudentView
 
-    //inquireStudent 전체 수강생
+    // 수강생 조회
     public void inquireAll(StudentMap studentMap, SubjectMap subjectMap) {
+        // 등록된 수강생이 있는지 확인
         if (studentMap.checkEmpty()) {
-            System.out.println("학생이 없습니다.");
+            System.out.println("등록된 수강생이 없습니다.");
             return;
         }
 
+        // 조회할 수강생 고유 번호 확인
         studentMap.printStudentInfo();
-        sc.nextLine();//개행문자 날리기
-        System.out.print("조회 학생의 고유번호를 입력하세요 : ");
+        sc.nextLine();
+        System.out.print("조회할 수강생의 고유 번호를 입력하세요 : ");
         String useKey = sc.nextLine();
         Student student = studentMap.getStudent(useKey);
 
         if (!studentManagement.checkStudentId(student)) return;
 
-        ArrayList<String> viewSubject = student.getSubjectList();//과목 아이디가 저장되어있음
+        ArrayList<String> viewSubject = student.getSubjectList(); // 과목 아이디가 저장되어있음
         ArrayList<String> viewMandatory = new ArrayList<>(); // 필수 과목 리스트
         ArrayList<String> viewOptional = new ArrayList<>(); // 선택 과목 리스트
 
@@ -78,7 +76,7 @@ public class StudentDisplay {
             }
         }
 
-        System.out.println("==============검색완료===============");
+        System.out.println("==============조회 성공===============");
         System.out.println("[이름]: " + student.getStudentName() + " [번호]: " + useKey + " [상태]: " + student.getStudentState());
 
         StringBuilder sb = new StringBuilder();
@@ -96,14 +94,12 @@ public class StudentDisplay {
         sb.deleteCharAt(sb.length() - 1);// 공백 삭제
         sb.deleteCharAt(sb.length() - 1);// , 삭제
         System.out.println(sb.toString());
-
     }
 
-    //inquireStudentByState    상태별 수강생 조회
+    // 상태별 수강생 조회
     public void inquireByCon(StudentMap studentMap) {
-
         if (studentMap.checkEmpty()) {
-            System.out.println("학생이 없습니다.");
+            System.out.println("등록된 수강생이 없습니다.");
             return;
         }
 
@@ -113,6 +109,7 @@ public class StudentDisplay {
         ArrayList<Student> greenStu = new ArrayList<>();
         ArrayList<Student> redStu = new ArrayList<>();
         ArrayList<Student> yellowStu = new ArrayList<>();
+
         for (String key : keyList) {
             if (studentMap.checkState(key, "Green")) {
                 greenStu.add(studentMap.getStudent(key));
@@ -123,18 +120,17 @@ public class StudentDisplay {
             }
         }
 
-        System.out.println("====Green 상태 학생====");
+        System.out.println("====Green 상태 수강생====");
         print(greenStu);
         System.out.println();
 
-        System.out.println("====Red 상태 학생====");
+        System.out.println("====Red 상태 수강생====");
         print(redStu);
         System.out.println();
 
-        System.out.println("====Yellow 상태 학생====");
+        System.out.println("====Yellow 상태 수강생====");
         print(yellowStu);
         System.out.println();
-
     }
 
     public void print(ArrayList<Student> stu) {
