@@ -4,6 +4,7 @@
 # 💡 프로젝트 소개
 본 프로젝트는 Java 강의를 통해 배운 내용을 기반으로 한 수강생 관리 시스템입니다. 본 시스템은 사용자의 입력을 Scanner 클래스를 활용하여 데이터를 입력받고, 이를 바탕으로 수강생 및 수강 과목의 점수를 관리 할 수 있습니다.
 
+
 # 🧐 팀구성원
 | 이 름| MBTI | 직책 |
 | ---- |:----:|:----:|
@@ -11,6 +12,30 @@
 | 김창민 | INFJ | 부팀장 |
 | 김민주 | ENTJ | 부팀장 |
 | 김태현 | INTP | 부팀장 |
+
+# 🚀STACK
+
+Environment
+
+![인텔리제이](   https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
+![깃허브](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+![깃이그노어](https://img.shields.io/badge/gitignore.io-204ECF?style=for-the-badge&logo=gitignore.io&logoColor=white)
+![깃](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
+
+Development
+
+![자바](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+
+Communication
+
+![슬랙](  https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
+![노션](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
+
+
+# 📊다이어그램
+[프로젝트 구조도](https://drive.google.com/file/d/1E_w3Wfiswu1zd-VvQwfa93AKxKGgSiWM/view?usp=sharing)
+
+[프로젝트 흐름도]( https://drive.google.com/file/d/1kn5cER_2Tbb8DieV9MowFvmJDkS6rxva/view?usp=sharing)
 
 
 # ⚒️프로젝트 기능 정리
@@ -45,7 +70,7 @@
 
       사용자가 등록된 수강생 중 삭제를 원하는 수강생의 고유번호를 입력할새 해당 수강생은 수강생 목록에서 제거됩니다.
       이때 만약 해당 수강생의 수강과목 중 등록된 점수가 있다면 해당 데이터도 같이 삭제됩니다.
-      | 고유 번호 | 이름 | 과목 목록 |
+
 
 
 - **점수 관리**
@@ -90,27 +115,6 @@
 | 필수 | 100-95 | 94-90 | 89-80 | 79-70 | 69-60 | 59~ |
 | 선텍 | 100~90 | 89~80 | 79~70 | 69~60 | 59~50 | 49~ |
 ---
-# 📊다이어그램
-
-[다이어그램 링크](https://drive.google.com/file/d/1E_w3Wfiswu1zd-VvQwfa93AKxKGgSiWM/view?usp=sharing)
-
-[수강생 관리 시스템 flow chart] https://drive.google.com/file/d/1kn5cER_2Tbb8DieV9MowFvmJDkS6rxva/view?usp=sharing
 
 
-# 🚀STACK
 
-Environment
-
-![인텔리제이](   https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
-![깃허브](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
-![깃이그노어](https://img.shields.io/badge/gitignore.io-204ECF?style=for-the-badge&logo=gitignore.io&logoColor=white)
-![깃](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
-
-Development
-
-![자바](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-
-Communication
-
-![슬랙](  https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
-![노션](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
