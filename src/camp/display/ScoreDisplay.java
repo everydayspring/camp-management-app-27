@@ -47,7 +47,7 @@ public class ScoreDisplay {
     }
 
     // 회차별 등급 조회
-    public void inquireAll(StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap) {
+    private void inquireAll(StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap) {
         System.out.println("===========회차별 등급 조회===========");
 
         // 등록된 수강생이 있는지 확인
@@ -93,7 +93,7 @@ public class ScoreDisplay {
     }
 
     // 과목 평균 등급 조회
-    public void inquireByCon(StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap) {
+    private void inquireByCon(StudentMap studentMap, SubjectMap subjectMap, ScoreMap scoreMap) {
         System.out.println("============평균 등급 조회============");
 
         // 등록된 수강생이 있는지 확인

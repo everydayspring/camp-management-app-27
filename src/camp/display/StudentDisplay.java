@@ -45,7 +45,7 @@ public class StudentDisplay {
     }
 
     // 수강생 조회
-    public void inquireAll(StudentMap studentMap, SubjectMap subjectMap) {
+    private void inquireAll(StudentMap studentMap, SubjectMap subjectMap) {
         // 등록된 수강생이 있는지 확인
         if (studentMap.checkEmpty()) {
             System.out.println("등록된 수강생이 없습니다.");
@@ -97,7 +97,7 @@ public class StudentDisplay {
     }
 
     // 상태별 수강생 조회
-    public void inquireByCon(StudentMap studentMap) {
+    private void inquireByCon(StudentMap studentMap) {
         if (studentMap.checkEmpty()) {
             System.out.println("등록된 수강생이 없습니다.");
             return;
@@ -133,7 +133,7 @@ public class StudentDisplay {
         System.out.println();
     }
 
-    public void print(ArrayList<Student> stu) {
+    private void print(ArrayList<Student> stu) {
         for (Student std : stu) {
             System.out.println(std.getStudentId() + " : " + std.getStudentName());
         }
