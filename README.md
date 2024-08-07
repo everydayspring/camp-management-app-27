@@ -38,6 +38,49 @@ Communication
 [프로젝트 흐름도]( https://drive.google.com/file/d/1kn5cER_2Tbb8DieV9MowFvmJDkS6rxva/view?usp=sharing)
 
 
+# 🏗️ 프로젝트 디렉토리 구조
+            
+            ├── README.md
+            ├── camp-management-app-27.iml
+            ├── out
+            │   └── production
+            │       └── camp-management-app-27
+            │           └── camp
+            │               ├── CampManagementApplication.class
+            │               ├── Management
+            │               │   ├── ScoreManagement.class
+            │               │   └── StudentManagement.class
+            │               ├── display
+            │               │   ├── MainDisplay.class
+            │               │   ├── ScoreDisplay.class
+            │               │   └── StudentDisplay.class
+            │               └── model
+            │                   ├── Score.class
+            │                   ├── ScoreMap.class
+            │                   ├── Student.class
+            │                   ├── StudentMap.class
+            │                   ├── Subject.class
+            │                   └── SubjectMap.class
+            ├── src
+            │   └── camp
+            │       ├── CampManagementApplication.java
+            │       ├── Management
+            │       │   ├── ScoreManagement.java
+            │       │   └── StudentManagement.java
+            │       ├── display
+            │       │   ├── MainDisplay.java
+            │       │   ├── ScoreDisplay.java
+            │       │   └── StudentDisplay.java
+            │       └── model
+            │           ├── Score.java
+            │           ├── ScoreMap.java
+            │           ├── Student.java
+            │           ├── StudentMap.java
+            │           ├── Subject.java
+            │           └── SubjectMap.java
+            └── src.txt
+            
+            13 directories, 27 files
 # ⚒️프로젝트 기능 정리
 
 - **수강생 관리**
@@ -115,6 +158,8 @@ Communication
 | 필수 | 100-95 | 94-90 | 89-80 | 79-70 | 69-60 | 59~ |
 | 선텍 | 100~90 | 89~80 | 79~70 | 69~60 | 59~50 | 49~ |
 ---
+
+
 
 
 
