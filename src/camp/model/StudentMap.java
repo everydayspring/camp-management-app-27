@@ -65,5 +65,4 @@ public class StudentMap {
     public boolean checkState(String key, String type){
         return this.studentStore.get(key).getStudentState().equals(type);
     }
-
 }
